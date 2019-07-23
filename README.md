@@ -4,7 +4,8 @@ The data will be stored in an SQLite database and supports insert, read, update 
 https://developer.android.com/jetpack/docs/guide
 
 # For The more curious:
-The sole purpose of building this project is to implement what I've learned so far and also test my knowledge of Android Architecture which allows for building scalable apps with robust codebase.
+The sole purpose of building this project is to implement what I've learned so far and also test my knowledge of Android Architecture which encircles best practices and recommended architecture for building robust, production-quality apps.
+
 # 
 **ViewModels** store and manage UI related data, they survive configuration changes and can be used seemlessly by the newly created activity. **LiveData** is an observable dataholder and it is life-cycle aware, which means it automatically starts and stops updating the UI-controller at the right times in it's lifecycle.
 For the backend of the app I make use of the **"Room Persistence Library"**, which works as a wrapper around SQLite and helps to reduce boilerplate code by making extensive use of Annotations. Instead of creating an SQLiteOpenDbHelper, I simply turn Java classes into "entities" to create tables, and use "Data Access Objects" (DAO) to query these tables and make operations on them. **Room** also provides compile time verification for SQL statements, so we run into fewer runtime exceptions, caused by typos and invalid queries.
