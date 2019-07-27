@@ -14,6 +14,8 @@ public class NoteRepository {
     //Constructor to reassign the variables
     public NoteRepository(Application application){
         NoteDatabase database = NoteDatabase.getInstance(application);
+        noteDao = database.noteDao();
+        allNotes = noteDao.getAllNotes();
     }
 
 }
