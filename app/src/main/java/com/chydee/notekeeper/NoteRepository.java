@@ -19,13 +19,27 @@ public class NoteRepository {
     }
 
     //Create methods for all database operations
-
+    //Insert()
     public void insert(Note note){
 
     }
-
+    //Update
     public void update(Note note){
 
     }
+    //Delete()
+    public void delete(Note note){
 
+    }
+
+    //Delete all notes
+    public void deleteAll(){
+
+    }
+    //Returns LiveData
+
+
+    public LiveData<List<Note>> getAllNotes() {
+        return allNotes;
+    }
 }
