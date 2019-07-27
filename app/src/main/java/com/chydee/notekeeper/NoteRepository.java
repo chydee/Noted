@@ -1,6 +1,7 @@
 package com.chydee.notekeeper;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
@@ -41,5 +42,13 @@ public class NoteRepository {
 
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;
+    }
+
+    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Note... notes) {
+            return null;
+        }
     }
 }
