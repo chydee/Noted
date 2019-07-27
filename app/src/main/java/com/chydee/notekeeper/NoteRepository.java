@@ -22,7 +22,7 @@ public class NoteRepository {
     //Create methods for all database operations
     //Insert()
     public void insert(Note note){
-
+        new InsertNoteAsyncTask(noteDao).execute(note);
     }
     //Update
     public void update(Note note){
@@ -46,8 +46,17 @@ public class NoteRepository {
 
     private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void>{
 
+        private NoteDao noteDao;
+
+        private InsertNoteAsyncTask(NoteDao noteDao){
+            this.noteDao = noteDao;
+        }
+
+
         @Override
         protected Void doInBackground(Note... notes) {
+
+            noteDao.insert(notes[0]);
             return null;
         }
     }
