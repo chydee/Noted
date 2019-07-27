@@ -7,4 +7,6 @@ import androidx.room.RoomDatabase;
 public abstract class NoteDatabase extends RoomDatabase {
 
     private static NoteDatabase instance;
+
+    public abstract NoteDao noteDao();
 }
