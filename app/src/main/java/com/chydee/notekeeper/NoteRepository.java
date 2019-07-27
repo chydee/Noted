@@ -18,4 +18,14 @@ public class NoteRepository {
         allNotes = noteDao.getAllNotes();
     }
 
+    //Create methods for all database operations
+
+    public void insert(Note note){
+
+    }
+
+    public void update(Note note){
+
+    }
+
 }
