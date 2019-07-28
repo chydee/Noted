@@ -96,7 +96,9 @@ public class NoteRepository {
 
         private NoteDao noteDao;
 
-        private DeleteAllNotesAsyncTask(){ }
+        private DeleteAllNotesAsyncTask(NoteDao noteDao){
+            this.noteDao = noteDao;
+        }
 
 
         @Override
