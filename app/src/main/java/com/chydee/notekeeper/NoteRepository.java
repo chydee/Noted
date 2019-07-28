@@ -26,7 +26,7 @@ public class NoteRepository {
     }
     //Update
     public void update(Note note){
-
+        new UpdateNoteAsyncTask(noteDao).execute(note);
     }
     //Delete()
     public void delete(Note note){
@@ -44,6 +44,54 @@ public class NoteRepository {
         return allNotes;
     }
 
+    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void>{
+
+        private NoteDao noteDao;
+
+        private InsertNoteAsyncTask(NoteDao noteDao){
+            this.noteDao = noteDao;
+        }
+
+
+        @Override
+        protected Void doInBackground(Note... notes) {
+
+            noteDao.insert(notes[0]);
+            return null;
+        }
+    }
+    private static class UpdateNoteAsyncTask extends AsyncTask<Note, Void, Void>{
+
+        private NoteDao noteDao;
+
+        private UpdateNoteAsyncTask(NoteDao noteDao){
+            this.noteDao = noteDao;
+        }
+
+
+        @Override
+        protected Void doInBackground(Note... notes) {
+
+            noteDao.update(notes[0]);
+            return null;
+        }
+    }
+    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void>{
+
+        private NoteDao noteDao;
+
+        private InsertNoteAsyncTask(NoteDao noteDao){
+            this.noteDao = noteDao;
+        }
+
+
+        @Override
+        protected Void doInBackground(Note... notes) {
+
+            noteDao.insert(notes[0]);
+            return null;
+        }
+    }
     private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void>{
 
         private NoteDao noteDao;
