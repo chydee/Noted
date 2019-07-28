@@ -18,4 +18,4 @@ Instead of a Cursor, we can let these queries return instances of our own Java o
 The RoomDatabase is an abstract class that ties all the pieces together and connects the entities to their corresponding DAO. Just as in an SQLiteOpenHelper, we have to define a version number and a migration strategy. With **fallbackToDestructiveMigration** we can let Room recreate our database if we increase the version number.
 We create our database in form of a static singleton with the databaseBuilder, where we have to pass our database class and a file name.
 # The Repository
-The epository is note part of the Android architecture components but it provides or serves as an abstraction layer for the Model-View-ViewModel
+The repository is not part of the Android architecture components but it is considered est practice provides or serves as an abstraction layer on top of the different data sources
