@@ -20,6 +20,7 @@ public class NoteRepository {
     }
 
     //Create methods for all database operations
+    //This helper methods below are the APIs that the repository exposes to the outside
     //Insert()
     public void insert(Note note){
         new InsertNoteAsyncTask(noteDao).execute(note);
@@ -35,7 +36,7 @@ public class NoteRepository {
 
     //Delete all notes
     public void deleteAll(){
-
+        new DeleteAllNotesAsyncTask(noteDao).execute();
     }
     //Returns LiveData
 
