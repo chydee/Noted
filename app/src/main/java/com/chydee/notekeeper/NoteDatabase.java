@@ -1,6 +1,7 @@
 package com.chydee.notekeeper;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -30,8 +31,23 @@ public abstract class NoteDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+            new PopulateDbAsyncTask(instance).execute();
         }
     };
 
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        private NoteDao noteDao;
+
+        private PopulateDbAsyncTask(NoteDatabase db){
+            noteDao = db.noteDao();
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            noteDao.insert(new Note("Learning MVVM", "MVVM is a android achitecture component", 1));
+            noteDao.insert(new Note("Learning Android Architecture", "MVVM is a android achitecture component", 2));
+            noteDao.insert(new Note("Learning Android Programming", "MVVM is a android achitecture component", 3));
+            return null;
+        }
+    }
 }
