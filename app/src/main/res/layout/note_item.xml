@@ -20,6 +20,17 @@
             android:layout_alignParentEnd="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="1"/>
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/text_view_priority"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="Title"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
