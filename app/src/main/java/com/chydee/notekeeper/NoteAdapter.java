@@ -33,7 +33,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mNotes.size();
+    }
+
+    public void setNotes(List<Note> notes){
+        this.mNotes = notes;
+        //this method does not allow animation in the recycler view
+        //Generally, or by convention its not a good practice to use this in a recycler view TBH
+        notifyDataSetChanged();
     }
 
     //Create a view holder class
