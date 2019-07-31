@@ -3,9 +3,11 @@ package com.chydee.notekeeper;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -34,12 +36,28 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     //So to comfirm the inputs when we click the save icon in the top menu right corner of the action bar
-    //First of all we have to get this icon there. We do this by overwriting :
+    //First of all we have to get this icon there. We do this by overriding :
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_note_menu, menu);
         return true;// Which means that we want to display the menu
+    }
+
+    //To handle the clicks on our menu icons or one icons as the case may be,
+    //We have to Override onOptionsItemSelected
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //The item.getItemId() helps us to find the item that was clicked on
+        switch (item.getItemId()) {
+            case R.id.save_note:
+                saveNote();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }
