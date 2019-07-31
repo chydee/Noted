@@ -21,7 +21,7 @@ android {
 
 dependencies {
 
-    def lifecycle_version = "2.0.0-rc01"
+    def lifecycle_version = "2.2.0-alpha02"
     def room_version = "2.1.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,7 +31,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'ng
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //Life-cycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
