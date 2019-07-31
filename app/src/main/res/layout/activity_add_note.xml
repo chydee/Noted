@@ -11,7 +11,22 @@
         android:id="@+id/edit_text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title"
+        android:hint="@string/hint_title"
         android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_description"
+        android:inputType="textMultiLine"/>
+
+    <!-- TextView for number picker -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Select Priority:"
+        android:textAppearance="@android:style/TextAppearance.Medium"/>
 
 </LinearLayout>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NoteKeeper</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
 </resources>
