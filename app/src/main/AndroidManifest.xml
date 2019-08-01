@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddNoteActivity"></activity>
-        <activity android:name=".MainActivity">
+        <!-- The "android:parentActivityName=".MainActivity"" attribute is responsible for getting the back button
+         into the top left corner of the AddNoteActivity which will then be replaced by our 'x' icon
+         with this attribute the system knows that it should bring us back into the main activity when we click the 'x' button-->
+        <activity android:name=".AddNoteActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
