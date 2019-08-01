@@ -1,5 +1,6 @@
 package com.chydee.notekeeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +54,10 @@ public class AddNoteActivity extends AppCompatActivity {
             return;
         }
 
+        Intent data = new Intent();
+        data.putExtra(EXTRA_TITLE, title);
+        data.putExtra(EXTRA_DESCRIPTION, description);
+        data.putExtra(EXTRA_PRIORITY, priority);
 
     }
 
