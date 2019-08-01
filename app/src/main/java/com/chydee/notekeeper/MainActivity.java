@@ -16,7 +16,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    public static final int ADD_NOTE_REQUEST = 1;
 
     private NoteViewModel mNoteViewModel;
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                startActivityForResult(intent,);
+                startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
 
