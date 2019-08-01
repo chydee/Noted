@@ -12,6 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddNoteActivity extends AppCompatActivity {
+    //For now I'll retrieve the data from the form via startIntentForResult
+    // and later on change it to the normal way
+    //Key for the intent Extras:
+    public static final String EXTRA_TITLE = "com.chydee.notekeeper.EXTRA_TITLE";
+    public static final String EXTRA_DESCRIPTION = "com.chydee.notekeeper.EXTRA_DESCRIPTION";
+    public static final String EXTRA_PRIORITY = "com.chydee.notekeeper.EXTRA_PRIORITY";
 
     private EditText mEditTextTitle;
     private EditText mEditTextDescription;
