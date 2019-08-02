@@ -1,6 +1,5 @@
 package com.chydee.notekeeper;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 public class AddNoteActivity extends AppCompatActivity {
     //For now I'll retrieve the data from the form via startIntentForResult
@@ -24,6 +24,8 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText mEditTextDescription;
     private NumberPicker mNumberPickerPriority;
 
+    private NoteViewModel mNoteViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,9 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mNumberPickerPriority.setMinValue(1);
         mNumberPickerPriority.setMaxValue(10);
+
+
+        mNoteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
 
         //In order to get the little 'x' in the top left corner of the action bar
         //i.e the close o exit activity button,
@@ -54,14 +59,18 @@ public class AddNoteActivity extends AppCompatActivity {
             return;
         }
 
-        Intent data = new Intent();
+        Note note = new Note(title, description, priority);
+        mNoteViewModel.insert(note);
+        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+        finish();
+        /*Intent data = new Intent();
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
 
-        setResult(RESULT_OK, data);
+        setResult(RESULT_OK, data);*/
 
-        finish();
+
 
     }
 
