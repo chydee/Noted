@@ -69,9 +69,6 @@ public class AddNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_PRIORITY, priority);
 
         setResult(RESULT_OK, data);*/
-
-
-
     }
 
     //So to comfirm the inputs when we click the save icon in the top menu right corner of the action bar
