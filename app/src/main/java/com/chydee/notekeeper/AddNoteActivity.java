@@ -1,5 +1,6 @@
 package com.chydee.notekeeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,21 +11,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 
 public class AddNoteActivity extends AppCompatActivity {
     //For now I'll retrieve the data from the form via startIntentForResult
     // and later on change it to the normal way
     //Key for the intent Extras:
-   // public static final String EXTRA_TITLE = "com.chydee.notekeeper.EXTRA_TITLE";
-   // public static final String EXTRA_DESCRIPTION = "com.chydee.notekeeper.EXTRA_DESCRIPTION";
-   // public static final String EXTRA_PRIORITY = "com.chydee.notekeeper.EXTRA_PRIORITY";
+    public static final String EXTRA_TITLE = "com.chydee.notekeeper.EXTRA_TITLE";
+    public static final String EXTRA_DESCRIPTION = "com.chydee.notekeeper.EXTRA_DESCRIPTION";
+    public static final String EXTRA_PRIORITY = "com.chydee.notekeeper.EXTRA_PRIORITY";
 
     private EditText mEditTextTitle;
     private EditText mEditTextDescription;
     private NumberPicker mNumberPickerPriority;
-
-    private NoteViewModel mNoteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +35,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mNumberPickerPriority.setMinValue(1);
         mNumberPickerPriority.setMaxValue(10);
-
-
-        mNoteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
 
         //In order to get the little 'x' in the top left corner of the action bar
         //i.e the close o exit activity button,
@@ -58,17 +53,18 @@ public class AddNoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Please add a title and a description", Toast.LENGTH_SHORT).show();
             return;
         }
+        // So lets make AddNoteActivity work basically as an input form
+        //therefore theres no communication with other layers TBH
 
-        Note note = new Note(title, description, priority);
-        mNoteViewModel.insert(note);
-        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
-        finish();
-        /*Intent data = new Intent();
+        Intent data = new Intent();
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
 
-        setResult(RESULT_OK, data);*/
+        setResult(RESULT_OK, data);
+
+        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     //So to comfirm the inputs when we click the save icon in the top menu right corner of the action bar
