@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 mNoteViewModel.delete(mAdapter.getNoteAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(MainActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
             }
-        })
+        }).attachToRecyclerView(recyclerView);
     }
 
     @Override
