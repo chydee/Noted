@@ -43,6 +43,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         notifyDataSetChanged();
     }
 
+    public Note getNoteAt(int position){
+        return mNotes.get(position);
+    }
+
     //Create a view holder class
     //This will hold the views in the recyclerView item
     class NoteHolder extends RecyclerView.ViewHolder{
