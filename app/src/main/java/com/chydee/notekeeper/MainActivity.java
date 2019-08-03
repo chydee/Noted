@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setHasFixedSize(true);// you should set this as true if you know that the recycler view size wont change
+        recyclerView.setHasFixedSize(true);//set this as true if you know that the recycler view size wont change
         //As this makes it more efficient
 
         final NoteAdapter mAdapter = new NoteAdapter();
