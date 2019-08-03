@@ -3,9 +3,7 @@ package com.chydee.notekeeper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -72,5 +70,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Note discarded", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }
