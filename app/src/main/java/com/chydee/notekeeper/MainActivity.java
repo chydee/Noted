@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+                viewHolder.getAdapterPosition()
             }
         })
     }
