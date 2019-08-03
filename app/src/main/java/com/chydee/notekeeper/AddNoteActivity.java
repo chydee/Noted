@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 
 public class AddNoteActivity extends AppCompatActivity {
     //For now I'll retrieve the data from the form via startIntentForResult
@@ -25,8 +24,6 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText mEditTextDescription;
     private NumberPicker mNumberPickerPriority;
 
-    private NoteViewModel mNoteViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +35,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mNumberPickerPriority.setMinValue(1);
         mNumberPickerPriority.setMaxValue(10);
-
-
-        mNoteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
 
         //In order to get the little 'x' in the top left corner of the action bar
         //i.e the close o exit activity button,
@@ -61,8 +55,6 @@ public class AddNoteActivity extends AppCompatActivity {
         }
         // So lets make AddNoteActivity work basically as an input form
         //therefore theres no communication with other layers TBH
-       /* Note note = new Note(title, description, priority);
-        mNoteViewModel.insert(note);*/
 
         Intent data = new Intent();
         data.putExtra(EXTRA_TITLE, title);
