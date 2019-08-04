@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- The "android:parentActivityName=".MainActivity"" attribute is responsible for getting the back button
-         into the top left corner of the AddNoteActivity which will then be replaced by our 'x' icon
+         into the top left corner of the AddEditNoteActivity which will then be replaced by our 'x' icon
          with this attribute the system knows that it should bring us back into the main activity when we click the 'x' button-->
-        <activity android:name=".AddNoteActivity"
+        <activity android:name=".AddEditNoteActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity"
             android:launchMode="singleTop">

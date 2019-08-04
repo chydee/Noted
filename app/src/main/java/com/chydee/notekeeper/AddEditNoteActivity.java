@@ -12,10 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddEditNoteActivity extends AppCompatActivity {
     //For now I'll retrieve the data from the form via startIntentForResult
     // and later on change it to the normal way
     //Key for the intent Extras:
+    public static final String EXTRA_ID = "com.chydee.notekeeper.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.chydee.notekeeper.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.chydee.notekeeper.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.chydee.notekeeper.EXTRA_PRIORITY";
@@ -40,20 +41,32 @@ public class AddNoteActivity extends AppCompatActivity {
         //i.e the close o exit activity button,
         // We call :
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");// This will just display the "Add Note" text in the action bar
+
+
+        Intent intent = getIntent();
+
+
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Note"); //This will change the action bar title to "Edit Note" if the user clicked an item in the main Activity
+            mEditTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            mEditTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            mNumberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
+        } else {
+            setTitle("Add Note");// This will just display the "Add Note" text in the action bar
+        }
     }
 
-    private void saveNote(){
+    private void saveNote() {
         //Get inputs from the textFields and the number picker
         String title = mEditTextTitle.getText().toString();
         String description = mEditTextDescription.getText().toString();
         int priority = mNumberPickerPriority.getValue();
 
-        if (title.trim().isEmpty() || description.trim().isEmpty()){
+        if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "Please add a title and a description", Toast.LENGTH_SHORT).show();
             return;
         }
-        // So lets make AddNoteActivity work basically as an input form
+        // So lets make AddEditNoteActivity work basically as an input form
         //therefore theres no communication with other layers TBH
 
         Intent data = new Intent();
@@ -61,9 +74,12 @@ public class AddNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
 
-        setResult(RESULT_OK, data);
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1){
+            data.putExtra(EXTRA_ID, id);
+        }
 
-        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK, data);
         finish();
     }
 
