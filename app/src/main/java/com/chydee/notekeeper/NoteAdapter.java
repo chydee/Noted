@@ -61,4 +61,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             mTextViewPriority = itemView.findViewById(R.id.text_view_priority);
         }
     }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Note note);
+    }
 }
