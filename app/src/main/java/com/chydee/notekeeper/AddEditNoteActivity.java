@@ -41,16 +41,25 @@ public class AddEditNoteActivity extends AppCompatActivity {
         //i.e the close o exit activity button,
         // We call :
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");// This will just display the "Add Note" text in the action bar
+
+
+        Intent intent = getIntent();
+
+
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Note"); //This will change the action bar title to "Edit Note" if the user clicked an item in the main Activity
+        } else {
+            setTitle("Add Note");// This will just display the "Add Note" text in the action bar
+        }
     }
 
-    private void saveNote(){
+    private void saveNote() {
         //Get inputs from the textFields and the number picker
         String title = mEditTextTitle.getText().toString();
         String description = mEditTextDescription.getText().toString();
         int priority = mNumberPickerPriority.getValue();
 
-        if (title.trim().isEmpty() || description.trim().isEmpty()){
+        if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "Please add a title and a description", Toast.LENGTH_SHORT).show();
             return;
         }
