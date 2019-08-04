@@ -74,9 +74,12 @@ public class AddEditNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
 
-        setResult(RESULT_OK, data);
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1){
+            data.putExtra(EXTRA_ID, id);
+        }
 
-        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK, data);
         finish();
     }
 
