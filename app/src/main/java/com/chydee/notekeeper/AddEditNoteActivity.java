@@ -48,6 +48,9 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
         if (intent.hasExtra(EXTRA_ID)) {
             setTitle("Edit Note"); //This will change the action bar title to "Edit Note" if the user clicked an item in the main Activity
+            mEditTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            mEditTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            mNumberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
         } else {
             setTitle("Add Note");// This will just display the "Add Note" text in the action bar
         }
