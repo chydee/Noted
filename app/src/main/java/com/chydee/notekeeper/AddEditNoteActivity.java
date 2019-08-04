@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddEditNoteActivity extends AppCompatActivity {
     //For now I'll retrieve the data from the form via startIntentForResult
     // and later on change it to the normal way
     //Key for the intent Extras:
@@ -53,7 +53,7 @@ public class AddNoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Please add a title and a description", Toast.LENGTH_SHORT).show();
             return;
         }
-        // So lets make AddNoteActivity work basically as an input form
+        // So lets make AddEditNoteActivity work basically as an input form
         //therefore theres no communication with other layers TBH
 
         Intent data = new Intent();
