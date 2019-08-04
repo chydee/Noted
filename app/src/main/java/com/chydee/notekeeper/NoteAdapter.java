@@ -60,6 +60,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             mTextViewTitle = itemView.findViewById(R.id.text_view_title);
             mTextViewDescription = itemView.findViewById(R.id.text_view_description);
             mTextViewPriority = itemView.findViewById(R.id.text_view_priority);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //get the position of the item
+                    int position = getAdapterPosition();
+                     listener.onItemClick(mNotes.get(position));
+                }
+            });
         }
     }
 
