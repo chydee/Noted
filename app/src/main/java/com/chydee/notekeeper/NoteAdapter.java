@@ -37,20 +37,28 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         return mNotes.size();
     }
 
-    public void setNotes(List<Note> notes){
+    public void setNotes(List<Note> notes) {
         this.mNotes = notes;
         //this method does not allow animation in the recycler view
         //Generally, or by convention its not a good practice to use this in a recycler view TBH
         notifyDataSetChanged();
     }
 
-    public Note getNoteAt(int position){
+    public Note getNoteAt(int position) {
         return mNotes.get(position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Note note);
     }
 
     //Create a view holder class
     //This will hold the views in the recyclerView item
-    class NoteHolder extends RecyclerView.ViewHolder{
+    class NoteHolder extends RecyclerView.ViewHolder {
         private TextView mTextViewTitle;
         private TextView mTextViewDescription;
         private TextView mTextViewPriority;
@@ -66,18 +74,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
                 public void onClick(View view) {
                     //get the position of the item
                     int position = getAdapterPosition();
-                     listener.onItemClick(mNotes.get(position));
+                    //check
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(mNotes.get(position));
+                    }
                 }
             });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Note note);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
     }
 
 }
