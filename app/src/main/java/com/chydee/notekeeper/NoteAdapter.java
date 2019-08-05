@@ -6,15 +6,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
+public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
 
     private List<Note> mNotes = new ArrayList<>();
     private OnItemClickListener listener;
+
+    public NoteAdapter(@NonNull DiffUtil.ItemCallback<Note> diffCallback) {
+        super(diffCallback);
+    }
 
     @NonNull
     @Override
