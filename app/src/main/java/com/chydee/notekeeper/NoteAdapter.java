@@ -6,15 +6,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
-
-    private List<Note> mNotes = new ArrayList<>();
     private OnItemClickListener listener;
+
+    public static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK = new DiffUtil.ItemCallback<Note>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getTitle().equals(newItem.getTitle()) &&
+                    oldItem.getDescription().equals(newItem.getDescription()) &&
+                    oldItem.getPriority() == newItem.getPriority();
+        }
+    };
+
+    public NoteAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -26,26 +42,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
-        Note currentNote = mNotes.get(position);
+        Note currentNote = getItem(position);
         holder.mTextViewTitle.setText(currentNote.getTitle());
         holder.mTextViewDescription.setText(currentNote.getDescription());
         holder.mTextViewPriority.setText(String.valueOf(currentNote.getPriority()));
     }
 
-    @Override
-    public int getItemCount() {
-        return mNotes.size();
-    }
-
-    public void setNotes(List<Note> notes) {
-        this.mNotes = notes;
-        //this method does not allow animation in the recycler view
-        //Generally, or by convention its not a good practice to use this in a recycler view TBH
-        notifyDataSetChanged();
-    }
 
     public Note getNoteAt(int position) {
-        return mNotes.get(position);
+        return getItem(position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -76,7 +81,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
                     int position = getAdapterPosition();
                     //check
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(mNotes.get(position));
+                        listener.onItemClick(getItem(position));
                     }
                 }
             });
