@@ -47,4 +47,8 @@ dependencies {
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$version_navigation"
     implementation "androidx.navigation:navigation-ui:$version_navigation"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 }
