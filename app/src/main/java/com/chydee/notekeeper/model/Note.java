@@ -1,4 +1,4 @@
-package com.chydee.notekeeper;
+package com.chydee.notekeeper.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

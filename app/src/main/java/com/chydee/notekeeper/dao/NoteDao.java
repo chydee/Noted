@@ -1,4 +1,4 @@
-package com.chydee.notekeeper;
+package com.chydee.notekeeper.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.chydee.notekeeper.model.Note;
 
 import java.util.List;
 

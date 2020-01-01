@@ -1,4 +1,4 @@
-package com.chydee.notekeeper;
+package com.chydee.notekeeper.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.chydee.notekeeper.R;
+import com.chydee.notekeeper.model.Note;
 
 public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
 
