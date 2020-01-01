@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chydee.notekeeper.AddEditNoteActivity;
-import com.chydee.notekeeper.Note;
 import com.chydee.notekeeper.NoteAdapter;
 import com.chydee.notekeeper.NoteViewModel;
 import com.chydee.notekeeper.R;
+import com.chydee.notekeeper.model.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
