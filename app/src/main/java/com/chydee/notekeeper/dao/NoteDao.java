@@ -1,4 +1,4 @@
-package com.chydee.notekeeper;
+package com.chydee.notekeeper.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

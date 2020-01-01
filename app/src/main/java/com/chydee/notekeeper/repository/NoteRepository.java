@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.chydee.notekeeper.NoteDao;
+import com.chydee.notekeeper.dao.NoteDao;
 import com.chydee.notekeeper.database.NoteDatabase;
 import com.chydee.notekeeper.model.Note;
 

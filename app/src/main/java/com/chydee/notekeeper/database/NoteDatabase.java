@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.chydee.notekeeper.NoteDao;
+import com.chydee.notekeeper.dao.NoteDao;
 import com.chydee.notekeeper.model.Note;
 
 @Database(entities = {Note.class}, version = 1)
