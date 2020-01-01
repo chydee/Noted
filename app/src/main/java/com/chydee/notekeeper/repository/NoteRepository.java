@@ -1,9 +1,13 @@
-package com.chydee.notekeeper;
+package com.chydee.notekeeper.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import com.chydee.notekeeper.Note;
+import com.chydee.notekeeper.NoteDao;
+import com.chydee.notekeeper.database.NoteDatabase;
 
 import java.util.List;
 

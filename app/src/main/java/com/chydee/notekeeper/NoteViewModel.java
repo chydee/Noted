@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.chydee.notekeeper.repository.NoteRepository;
+
 import java.util.List;
 
 public class NoteViewModel extends AndroidViewModel {
