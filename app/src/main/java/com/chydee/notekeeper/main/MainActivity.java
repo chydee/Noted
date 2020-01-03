@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +21,6 @@ import com.chydee.notekeeper.NoteViewModel;
 import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.adapter.NoteAdapter;
 import com.chydee.notekeeper.model.Note;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -38,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton buttonAddNote = findViewById(R.id.button_add_note);
+        /*FloatingActionButton buttonAddNote = findViewById(R.id.button_add_note);
         buttonAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
-        });
+        });*/
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
