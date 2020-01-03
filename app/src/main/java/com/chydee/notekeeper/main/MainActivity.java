@@ -136,14 +136,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.delete_all_notes:
-                mNoteViewModel.deleteAllNotes();
-                Toast.makeText(this, "All Notes Deleted", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.delete_all_notes) {
+            mNoteViewModel.deleteAllNotes();
+            Toast.makeText(this, "All Notes Deleted", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 }
