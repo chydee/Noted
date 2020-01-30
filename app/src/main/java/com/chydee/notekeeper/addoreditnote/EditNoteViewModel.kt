@@ -1,4 +1,4 @@
-package com.chydee.notekeeper
+package com.chydee.notekeeper.addoreditnote
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.chydee.notekeeper
+package com.chydee.notekeeper.addoreditnote
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.chydee.notekeeper.R
 
 
 class EditNoteFragment : Fragment() {
