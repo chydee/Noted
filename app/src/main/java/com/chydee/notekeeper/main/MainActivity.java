@@ -12,9 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chydee.notekeeper.AddEditNoteActivity;
 import com.chydee.notekeeper.NoteViewModel;
@@ -45,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        /*RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
-        recyclerView.setHasFixedSize(true);//set this as true if you know that the recycler view size wont change
+        // recyclerView.setHasFixedSize(true);//set this as true if you know that the recycler view size wont change
         //As this makes it more efficient
 
         final NoteAdapter mAdapter = new NoteAdapter();
-        recyclerView.setAdapter(mAdapter);
+        //recyclerView.setAdapter(mAdapter);
 
         mNoteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         mNoteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
@@ -65,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Creating the swipe to delete
         //By calling the class ItemTouchHelper() this is the class that will make the recyclerView swipeable
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT /*To swipe left*/ | ItemTouchHelper.RIGHT /*To swipe Right*/) {
+       /* new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT *//*To swipe left*//* | ItemTouchHelper.RIGHT *//*To swipe Right*//*) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false; //This method is for dragging a item around the screen
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 mNoteViewModel.delete(mAdapter.getNoteAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(MainActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
             }
-        }).attachToRecyclerView(recyclerView);
+        }).attachToRecyclerView(recyclerView);*/
 
         mAdapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
