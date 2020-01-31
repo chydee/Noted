@@ -75,7 +75,7 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
             super(itemView);
             mTextViewTitle = itemView.findViewById(R.id.text_view_title);
             mTextViewDescription = itemView.findViewById(R.id.text_view_description);
-            mTextViewPriority = itemView.findViewById(R.id.text_view_priority);
+            // mTextViewPriority = itemView.findViewById(R.id.text_view_priority);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
