@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="homeFragemnt"
+            name="homeFragment"
             type="com.chydee.notekeeper.home.HomeFragment" />
     </data>
 
