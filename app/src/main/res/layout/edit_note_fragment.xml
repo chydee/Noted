@@ -10,14 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
+        android:padding="8dp"
         tools:context=".addoreditnote.EditNoteFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/title_text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/title_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +25,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:inputType="textAutoCorrect|text|textAutoComplete|textMultiLine" />
+                android:inputType="textCapWords|textAutoCorrect|text|textAutoComplete"
+                app:placeholderText="@string/title_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/title_text_layout"
+            app:layout_constraintStart_toStartOf="@+id/title_text_layout"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine|text|textAutoCorrect"
+                app:placeholderText="@string/note_placeholder" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
