@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
@@ -9,9 +9,15 @@
     </style>
 
     <style name="Widget.MaterialComponents.CardView.NoteItems">
-        <item name="android:layout_marginLeft">@dimen/mtrl_card_spacing</item>
-        <item name="android:layout_marginTop">@dimen/mtrl_card_spacing</item>
-        <item name="android:layout_marginRight">@dimen/mtrl_card_spacing</item>
+        <item name="android:layout_marginLeft" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginTop" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginRight" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
     </style>
 
 </resources>
