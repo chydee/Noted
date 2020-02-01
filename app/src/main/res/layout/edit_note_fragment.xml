@@ -13,36 +13,31 @@
         android:padding="8dp"
         tools:context=".addoreditnote.EditNoteFragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_text_layout"
+        <EditText
+            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="auto"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/title_hint"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:inputType="textCapWords|textAutoCorrect|text|textAutoComplete"
-                app:placeholderText="@string/title_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/title_text_layout"
-            app:layout_constraintStart_toStartOf="@+id/title_text_layout"
-            app:layout_constraintTop_toBottomOf="@+id/title_text_layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine|text|textAutoCorrect"
-                app:placeholderText="@string/note_placeholder" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:focusable="auto"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/note_placeholder"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|text|textLongMessage|textCapSentences|textAutoCorrect|textShortMessage"
+            app:layout_constraintEnd_toEndOf="@+id/editText"
+            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

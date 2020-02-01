@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="floatingActionButtonStyle">
+            @style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon
+        </item>
         <item name="android:showDividers">none</item>
         <item name="actionBarDivider">@android:color/transparent</item>
     </style>
