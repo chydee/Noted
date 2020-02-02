@@ -28,7 +28,7 @@
         <item name="ensureMinTouchTargetSize">true</item>
         <item name="elevation" tools:ignore="PrivateResource">@dimen/mtrl_fab_elevation</item>
         <item name="backgroundTint" tools:ignore="PrivateResource">
-            @color/primaryLightColor
+            @color/primaryColor
         </item>
         <item name="tint">@android:color/white</item>
         <item name="hoveredFocusedTranslationZ" tools:ignore="PrivateResource">
