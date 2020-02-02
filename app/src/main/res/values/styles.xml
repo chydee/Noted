@@ -1,17 +1,53 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="android:showDividers">none</item>
+        <item name="actionBarDivider">@android:color/transparent</item>
     </style>
 
     <style name="Widget.MaterialComponents.CardView.NoteItems">
-        <item name="android:layout_marginLeft">@dimen/mtrl_card_spacing</item>
-        <item name="android:layout_marginTop">@dimen/mtrl_card_spacing</item>
-        <item name="android:layout_marginRight">@dimen/mtrl_card_spacing</item>
+        <item name="android:layout_marginLeft" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginTop" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginRight" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+    </style>
+
+    <style name="Widget.MaterialComponents.FloatingActionButton.Custom" parent="Widget.Design.FloatingActionButton">
+        <item name="android:background">@null</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+        <item name="elevation" tools:ignore="PrivateResource">@dimen/mtrl_fab_elevation</item>
+        <item name="backgroundTint" tools:ignore="PrivateResource">
+            @color/primaryColor
+        </item>
+        <item name="tint">@android:color/white</item>
+        <item name="hoveredFocusedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_hovered_focused
+        </item>
+        <item name="pressedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_pressed
+        </item>
+        <item name="rippleColor" tools:ignore="PrivateResource">@color/mtrl_fab_ripple_color</item>
+        <item name="showMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_show_motion_spec
+        </item>
+        <item name="hideMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_hide_motion_spec
+        </item>
+        <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton
+        </item>
     </style>
 
 </resources>

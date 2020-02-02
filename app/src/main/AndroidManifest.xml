@@ -15,9 +15,6 @@
          with this attribute the system knows that it should bring us back into the main activity when we click the 'x' button
         -->
         <activity
-            android:name=".AddEditNoteActivity"
-            android:parentActivityName=".main.MainActivity" />
-        <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -26,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
