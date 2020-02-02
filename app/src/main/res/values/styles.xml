@@ -28,14 +28,22 @@
         <item name="ensureMinTouchTargetSize">true</item>
         <item name="elevation" tools:ignore="PrivateResource">@dimen/mtrl_fab_elevation</item>
         <item name="backgroundTint" tools:ignore="PrivateResource">
-            @color/mtrl_fab_bg_color_selector
+            @color/primaryLightColor
         </item>
         <item name="tint">@android:color/white</item>
-        <item name="hoveredFocusedTranslationZ">@dimen/mtrl_fab_translation_z_hovered_focused</item>
-        <item name="pressedTranslationZ">@dimen/mtrl_fab_translation_z_pressed</item>
+        <item name="hoveredFocusedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_hovered_focused
+        </item>
+        <item name="pressedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_pressed
+        </item>
         <item name="rippleColor" tools:ignore="PrivateResource">@color/mtrl_fab_ripple_color</item>
-        <item name="showMotionSpec">@animator/mtrl_fab_show_motion_spec</item>
-        <item name="hideMotionSpec">@animator/mtrl_fab_hide_motion_spec</item>
+        <item name="showMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_show_motion_spec
+        </item>
+        <item name="hideMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_hide_motion_spec
+        </item>
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton
