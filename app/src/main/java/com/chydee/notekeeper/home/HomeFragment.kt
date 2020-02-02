@@ -26,8 +26,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding: HomeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
-        //binding.homeFragemnt = this
-        binding.buttonAddNote.setOnClickListener { view: View ->
+        binding.homeFragment = this
+
+        binding.floatingActionButton.setOnClickListener { view: View ->
             val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment()
             view.findNavController().navigate(action)
         }
