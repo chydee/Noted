@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <!--NavHost-->
 
     <!--<com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_appbar_lay"
@@ -33,6 +32,8 @@
             android:elevation="4dp" />
 
     </com.google.android.material.appbar.AppBarLayout>-->
+
+    <!--NavHost-->
 
     <fragment
         android:id="@+id/nav_host_fragment"
