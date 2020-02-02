@@ -1,7 +1,10 @@
 package com.chydee.notekeeper.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 
 //Defines the method for using the Note class with room
@@ -19,8 +22,6 @@ interface NoteDatabaseDao {
      */
     @Update
     fun update(note: Note)
-
-    @Delete
 
     /**
      * Deletes all values from the table.
