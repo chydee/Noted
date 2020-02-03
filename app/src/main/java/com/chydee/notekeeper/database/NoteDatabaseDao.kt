@@ -31,6 +31,12 @@ interface NoteDatabaseDao {
     @Query("DELETE FROM note_table")
     fun clear()
 
+    /**
+     * Selects and returns the latest night.
+     */
+    @Query("SELECT * FROM note_table ORDER BY noteId DESC LIMIT 1")
+    fun getTonight(): Note?
+
     @Query("SELECT * FROM note_table ORDER BY noteId DESC")
     fun getAllNotes(): LiveData<List<Note>>
 }
