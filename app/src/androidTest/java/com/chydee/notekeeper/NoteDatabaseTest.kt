@@ -43,4 +43,13 @@ class NoteDatabaseTest {
         val thisNote = noteDao.getTonight()
         assertEquals(thisNote?.noteTitle, "Hello")
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun updateAndGetNote() {
+        val note = Note(noteId = 0, noteTitle = "Hi", noteDetail = "How are you?")
+        noteDao.update(note)
+        val newNote = noteDao.getTonight()
+        assertEquals(newNote?.noteTitle, "Hi")
+    }
 }
