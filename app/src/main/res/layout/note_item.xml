@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.MaterialComponents.CardView.NoteItems"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:rippleColor="@color/secondaryLightColor"
-    app:strokeColor="@android:color/darker_gray"
-    app:strokeWidth="1dp"
-    tools:ignore="PrivateResource">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Child view-->
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="property"
+            type="com.chydee.notekeeper.database.Note" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.MaterialComponents.CardView.NoteItems"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        app:rippleColor="@color/secondaryLightColor"
+        app:strokeColor="@android:color/darker_gray"
+        app:strokeWidth="1dp"
+        tools:ignore="PrivateResource">
 
-        <TextView
-            android:id="@+id/text_view_title"
+        <!-- Child view-->
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Title" />
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/text_view_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_title"
-            tools:text="Description" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                tools:text="Title" />
 
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/text_view_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_title"
+                tools:text="Description" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
