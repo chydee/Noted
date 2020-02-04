@@ -10,5 +10,7 @@ class BindingAdapter
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Note>?) {
     val adapter = recyclerView.adapter as NoteAdapter
-    adapter.submitList(data)
+    adapter.submitList(data
+
+    )
 }

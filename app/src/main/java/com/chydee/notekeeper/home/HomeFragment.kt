@@ -13,6 +13,7 @@ import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
+@Suppress("DEPRECATION")
 class HomeFragment : Fragment(R.layout.home_fragment) {
 
     companion object {

@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="homeFragment"
-            type="com.chydee.notekeeper.home.HomeFragment" />
+            name="homeViewModel"
+            type="com.chydee.notekeeper.home.HomeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,6 +19,9 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="4dp"
+            app:listData="@{}"
             tools:listitem="@layout/note_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
