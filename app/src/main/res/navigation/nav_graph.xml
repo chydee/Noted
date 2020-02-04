@@ -11,10 +11,17 @@
         android:label="home_fragment"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_homeFragment_to_editNoteFragment"
+            android:id="@+id/action_homeFragment_to_editNoteFragment_with_args"
             app:destination="@id/editNoteFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_editNoteFragment2"
+            app:destination="@id/editNoteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
@@ -28,10 +35,10 @@
             app:destination="@id/homeFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@+id/homeFragment" />
         <argument
             android:name="selectedNoteProperty"
-            android:defaultValue="@null"
             app:argType="com.chydee.notekeeper.database.Note"
             app:nullable="true" />
     </fragment>

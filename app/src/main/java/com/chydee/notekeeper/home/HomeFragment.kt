@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chydee.notekeeper.R
+import com.chydee.notekeeper.database.Note
 import com.chydee.notekeeper.database.NoteDatabase
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 
@@ -49,13 +50,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
         viewModel.navigateToSelectedNote.observe(this, Observer {
             if (null != it) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(it))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragmentWithArgs(it))
             }
         })
 
 
         binding.floatingActionButton.setOnClickListener { view: View ->
-            val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(null)
+            val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment2(Note(noteId = -1, noteTitle = "", noteDetail = ""))
             view.findNavController().navigate(action)
         }
         return binding.root
