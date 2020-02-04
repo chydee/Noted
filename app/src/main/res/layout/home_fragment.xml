@@ -23,7 +23,6 @@
             android:padding="4dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            app:listData="@{}"
             tools:listitem="@layout/note_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

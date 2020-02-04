@@ -29,5 +29,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <argument
+            android:name="selectedNoteProperty"
+            android:defaultValue="@null"
+            app:argType="com.chydee.notekeeper.database.Note"
+            app:nullable="true" />
     </fragment>
 </navigation>
