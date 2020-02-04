@@ -1,5 +1,6 @@
 package com.chydee.notekeeper.home
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -7,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.database.Note
 import com.chydee.notekeeper.databinding.NoteItemBinding
 
-class NoteAdapter(val onClickListener: OnClickListener) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(DiffCallback) {
+class NoteAdapter(private val onClickListener: OnClickListener) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return NoteViewHolder(NoteItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     class NoteViewHolder(private var binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -34,7 +35,7 @@ class NoteAdapter(val onClickListener: OnClickListener) : ListAdapter<Note, Note
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        var notes = getItem(position)
+        val notes = getItem(position)
         holder.bind(notes)
         holder.itemView.setOnClickListener {
             onClickListener.onClick(notes)
