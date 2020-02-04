@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @Suppress("DEPRECATION")
@@ -21,8 +20,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private lateinit var viewModel: HomeViewModel
-
-    private lateinit var addNote: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
