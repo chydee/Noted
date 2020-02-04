@@ -6,11 +6,12 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.chydee.notekeeper.database.Note
 import com.chydee.notekeeper.database.NoteDatabase
 import com.chydee.notekeeper.database.NoteDatabaseDao
-import junit.framework.Assert.assertEquals
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteDatabaseTest {
@@ -22,7 +23,9 @@ class NoteDatabaseTest {
     fun createDb() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext // initializes the context
         // Will make use of an in-memory database cos the data saved here are cleared once the process is killed
-        db = Room.inMemoryDatabaseBuilder(context, NoteDatabase::class.java)//Allowing main thread queries just start testing
+
+        db = Room.inMemoryDatabaseBuilder(context, NoteDatabase::class.java)
+                //Allowing main thread queries just start testing
                 .allowMainThreadQueries()
                 .build()
 
@@ -30,17 +33,17 @@ class NoteDatabaseTest {
     }
 
     @After
-    @Throws(Exception::class)
-    fun closedb() {
+    @Throws(IOException::class)
+    fun closeDb() {
         db.close()
     }
 
     @Test
     @Throws(Exception::class)
     fun insertAndGetNote() {
-        val note = Note(noteTitle = "Hello", noteDetail = "Details")
+        val note = Note(noteId = 0, noteTitle = "Hello", noteDetail = "Details")
         noteDao.insert(note)
-        val thisNote = noteDao.getTonight()
+        val thisNote = noteDao.getThisNote()
         assertEquals(thisNote?.noteTitle, "Hello")
     }
 
@@ -49,7 +52,7 @@ class NoteDatabaseTest {
     fun updateAndGetNote() {
         val note = Note(noteId = 0, noteTitle = "Hi", noteDetail = "How are you?")
         noteDao.update(note)
-        val newNote = noteDao.getTonight()
+        val newNote = noteDao.getThisNote()
         assertEquals(newNote?.noteTitle, "Hi")
     }
 }
