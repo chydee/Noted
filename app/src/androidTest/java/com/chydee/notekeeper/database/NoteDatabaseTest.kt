@@ -3,12 +3,10 @@ package com.chydee.notekeeper.database
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteDatabaseTest {
@@ -25,11 +23,11 @@ class NoteDatabaseTest {
         noteDatabaseDao = noteDb.noteDatabaseDao
     }
 
-    @After
+    /*@After
     @Throws(IOException::class)
     fun tearDown() {
         noteDb.close()
-    }
+    }*/
 
     @Test
     @Throws(Exception::class)
