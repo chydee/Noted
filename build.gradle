@@ -13,6 +13,7 @@ buildscript {
         version_fragment = "1.2.0"
         version_material_design = '1.2.0-alpha04'
         nav_version = "2.2.0"
+        version_gradle ="3.5.3"
     }
 
     repositories {
@@ -21,7 +22,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath "com.android.tools.build:gradle:$version_gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         // NOTE: Do not place your application dependencies here; they belong

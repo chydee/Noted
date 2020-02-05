@@ -18,26 +18,21 @@ import com.chydee.notekeeper.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
-
-    private lateinit var homeViewModelFactory: HomeViewModelFactory
-
-    private lateinit var binding: HomeFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
-
-        binding.homeViewModel = viewModel
-
-        binding.lifecycleOwner = this
+        val binding: HomeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
         val application = requireNotNull(this.activity).application
 
         val dataSource = NoteDatabase.getInstance(application).noteDatabaseDao
+        val homeViewModelFactory = HomeViewModelFactory(dataSource, application)
 
-        homeViewModelFactory = HomeViewModelFactory(dataSource, application)
+        val viewModel: HomeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
+
+        binding.homeViewModel = viewModel
+
+        binding.lifecycleOwner = this
 
         val manager = GridLayoutManager(activity, 1)
         binding.recyclerView.layoutManager = manager
@@ -50,17 +45,12 @@ class HomeFragment : Fragment() {
             }
         })
 
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
-
         binding.floatingActionButton.setOnClickListener { view: View ->
             val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(null)
             view.findNavController().navigate(action)
         }
+
+        return binding.root
     }
 
 }
