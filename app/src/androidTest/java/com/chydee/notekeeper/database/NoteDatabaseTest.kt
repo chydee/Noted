@@ -36,10 +36,18 @@ class NoteDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetNight() {
-        val night = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm")
-        noteDao.insert(night)
-        val tonight = noteDao.getThisNote()
-        Assert.assertEquals(tonight?.noteTitle, "Hi")
+    fun insertAndGetNote() {
+        val note = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm")
+        noteDao.insert(note)
+        val thisNote = noteDao.getThisNote()
+        Assert.assertEquals(thisNote?.noteTitle, "Hi")
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun updateAndGetNote() {
+        noteDao.update(Note(noteId = 1, noteTitle = "Test", noteDetail = "Testing Testing"))
+        val updatedNote = noteDao.getThisNote()
+        Assert.assertNotEquals(updatedNote?.noteTitle, "Hi")
     }
 }
