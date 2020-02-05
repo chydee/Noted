@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,12 +17,7 @@ import com.chydee.notekeeper.database.NoteDatabase
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 
 
-@Suppress("DEPRECATION")
-class HomeFragment : Fragment(R.layout.home_fragment) {
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
+class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
 
@@ -32,6 +27,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                               savedInstanceState: Bundle?): View? {
         val binding: HomeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
+        viewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
         val application = requireNotNull(this.activity).application
 
@@ -60,12 +56,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             view.findNavController().navigate(action)
         }
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, homeViewModelFactory).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }
