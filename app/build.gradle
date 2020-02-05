@@ -57,11 +57,11 @@ dependencies {
 
     //Life-cycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$version_lifecycle"
+    kapt "androidx.lifecycle:lifecycle-compiler:$version_lifecycle"
 
     //Room components
     implementation "androidx.room:room-runtime:$version_room"
-    annotationProcessor "androidx.room:room-compiler:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
 
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"

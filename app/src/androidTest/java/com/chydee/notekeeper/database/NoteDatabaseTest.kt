@@ -12,31 +12,34 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteDatabaseTest {
-
-    private lateinit var noteDatabaseDao: NoteDatabaseDao
-    private lateinit var noteDb: NoteDatabase
+    private lateinit var noteDao: NoteDatabaseDao
+    private lateinit var db: NoteDatabase
 
     @Before
-    @Throws(IOException::class)
-    fun setUp() {
+    fun createDb() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        noteDb = Room.inMemoryDatabaseBuilder(context, NoteDatabase::class.java).allowMainThreadQueries().build()
-        noteDatabaseDao = noteDb.noteDatabaseDao
+        // Using an in-memory database because the information stored here disappears when the
+        // process is killed.
+        db = Room.inMemoryDatabaseBuilder(context, NoteDatabase::class.java)
+                // Allowing main thread queries, just for testing.
+                .allowMainThreadQueries()
+                .build()
+        noteDao = db.noteDatabaseDao
     }
 
-
-    @Test
-    @Throws(Exception::class)
-    fun insertAndGetNote() {
-        val note = Note(noteId = 1, noteTitle = "Test Implementation", noteDetail = "Instrumentation Test for the database")
-        noteDatabaseDao.insert(note)
-        val thisNote = noteDatabaseDao.getThisNote()
-        Assert.assertEquals(thisNote?.noteId, 1)
-    }
 
     @After
     @Throws(IOException::class)
-    fun tearDown() {
-        noteDb.close()
+    fun closeDb() {
+        db.close()
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun insertAndGetNight() {
+        val night = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm")
+        noteDao.insert(night)
+        val tonight = noteDao.getThisNote()
+        Assert.assertEquals(tonight?.noteTitle, "Hi")
     }
 }
