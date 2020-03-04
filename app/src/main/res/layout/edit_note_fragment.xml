@@ -16,22 +16,22 @@
 
 
         <EditText
-                android:id="@+id/text_input_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:focusable="auto"
-            android:padding="8dp"
-                android:hint="@string/title_hint"
-                android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject" />
+            android:id="@+id/text_input_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:focusable="auto"
+            android:hint="@string/title_hint"
+            android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject"
+            android:padding="8dp" />
 
 
         <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_description"
             android:inputType="text|textMultiLine"
-                android:hint="@string/hint_description"
-                android:background="@android:color/transparent"
             android:textColor="@android:color/black" />
 
 
