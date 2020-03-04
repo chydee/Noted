@@ -21,21 +21,26 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:focusable="auto"
+            android:fontFamily="@font/poppins"
             android:hint="@string/title_hint"
             android:importantForAutofill="no"
             android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-            android:padding="@dimen/text_area_padding" />
+            android:padding="@dimen/text_area_padding"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@android:color/black" />
 
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins"
             android:gravity="top"
-            android:hint="@string/hint_description"
+            android:hint="@string/note_placeholder"
             android:importantForAutofill="no"
-            android:padding="@dimen/text_area_padding"
             android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+            android:padding="@dimen/text_area_padding"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@android:color/black" />
 
 
