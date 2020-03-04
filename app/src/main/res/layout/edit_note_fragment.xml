@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -36,14 +37,17 @@
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            app:hintEnabled="false"
             android:padding="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="@string/hint_description"
                 android:background="@android:color/transparent"
                 android:inputType="textMultiLine|textAutoComplete|text|textCapWords|textPhonetic|textCapSentences|textNoSuggestions|textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 </layout>
