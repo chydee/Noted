@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/poppins"
+        android:orientation="vertical"
         android:padding="8dp"
         tools:context=".addoreditnote.EditNoteFragment">
 
-        <EditText
-            android:id="@+id/editText"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="auto"
-            android:fontFamily="@font/poppins"
-            android:hint="@string/title_hint"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:focusable="auto"
+                android:hint="@string/title_hint"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            android:focusable="auto"
-            android:fontFamily="@font/poppins"
-            android:hint="@string/note_placeholder"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine|text|textLongMessage|textCapSentences|textAutoCorrect|textShortMessage"
-            app:layout_constraintEnd_toEndOf="@+id/editText"
-            app:layout_constraintStart_toStartOf="@+id/editText"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            android:layout_weight="1"
+            android:padding="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:inputType="textMultiLine|textAutoComplete|text|textCapWords|textPhonetic|textCapSentences|textNoSuggestions|textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 </layout>
