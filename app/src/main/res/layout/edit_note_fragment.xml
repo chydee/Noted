@@ -23,15 +23,17 @@
             android:focusable="auto"
             android:hint="@string/title_hint"
             android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject"
-            android:padding="8dp" />
+            android:padding="@dimen/text_area_padding" />
 
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:gravity="top"
             android:hint="@string/hint_description"
             android:inputType="text|textMultiLine"
+            android:padding="@dimen/text_area_padding"
             android:textColor="@android:color/black" />
 
 
