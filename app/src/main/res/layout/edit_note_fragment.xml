@@ -22,7 +22,8 @@
             android:background="@android:color/transparent"
             android:focusable="auto"
             android:hint="@string/title_hint"
-            android:inputType="textCapWords|text|textAutoCorrect|text|textEmailSubject"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
             android:padding="@dimen/text_area_padding" />
 
 
@@ -32,8 +33,9 @@
             android:background="@android:color/transparent"
             android:gravity="top"
             android:hint="@string/hint_description"
-            android:inputType="text|textMultiLine"
+            android:importantForAutofill="no"
             android:padding="@dimen/text_area_padding"
+            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
             android:textColor="@android:color/black" />
 
 
