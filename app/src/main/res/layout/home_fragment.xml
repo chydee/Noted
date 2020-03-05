@@ -23,13 +23,11 @@
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="5dp"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
+                style="@style/ToolBarWrapperCardStyle"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.appbar.AppBarLayout
@@ -52,14 +50,12 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:clipToPadding="false"
-                android:padding="4dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toStartOf="@+id/cardView"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 app:spanCount="1"
+                style="@style/HomeRecyclerViewStyle"
                 tools:listitem="@layout/note_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
