@@ -62,18 +62,5 @@
         <item name="android:padding">4dp</item>
     </style>
 
-    <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
-        </item>
-    </style>
-
-
-    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">15dp</item>
-        <item name="cornerSizeTopLeft">15dp</item>
-        <item name="cornerSizeBottomRight">15dp</item>
-        <item name="cornerSizeBottomLeft">15dp</item>
-    </style>
 
 </resources>
