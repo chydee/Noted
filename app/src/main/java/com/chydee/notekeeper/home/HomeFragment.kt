@@ -50,6 +50,9 @@ class HomeFragment : Fragment() {
             view.findNavController().navigate(action)
         }
 
+        // Note that the Toolbar defined in the layout has the id "my_toolbar"
+        //setSupportActionBar(findViewById(R.id.my_toolbar))
+
         return binding.root
     }
 
