@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
 
         binding.recyclerView.adapter = NoteAdapter(NoteAdapter.OnClickListener { viewModel.displayNoteDetails(it) })
 
-        viewModel.navigateToSelectedNote.observe(this, Observer {
+        viewModel.navigateToSelectedNote.observe(viewLifecycleOwner, Observer {
             if (null != it) {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(it))
             }
