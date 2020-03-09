@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:theme="@style/AppTheme">
         <!--
          The "android:parentActivityName=".MainActivity"" attribute is responsible for getting the back button
