@@ -19,7 +19,6 @@
             android:padding="5dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:elevation="4dp"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -30,7 +29,7 @@
             android:id="@+id/edit_note_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/secondaryColor"
+            android:background="@color/primaryDarkColor"
             android:padding="5dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             android:visibility="visible"
@@ -49,8 +48,8 @@
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edit_note_toolbar"
-            app:layout_constraintTop_toBottomOf="@+id/edit_note_toolbar"
+            app:layout_constraintStart_toStartOf="@+id/main_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
             app:navGraph="@navigation/nav_graph"
             tools:ignore="FragmentTagUsage" />
 
