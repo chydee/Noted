@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         final ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //setSupportActionBar(binding.mainToolbar);
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
