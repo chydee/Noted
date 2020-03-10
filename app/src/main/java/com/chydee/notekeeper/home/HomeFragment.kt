@@ -55,11 +55,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val checkable = menu.findItem(R.id.toggle_list_display)
         checkable.isChecked = isChecked
-        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
