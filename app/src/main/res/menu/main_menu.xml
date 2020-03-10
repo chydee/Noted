@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/delete_all_notes"
-        android:title="Delete All Notes"
-        app:showAsAction="never" />
+        android:title="@string/switch_list_display"
+        app:actionLayout="@layout/layout_manager_toggle"
+        app:showAsAction="always" />
 
 </menu>
