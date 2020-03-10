@@ -34,6 +34,8 @@ class HomeFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        setHasOptionsMenu(true)
+
         val manager = GridLayoutManager(activity, 1)
         binding.recyclerView.layoutManager = manager
 
