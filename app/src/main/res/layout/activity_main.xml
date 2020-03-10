@@ -19,6 +19,7 @@
             android:padding="5dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:elevation="4dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -28,31 +29,28 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/edit_note_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:background="@color/secondaryColor"
             android:padding="5dp"
-            android:background="@android:color/holo_green_light"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:elevation="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title=""
-            app:titleTextColor="@color/primaryTextColor" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!--NavHost-->
 
         <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/main_toolbar"
-            app:layout_constraintRight_toRightOf="@+id/main_toolbar"
-            app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edit_note_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/edit_note_toolbar"
             app:navGraph="@navigation/nav_graph"
             tools:ignore="FragmentTagUsage" />
 
