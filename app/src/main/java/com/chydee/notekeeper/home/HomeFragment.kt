@@ -28,11 +28,8 @@ class HomeFragment : Fragment() {
         val viewModel: HomeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
         binding.homeViewModel = viewModel
-
         binding.lifecycleOwner = this
-
         setHasOptionsMenu(true)
-
         val manager = GridLayoutManager(activity, 1)
         binding.recyclerView.layoutManager = manager
 
@@ -48,9 +45,6 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(null)
             view.findNavController().navigate(action)
         }
-
-        // Note that the Toolbar defined in the layout has the id "my_toolbar"
-        //setSupportActionBar(findViewById(R.id.my_toolbar))
 
         return binding.root
     }
