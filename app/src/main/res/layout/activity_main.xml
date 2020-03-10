@@ -22,7 +22,21 @@
             app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/primaryTextColor" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/edit_note_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="5dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:elevation="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/primaryTextColor" />
 
         <!--NavHost-->
 
