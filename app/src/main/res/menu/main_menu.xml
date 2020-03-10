@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/delete_all_notes"
+        android:id="@+id/toggle_list_display"
         android:checkable="true"
         android:title="@string/switch_list_display"
         app:actionLayout="@layout/layout_manager_toggle"
