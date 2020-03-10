@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
@@ -18,6 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_margin="8dp"
             android:background="@drawable/action_bar"
+            android:padding="5dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:elevation="4dp"
             app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
