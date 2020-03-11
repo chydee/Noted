@@ -5,4 +5,5 @@
     <string name="note_placeholder">Note</string>
     <string name="switch_list_display">Switch List Display</string>
     <string name="save_note">Save Note</string>
+    <string name="date_time_string_format">MMM dd, yyyy k:mm</string>
 </resources>
