@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <LinearLayout
-        android:id="@+id/add_or_edit_note_fragment"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/poppins"
-        android:orientation="vertical"
-        android:padding="8dp"
-        tools:context=".addoreditnote.EditNoteFragment">
+        android:layout_height="match_parent">
 
-
-        <EditText
-            android:id="@+id/text_input_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:focusable="auto"
-            android:fontFamily="@font/poppins"
-            android:hint="@string/title_hint"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-            android:padding="@dimen/text_area_padding"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textColor="@android:color/black" />
-
-
-        <EditText
+        <LinearLayout
+            android:id="@+id/add_or_edit_note_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             android:fontFamily="@font/poppins"
-            android:gravity="top"
-            android:hint="@string/note_placeholder"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-            android:padding="@dimen/text_area_padding"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/black" />
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".addoreditnote.EditNoteFragment">
 
+            <EditText
+                android:id="@+id/text_input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:focusable="auto"
+                android:fontFamily="@font/poppins"
+                android:hint="@string/title_hint"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+                android:padding="@dimen/text_area_padding"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@android:color/black" />
 
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins"
+                android:gravity="top"
+                android:hint="@string/note_placeholder"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+                android:padding="@dimen/text_area_padding"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
