@@ -77,7 +77,43 @@
 
         </LinearLayout>
 
-        <include layout="@layout/options_bottom_sheet" />
+        <LinearLayout
+            android:id="@+id/options_bottom_sheet_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:targetApi="lollipop">
+
+            <Button
+                android:id="@+id/delete_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                app:icon="@drawable/ic_delete_black_24dp" />
+
+            <Button
+                android:id="@+id/copy_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/make_a_copy"
+                app:icon="@drawable/ic_content_copy" />
+
+            <Button
+                android:id="@+id/send_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                app:icon="@drawable/ic_share" />
+
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
