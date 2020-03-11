@@ -2,18 +2,19 @@ package com.chydee.notekeeper.addoreditnote
 
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
 class EditNoteFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = EditNoteFragment()
-    }
+    private val sheetBehavior: BottomSheetBehavior<*>? = null
+    private val options_bottom_sheet: LinearLayout? = null
 
     private lateinit var viewModel: EditNoteViewModel
 
