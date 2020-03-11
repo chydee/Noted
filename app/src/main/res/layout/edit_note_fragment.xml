@@ -68,6 +68,7 @@
                     android:textColor="@android:color/black" />
 
                 <ImageView
+                    android:id="@+id/bottom_sheet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_more_bottom_sheet" />
