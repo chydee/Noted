@@ -33,12 +33,17 @@ public class MainActivity extends AppCompatActivity {
                     binding.mainToolbar.setVisibility(View.VISIBLE);
                     setSupportActionBar(binding.mainToolbar);
                 } else {
-                    binding.mainToolbar.setVisibility(View.INVISIBLE);
-                    binding.editNoteToolbar.setVisibility(View.VISIBLE);
-                    setSupportActionBar(binding.editNoteToolbar);
+                    appBarSetUpForLastDestination(binding);
                 }
             }
 
         });
+    }
+
+    private void appBarSetUpForLastDestination(ActivityMainBinding binding) {
+        binding.mainToolbar.setVisibility(View.INVISIBLE);
+        binding.editNoteToolbar.setVisibility(View.VISIBLE);
+        binding.editNoteToolbar.setTitle("");
+        setSupportActionBar(binding.editNoteToolbar);
     }
 }
