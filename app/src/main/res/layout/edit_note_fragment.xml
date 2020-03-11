@@ -76,6 +76,8 @@
 
         </LinearLayout>
 
+        <include layout="@layout/options_bottom_sheet" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
