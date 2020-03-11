@@ -9,7 +9,9 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".addoreditnote.EditNoteFragment">
 
         <LinearLayout
             android:id="@+id/add_or_edit_note_fragment"
@@ -17,8 +19,7 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
             android:orientation="vertical"
-            android:padding="8dp"
-            tools:context=".addoreditnote.EditNoteFragment">
+            android:padding="8dp">
 
             <EditText
                 android:id="@+id/text_input_title"
