@@ -29,15 +29,19 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
 
                 if (destination.getId() == controller.getGraph().getStartDestination()) {
-                    binding.editNoteToolbar.setVisibility(View.INVISIBLE);
-                    binding.mainToolbar.setVisibility(View.VISIBLE);
-                    setSupportActionBar(binding.mainToolbar);
+                    appBarSetUpForStartDestination(binding);
                 } else {
                     appBarSetUpForLastDestination(binding);
                 }
             }
 
         });
+    }
+
+    private void appBarSetUpForStartDestination(ActivityMainBinding binding) {
+        binding.editNoteToolbar.setVisibility(View.INVISIBLE);
+        binding.mainToolbar.setVisibility(View.VISIBLE);
+        setSupportActionBar(binding.mainToolbar);
     }
 
     private void appBarSetUpForLastDestination(ActivityMainBinding binding) {
