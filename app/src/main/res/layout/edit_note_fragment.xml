@@ -13,6 +13,29 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".addoreditnote.EditNoteFragment">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_anchor="@id/options_bottom_sheet_layout"
+            app:layout_anchorGravity="top">
+
+            <TextClock
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins"
+                android:format12Hour="@string/date_time_string_format"
+                android:textAlignment="center"
+                android:textColor="@android:color/black" />
+
+            <ImageView
+                android:id="@+id/bottom_sheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_more_bottom_sheet" />
+
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
