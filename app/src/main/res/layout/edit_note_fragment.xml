@@ -13,12 +13,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".addoreditnote.EditNoteFragment">
 
+        <include layout="@layout/edit_frag_main" />
+
+        <include layout="@layout/bottom_sheet_layout" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="4dp"
             app:layout_anchor="@id/options_bottom_sheet_layout"
-            app:layout_anchorGravity="top">
+            app:layout_anchorGravity="top|center_horizontal">
 
             <TextClock
                 android:layout_width="0dp"
@@ -33,6 +38,7 @@
                 android:id="@+id/bottom_sheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 app:srcCompat="@drawable/ic_more_bottom_sheet" />
 
         </LinearLayout>
