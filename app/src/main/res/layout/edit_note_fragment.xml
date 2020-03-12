@@ -19,7 +19,8 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_anchor="@+id/options_bottom_sheet_layout">
 
             <EditText
                 android:id="@+id/text_input_title"
@@ -52,11 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
                 <TextClock
                     android:layout_width="0dp"
@@ -74,6 +71,7 @@
                     app:srcCompat="@drawable/ic_more_bottom_sheet" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -114,6 +112,7 @@
                 app:icon="@drawable/ic_share" />
 
         </LinearLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
