@@ -19,7 +19,9 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_anchor="@id/options_bottom_sheet_layout"
+            app:layout_anchorGravity="top">
 
             <EditText
                 android:id="@+id/text_input_title"
@@ -49,12 +51,36 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@android:color/black" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextClock
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:format12Hour="@string/date_time_string_format"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:id="@+id/bottom_sheet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_more_bottom_sheet" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/options_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:padding="20dp"
             android:background="@android:color/white"
             android:elevation="10dp"
             android:orientation="vertical"
@@ -86,32 +112,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/send"
                 app:icon="@drawable/ic_share" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:gravity="bottom|center_horizontal"
-            android:orientation="horizontal"
-            app:layout_anchor="@+id/options_bottom_sheet_layout"
-            app:layout_anchorGravity="top|center_horizontal">
-
-            <TextClock
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/poppins"
-                android:format12Hour="@string/date_time_string_format"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
-
-            <ImageView
-                android:id="@+id/bottom_sheet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_more_bottom_sheet" />
 
         </LinearLayout>
 
