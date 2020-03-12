@@ -14,68 +14,6 @@
         tools:context=".addoreditnote.EditNoteFragment">
 
         <LinearLayout
-            android:id="@+id/add_or_edit_note_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/poppins"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_anchor="@id/options_bottom_sheet_layout"
-            app:layout_anchorGravity="top">
-
-            <EditText
-                android:id="@+id/text_input_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:focusable="auto"
-                android:fontFamily="@font/poppins"
-                android:hint="@string/title_hint"
-                android:importantForAutofill="no"
-                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-                android:padding="@dimen/text_area_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/poppins"
-                android:gravity="top"
-                android:hint="@string/note_placeholder"
-                android:importantForAutofill="no"
-                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-                android:padding="@dimen/text_area_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="@android:color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextClock
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins"
-                    android:format12Hour="@string/date_time_string_format"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black" />
-
-                <ImageView
-                    android:id="@+id/bottom_sheet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_more_bottom_sheet" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/options_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
