@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="horizontal"
-            app:layout_anchor="@id/options_bottom_sheet_layout"
-            app:layout_anchorGravity="top|center_horizontal">
+            app:layout_anchor="@layout/bottom_sheet_layout"
+            app:layout_anchorGravity="top">
 
             <TextClock
                 android:layout_width="0dp"
@@ -31,8 +31,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
                 android:format12Hour="@string/date_time_string_format"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
+                android:textAlignment="center" />
 
             <ImageView
                 android:id="@+id/bottom_sheet"
