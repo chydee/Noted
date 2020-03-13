@@ -2,7 +2,7 @@ package com.chydee.notekeeper.addoreditnote
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 class EditNoteFragment : Fragment() {
 
     private var sheetBehavior: BottomSheetBehavior<View>? = null
-    private var options_bottom_sheet: LinearLayout? = null
+    private var options_bottom_sheet: CoordinatorLayout? = null
 
     private lateinit var viewModel: EditNoteViewModel
 
