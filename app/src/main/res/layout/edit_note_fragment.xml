@@ -18,6 +18,7 @@
         <include layout="@layout/bottom_sheet_layout" />
 
         <LinearLayout
+            android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
