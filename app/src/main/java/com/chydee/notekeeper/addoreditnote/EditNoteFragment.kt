@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 
 
 class EditNoteFragment : Fragment() {
@@ -34,16 +33,6 @@ class EditNoteFragment : Fragment() {
                     }
                     )
         }
-
-        // set callback for changes
-
-        // set callback for changes
-        sheetBehavior!!.setBottomSheetCallback(object : BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
         return binding.root
     }
 
