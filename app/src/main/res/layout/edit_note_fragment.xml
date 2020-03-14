@@ -22,8 +22,9 @@
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="10dp"
+            android:elevation="@dimen/bottom_layout_elevation"
             android:orientation="horizontal"
+            app:layout_anchorGravity="bottom"
             app:layout_anchor="@id/options_bottom_sheet_layout"
             tools:targetApi="lollipop">
 
