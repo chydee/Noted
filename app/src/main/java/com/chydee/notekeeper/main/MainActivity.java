@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return super.onSupportNavigateUp();
+    }
+
     private void appBarSetUpForStartDestination(ActivityMainBinding binding) {
         binding.editNoteToolbar.setVisibility(View.INVISIBLE);
         binding.mainToolbar.setVisibility(View.VISIBLE);

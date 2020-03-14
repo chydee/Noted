@@ -39,4 +39,6 @@ class EditNoteFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.add_note_menu, menu)
     }
+
+
 }
