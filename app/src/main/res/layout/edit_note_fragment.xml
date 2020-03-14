@@ -40,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/menu_icon_desc"
                 app:srcCompat="@drawable/ic_more_bottom_sheet" />
 
         </LinearLayout>

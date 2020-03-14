@@ -9,4 +9,5 @@
     <string name="send">Send</string>
     <string name="make_a_copy">Make a Copy</string>
     <string name="delete">Delete</string>
+    <string name="menu_icon_desc">Overflow options menu icon</string>
 </resources>
