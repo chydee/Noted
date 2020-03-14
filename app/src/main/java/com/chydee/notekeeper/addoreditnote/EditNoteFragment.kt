@@ -1,9 +1,7 @@
 package com.chydee.notekeeper.addoreditnote
 
-import android.R.attr.*
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -42,14 +40,6 @@ class EditNoteFragment : Fragment() {
         // set callback for changes
         sheetBehavior!!.setBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                val params = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                params.setMargins(left, top, right, bottom)
-                if (BottomSheetBehavior.STATE_COLLAPSED == newState) {
-                    binding.bottomLayout.layoutParams = params
-                }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}

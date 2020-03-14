@@ -8,6 +8,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/edit_note_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -21,10 +22,10 @@
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:elevation="10dp"
             android:orientation="horizontal"
             app:layout_anchor="@id/options_bottom_sheet_layout"
-            app:layout_anchorGravity="top">
+            tools:targetApi="lollipop">
 
             <TextClock
                 android:layout_width="0dp"
