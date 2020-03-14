@@ -5,7 +5,6 @@ import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -40,11 +39,4 @@ class EditNoteFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.add_note_menu, menu)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(EditNoteViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
