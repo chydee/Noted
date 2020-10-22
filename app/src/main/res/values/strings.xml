@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NoteKeeper</string>
+    <string name="app_name">Noted</string>
     <string name="hint_title">Title</string>
     <string name="title_hint">Title</string>
     <string name="note_placeholder">Note</string>
