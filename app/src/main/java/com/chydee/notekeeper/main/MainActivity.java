@@ -16,25 +16,31 @@ import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String TAG = MainActivity.class.getSimpleName();
+    private ActivityMainBinding binding;
     AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setupNavigation();
+    }
+
+    private void setupNavigation() {
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-
-                if (destination.getId() == controller.getGraph().getStartDestination()) {
-                    appBarSetUpForStartDestination(binding);
-                } else {
-                    appBarSetUpForLastDestination(binding);
+                switch (destination.getId()) {
+                    case R.id.editNoteFragment:
+                        binding.appBarLayout.setVisibility(View.GONE);
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.primaryColor));
+                        break;
+                    default:
+                        binding.appBarLayout.setVisibility(View.VISIBLE);
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.primaryColor));
                 }
             }
 
@@ -45,19 +51,5 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration);
-        //return super.onSupportNavigateUp();
-    }
-
-    private void appBarSetUpForStartDestination(ActivityMainBinding binding) {
-        binding.editNoteToolbar.setVisibility(View.INVISIBLE);
-        binding.mainToolbar.setVisibility(View.VISIBLE);
-        setSupportActionBar(binding.mainToolbar);
-    }
-
-    private void appBarSetUpForLastDestination(ActivityMainBinding binding) {
-        binding.mainToolbar.setVisibility(View.INVISIBLE);
-        binding.editNoteToolbar.setVisibility(View.VISIBLE);
-        binding.editNoteToolbar.setTitle("");
-        setSupportActionBar(binding.editNoteToolbar);
     }
 }
