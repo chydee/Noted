@@ -36,7 +36,7 @@
             android:gravity="top"
             android:hint="@string/note_placeholder"
             android:importantForAutofill="no"
-            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+            android:inputType="text|textAutoCorrect|textMultiLine"
             android:padding="@dimen/text_area_padding"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@android:color/black" />
