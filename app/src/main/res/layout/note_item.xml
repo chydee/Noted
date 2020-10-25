@@ -3,23 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="property"
+            type="com.chydee.notekeeper.data.model.Note" />
+    </data>
+
+
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView.NoteItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rippleColor="@color/secondaryLightColor"
         app:strokeColor="@android:color/darker_gray"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        tools:ignore="PrivateResource">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/noteTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -37,6 +47,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins"
+                android:maxLines="5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/noteTitle"
                 app:layout_constraintStart_toStartOf="@+id/noteTitle"

@@ -3,6 +3,9 @@ package com.chydee.notekeeper.database
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.chydee.notekeeper.data.NoteDao
+import com.chydee.notekeeper.data.NoteDatabase
+import com.chydee.notekeeper.data.model.Note
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -12,7 +15,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteDatabaseTest {
-    private lateinit var noteDao: NoteDatabaseDao
+    private lateinit var noteDao: NoteDao
     private lateinit var db: NoteDatabase
 
     @Before
@@ -24,7 +27,7 @@ class NoteDatabaseTest {
                 // Allowing main thread queries, just for testing.
                 .allowMainThreadQueries()
                 .build()
-        noteDao = db.noteDatabaseDao
+        noteDao = db.noteDao
     }
 
 
@@ -40,7 +43,7 @@ class NoteDatabaseTest {
         val note = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm")
         noteDao.insert(note)
         val thisNote = noteDao.getThisNote()
-        Assert.assertEquals(thisNote?.noteTitle, "Hi")
+        Assert.assertEquals(thisNote.noteTitle, "Hi")
     }
 
     @Test
@@ -48,6 +51,6 @@ class NoteDatabaseTest {
     fun updateAndGetNote() {
         noteDao.update(Note(noteId = 1, noteTitle = "Test", noteDetail = "Testing Testing"))
         val updatedNote = noteDao.getThisNote()
-        Assert.assertNotEquals(updatedNote?.noteTitle, "Hi")
+        Assert.assertNotEquals(updatedNote.noteTitle, "Hi")
     }
 }

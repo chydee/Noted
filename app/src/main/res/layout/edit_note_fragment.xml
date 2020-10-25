@@ -7,45 +7,75 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/edit_note_frag"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".addoreditnote.EditNoteFragment">
-
-        <include layout="@layout/edit_frag_main" />
-
-        <include layout="@layout/bottom_sheet_layout" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/bottom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/bottom_layout_elevation"
-            android:orientation="horizontal"
-            app:layout_anchorGravity="bottom"
-            app:layout_anchor="@id/options_bottom_sheet_layout"
-            tools:targetApi="lollipop">
+            android:id="@+id/add_or_edit_note_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/poppins"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextClock
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/text_input_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:focusable="auto"
                 android:fontFamily="@font/poppins"
-                android:format12Hour="@string/date_time_string_format"
-                android:textAlignment="center" />
+                android:hint="@string/title_hint"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+                android:padding="@dimen/text_area_padding"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@android:color/black" />
 
-            <ImageView
-                android:id="@+id/bottom_sheet"
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins"
+                android:gravity="top"
+                android:hint="@string/note_placeholder"
+                android:importantForAutofill="no"
+                android:inputType="text|textAutoCorrect|textMultiLine"
+                android:padding="@dimen/text_area_padding"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:contentDescription="@string/menu_icon_desc"
-                app:srcCompat="@drawable/ic_more_bottom_sheet" />
+                android:orientation="horizontal"
+                tools:targetApi="lollipop">
 
+                <TextClock
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:format12Hour="@string/date_time_string_format"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:id="@+id/bottom_sheet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/menu_icon_desc"
+                    app:srcCompat="@drawable/ic_more_bottom_sheet" />
+
+            </LinearLayout>
         </LinearLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -1,15 +1,16 @@
-package com.chydee.notekeeper.database
+package com.chydee.notekeeper.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.chydee.notekeeper.data.model.Note
 
 
 @Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 
-    abstract val noteDatabaseDao: NoteDatabaseDao //Connects the database to the DAO
+    abstract val noteDao: NoteDao //Connects the database to the DAO
 
     companion object {
         /*

@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chydee.notekeeper.database.Note
-import com.chydee.notekeeper.database.NoteDatabaseDao
+import com.chydee.notekeeper.data.NoteDao
+import com.chydee.notekeeper.data.model.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-class HomeViewModel(val database: NoteDatabaseDao, application: Application) : AndroidViewModel(application) {
+class HomeViewModel(val database: NoteDao, application: Application) : AndroidViewModel(application) {
 
 
     private var viewModelJob = Job()

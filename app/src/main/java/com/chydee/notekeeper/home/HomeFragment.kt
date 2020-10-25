@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chydee.notekeeper.R
-import com.chydee.notekeeper.database.NoteDatabase
+import com.chydee.notekeeper.data.NoteDatabase
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 
 
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
 
-        val dataSource = NoteDatabase.getInstance(application).noteDatabaseDao
+        val dataSource = NoteDatabase.getInstance(application).noteDao
         val homeViewModelFactory = HomeViewModelFactory(dataSource, application)
 
         val viewModel: HomeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)

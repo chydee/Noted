@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.chydee.notekeeper.database.Note
+import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.NoteItemBinding
 
 class NoteAdapter(private val onClickListener: OnClickListener) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(DiffCallback) {
@@ -42,4 +42,3 @@ class NoteAdapter(private val onClickListener: OnClickListener) : ListAdapter<No
         }
     }
 }
-
