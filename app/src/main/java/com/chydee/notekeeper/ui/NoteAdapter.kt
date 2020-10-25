@@ -15,7 +15,7 @@ class NoteAdapter(private val onClickListener: OnClickListener) : ListAdapter<No
 
     class NoteViewHolder(private var binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
-            binding.property = note
+            binding.notes = note
             binding.executePendingBindings()
         }
     }

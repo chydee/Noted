@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.NoteAdapter
+import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory
 import java.util.*
 
@@ -39,6 +40,7 @@ class HomeFragment : Fragment() {
         setupViewModel()
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.getNotes()
         greetUser()
         setupListener()
         setupRV()
@@ -53,14 +55,15 @@ class HomeFragment : Fragment() {
 
 
     private fun setupRV() {
-        viewModel.getNotes()
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = manager
         adapter = NoteAdapter(NoteAdapter.OnClickListener { viewModel.displayNoteDetails(it) })
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(SpacesItemDecoration(14))
         viewModel.notes.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it.isNotEmpty()) {
+                    binding.emptyNotesState.visibility = View.GONE
                     adapter.submitList(it)
                 } else {
                     binding.emptyNotesState.visibility = View.VISIBLE
@@ -94,8 +97,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        application = requireActivity().application
-        viewModelFactory = ViewModelFactory(application)
+        viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
     }
 }

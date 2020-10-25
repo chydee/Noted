@@ -1,19 +1,19 @@
 package com.chydee.notekeeper.ui.home
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.chydee.notekeeper.data.DBHelperImpl
 import com.chydee.notekeeper.data.model.Note
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class HomeViewModel constructor(application: Application) : AndroidViewModel(application) {
+class HomeViewModel constructor(context: Context) : ViewModel() {
 
-    private val dbHelper: DBHelperImpl = DBHelperImpl(application)
+    private val dbHelper: DBHelperImpl = DBHelperImpl(context)
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -24,11 +24,6 @@ class HomeViewModel constructor(application: Application) : AndroidViewModel(app
     private val _navigateToSelectedNote = MutableLiveData<Note>()
     val navigateToSelectedNote: LiveData<Note>
         get() = _navigateToSelectedNote
-
-
-    private val _properties = MutableLiveData<List<Note>>()
-    val properties: LiveData<List<Note>>
-        get() = _properties
 
     fun getNotes() {
         dbHelper.getAllNotes().subscribeOn(Schedulers.io())

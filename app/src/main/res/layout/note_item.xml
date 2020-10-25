@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="property"
+            name="notes"
             type="com.chydee.notekeeper.data.model.Note" />
     </data>
 
@@ -33,6 +33,7 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{notes.noteTitle}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +49,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins"
                 android:maxLines="5"
+                android:text="@{notes.noteDetail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/noteTitle"
                 app:layout_constraintStart_toStartOf="@+id/noteTitle"

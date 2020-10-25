@@ -1,6 +1,6 @@
 package com.chydee.notekeeper.ui.addoreditnote
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.chydee.notekeeper.data.DBHelperImpl
 import com.chydee.notekeeper.data.model.Note
@@ -8,8 +8,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class EditNoteViewModel constructor(application: Application) : ViewModel() {
-    private val dbHelper: DBHelperImpl = DBHelperImpl(application)
+class EditNoteViewModel constructor(context: Context) : ViewModel() {
+    private val dbHelper: DBHelperImpl = DBHelperImpl(context)
 
     private val compositeDisposable = CompositeDisposable()
 

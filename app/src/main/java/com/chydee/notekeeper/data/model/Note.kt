@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class Note(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "id")
-        val noteId: Long,
+        val noteId: Int = 0,
 
         @ColumnInfo(name = "note_title")
         val noteTitle: String,

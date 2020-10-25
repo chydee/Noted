@@ -1,14 +1,14 @@
 package com.chydee.notekeeper.data
 
-import android.app.Application
+import android.content.Context
 import com.chydee.notekeeper.data.database.NoteDatabase
 import com.chydee.notekeeper.data.model.Note
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class DBHelperImpl(application: Application) : DBHelper {
+class DBHelperImpl(context: Context) : DBHelper {
 
-    private val database = NoteDatabase.getInstance(application).noteDao
+    private val database = NoteDatabase.getInstance(context).noteDao
 
     override fun insert(note: Note): Completable {
         return database.insert(note)

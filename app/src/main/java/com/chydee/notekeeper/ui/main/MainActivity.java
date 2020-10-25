@@ -17,4 +17,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
     }
 
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
 }

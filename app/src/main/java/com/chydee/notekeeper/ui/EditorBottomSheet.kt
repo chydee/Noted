@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chydee.notekeeper.databinding.BottomSheetLayoutBinding
-import com.easyvr.easyvr.databinding.BottomSheetEmailBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EditorBottomSheet : BottomSheetDialogFragment() {
