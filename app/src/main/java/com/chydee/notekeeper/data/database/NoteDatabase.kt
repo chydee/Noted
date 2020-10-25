@@ -1,9 +1,10 @@
-package com.chydee.notekeeper.data
+package com.chydee.notekeeper.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.chydee.notekeeper.data.NoteDao
 import com.chydee.notekeeper.data.model.Note
 
 
@@ -31,7 +32,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                             context.applicationContext,
                             NoteDatabase::class.java,
-                            "note_keeper_database"
+                            "NoteDB"
                     ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }

@@ -1,9 +1,9 @@
-package com.chydee.notekeeper
+package com.chydee.notekeeper.utils
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Note
-import com.chydee.notekeeper.home.NoteAdapter
+import com.chydee.notekeeper.ui.NoteAdapter
 
 class BindingAdapter
 
