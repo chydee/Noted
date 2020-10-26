@@ -48,7 +48,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins"
-                android:maxLines="5"
+                android:maxLines="15"
                 android:text="@{notes.noteDetail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/noteTitle"

@@ -35,10 +35,10 @@ class NoteAdapter(private val onClickListener: OnClickListener) : ListAdapter<No
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val notes = getItem(position)
-        holder.bind(notes)
+        val note = getItem(position)
+        holder.bind(note)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(notes)
+            onClickListener.onClick(note)
         }
     }
 }
