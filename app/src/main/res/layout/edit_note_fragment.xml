@@ -61,14 +61,18 @@
                 android:text="Edited Oct 25, 2020 08:31PM"
                 android:textAlignment="center" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/optionsBtn"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_more_bottom_sheet"
-                android:contentDescription="@string/menu_icon_desc" />
+                app:icon="@drawable/ic_more_bottom_sheet"
+                app:iconGravity="textEnd"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/primaryDarkColor" />
 
         </LinearLayout>
     </LinearLayout>

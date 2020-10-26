@@ -6,29 +6,26 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_write_tiny"
             android:title="@string/menu_home" />
-
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_trash"
-                android:icon="@drawable/ic_trash"
-                android:title="@string/menu_trash" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_trash"
+            android:icon="@drawable/ic_trash"
+            android:title="@string/menu_trash" />
+    </group>
 
-    <item android:title="">
+    <item android:title="@string/others">
         <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_trash"
-                android:title="@string/menu_trash" />
-
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_about"
                 android:title="@string/menu_about" />
+
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/menu_settings" />
         </menu>
     </item>
 
