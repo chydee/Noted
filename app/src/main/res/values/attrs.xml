@@ -7,4 +7,9 @@
     <attr name="flow_verticalSeparator" />
     <attr name="flow_horizontalSeparator" />
     <attr name="waveDecay" />
+
+    <attr name="colorNavigationItem" format="color" />
+    <attr name="colorNavigationItemSelected" format="color" />
+
+    <attr name="drawableNavigationItemBackground" format="reference" />
 </resources>

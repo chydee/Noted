@@ -10,7 +10,6 @@
             type="com.chydee.notekeeper.ui.home.HomeViewModel" />
     </data>
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/home_const_layout"
         android:layout_width="match_parent"
@@ -22,54 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/hello"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/hello"
-                android:textColor="@color/secondaryColor"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/burger_menu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/burger_menu"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/burger_menu"
-                android:backgroundTint="@color/primaryDarkColor"
-                android:checked="false"
-                android:contentDescription="@null"
-                android:thumb="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/hello"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/hello" />
-
-            <TextView
-                android:id="@+id/greetings"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/good_afternoon"
-                android:textColor="@color/secondaryColor"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/burger_menu"
-                app:layout_constraintStart_toStartOf="@+id/hello"
-                app:layout_constraintTop_toBottomOf="@+id/hello" />
-
             <EditText
                 android:id="@+id/searchNote"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:background="@drawable/search_container"
                 android:drawableStart="@drawable/ic_baseline_search_24"
@@ -77,13 +35,13 @@
                 android:ems="10"
                 android:gravity="start|center_vertical"
                 android:hint="@string/search"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/greetings"
-                app:layout_constraintStart_toStartOf="@+id/greetings"
-                android:importantForAutofill="no"
-                app:layout_constraintTop_toBottomOf="@+id/greetings" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -91,6 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/searchNote"
@@ -153,4 +112,5 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

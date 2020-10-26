@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.EditorBottomSheet
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickListener {
@@ -25,6 +26,7 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = EditNoteFragmentBinding.inflate(inflater)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -33,14 +35,16 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory)[EditNoteViewModel::class.java]
         binding.lifecycleOwner = this
+
+        showNavigationIcon()
+
         handleClickListeners()
     }
 
     private fun handleClickListeners() {
-        binding.upBtn.setOnClickListener {
-            addNote()
-            findNavController().popBackStack()
-        }
+        /*addNote()
+        findNavController().popBackStack()*/
+
         binding.optionsBtn.setOnClickListener {
             EditorBottomSheet.instance(this).show(childFragmentManager, "Options")
         }
@@ -61,6 +65,11 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
             return false
         }
         return true
+    }
+
+    private fun showNavigationIcon() {
+        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        appbar.setNavigationIcon(R.drawable.ic_up)
     }
 
 

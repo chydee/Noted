@@ -16,6 +16,7 @@
     <string name="good_morning">Good Morning 🌄</string>
     <string name="good_evening">Good Evening 🌅</string>
     <string name="good_night">Good Night 🌃</string>
+    <string name="good_day">Good Day!</string>
 
 
     <string name="cross_line">M52,52 L12,12</string>
@@ -26,4 +27,15 @@
     <string name="encrypt_note">Encrypt Note</string>
     <string name="search">Search</string>
     <string name="empty_notes">You haven\'t saved any note</string>
+
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
+
+    <string name="menu_home">Notes</string>
+    <string name="menu_about">About</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_trash">Trash</string>
+
+
 </resources>

@@ -2,91 +2,74 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/add_or_edit_note_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundColor">
+        android:layout_marginTop="8dp"
+        android:background="@color/backgroundColor"
+        android:fontFamily="@font/poppins"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/upBtn"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/ic_up"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/noteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:focusable="auto"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/title_hint"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+            android:padding="@dimen/text_area_padding"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/noteContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins"
+            android:gravity="top"
+            android:hint="@string/note_placeholder"
+            android:importantForAutofill="no"
+            android:inputType="text|textAutoCorrect|textMultiLine"
+            android:padding="@dimen/text_area_padding"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@android:color/black" />
 
         <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins"
-            android:orientation="vertical"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upBtn">
-
-            <EditText
-                android:id="@+id/noteTitle"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/lastEdited"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:focusable="auto"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/title_hint"
-                android:importantForAutofill="no"
-                android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
-                android:padding="@dimen/text_area_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:id="@+id/noteContent"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/poppins"
-                android:gravity="top"
-                android:hint="@string/note_placeholder"
-                android:importantForAutofill="no"
-                android:inputType="text|textAutoCorrect|textMultiLine"
-                android:padding="@dimen/text_area_padding"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="@android:color/black" />
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Edited Oct 25, 2020 08:31PM"
+                android:textAlignment="center" />
 
-            <LinearLayout
-                android:id="@+id/bottom_layout"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/optionsBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_more_bottom_sheet"
+                android:contentDescription="@string/menu_icon_desc" />
 
-                <TextView
-                    android:id="@+id/lastEdited"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Edited Oct 25, 2020 08:31PM"
-                    android:textAlignment="center" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/optionsBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/ic_more_bottom_sheet"
-                    android:contentDescription="@string/menu_icon_desc" />
-
-            </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 </layout>

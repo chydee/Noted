@@ -15,7 +15,7 @@ import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.NoteAdapter
 import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory
-import java.util.*
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class HomeFragment : Fragment() {
@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = HomeFragmentBinding.inflate(inflater)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -40,8 +41,11 @@ class HomeFragment : Fragment() {
         setupViewModel()
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
+
+        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        appbar.navigationIcon = null
+
         viewModel.getNotes()
-        greetUser()
         setupListener()
         setupRV()
     }
@@ -75,25 +79,6 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(it))
             }
         })
-    }
-
-    private fun greetUser() {
-        val c: Calendar = Calendar.getInstance()
-
-        when (c.get(Calendar.HOUR_OF_DAY)) {
-            in 0..11 -> {
-                binding.greetings.text = getString(R.string.good_morning)
-            }
-            in 12..15 -> {
-                binding.greetings.text = getString(R.string.good_afternoon)
-            }
-            in 16..20 -> {
-                binding.greetings.text = getString(R.string.good_evening)
-            }
-            in 21..23 -> {
-                binding.greetings.text = getString(R.string.good_night)
-            }
-        }
     }
 
     private fun setupViewModel() {
