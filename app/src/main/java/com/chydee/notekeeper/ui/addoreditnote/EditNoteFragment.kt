@@ -2,10 +2,14 @@ package com.chydee.notekeeper.ui.addoreditnote
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
@@ -39,12 +43,18 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
         showNavigationIcon()
 
         handleClickListeners()
+        val callback = object : OnBackPressedCallback(true
+                /** true means that the callback is enabled */) {
+            override fun handleOnBackPressed() {
+                // Show your dialog and handle navigation
+                Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun handleClickListeners() {
-        /*addNote()
-        findNavController().popBackStack()*/
-
         binding.optionsBtn.setOnClickListener {
             EditorBottomSheet.instance(this).show(childFragmentManager, "Options")
         }
@@ -83,5 +93,14 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
     }
 
     override fun onEncryptClicked() {
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            addNote()
+            findNavController().popBackStack()
+            return true
+        }
+        return false
     }
 }
