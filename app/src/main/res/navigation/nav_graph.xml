@@ -30,4 +30,29 @@
             app:argType="com.chydee.notekeeper.data.model.Note"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="com.chydee.notekeeper.ui.trash.TrashFragment"
+        android:label="TrashFragment"
+        tools:layout="@layout/trash_fragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.chydee.notekeeper.ui.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/about_fragment" />
+    <action
+        android:id="@+id/action_global_trashFragment"
+        app:destination="@id/trashFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"
+        app:popUpTo="@id/nav_graph" />
+    <action
+        android:id="@+id/action_global_aboutFragment"
+        app:destination="@id/aboutFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
 </navigation>

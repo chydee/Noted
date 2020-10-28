@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/primaryLightColor</item>
         <item name="android:showDividers">none</item>
         <item name="actionBarDivider">@android:color/transparent</item>
+
+        <item name="colorNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemSelected">@color/colorWhite</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
     </style>
 
     <style name="Widget.MaterialComponents.CardView.NoteItems">
@@ -62,5 +66,10 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?attr/colorNavigationItem</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.chydee.notekeeper.ui.home
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +20,6 @@ import com.google.android.material.appbar.MaterialToolbar
 class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
-    private val isChecked = false
-    private lateinit var application: Application
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: ViewModelFactory
@@ -61,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun setupRV() {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = manager
-        adapter = NoteAdapter(NoteAdapter.OnClickListener { viewModel.displayNoteDetails(it) })
+        adapter = NoteAdapter(NoteAdapter.OnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(it)) })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(14))
         viewModel.notes.observe(viewLifecycleOwner, {
@@ -72,11 +69,6 @@ class HomeFragment : Fragment() {
                 } else {
                     binding.emptyNotesState.visibility = View.VISIBLE
                 }
-            }
-        })
-        viewModel.navigateToSelectedNote.observe(viewLifecycleOwner, {
-            if (null != it) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(it))
             }
         })
     }

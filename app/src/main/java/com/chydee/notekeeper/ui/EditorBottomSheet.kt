@@ -35,4 +35,22 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            deleteBtn.setOnClickListener {
+                mListener.onDeleteClick()
+            }
+            copyBtn.setOnClickListener {
+                mListener.onCopyClick()
+            }
+            sendBtn.setOnClickListener {
+                mListener.onSendClick()
+            }
+            encryptionBtn.setOnClickListener {
+                mListener.onEncryptClicked()
+            }
+        }
+    }
+
 }

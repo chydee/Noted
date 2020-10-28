@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         setUpAppBar();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpNavController() {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.navigationView, navController);
+
     }
 
     private void greetUser() {
@@ -180,9 +183,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
+        drawerLayout.closeDrawers();
+
         switch (item.getItemId()) {
-            //case R.id.
+            case R.id.homeFragment:
+                navController.navigate(R.id.homeFragment);
+                break;
+            case R.id.aboutFragment:
+                navController.navigate(R.id.aboutFragment);
+                break;
+            case R.id.trashFragment:
+                navController.navigate(R.id.trashFragment);
+                break;
+            default:
+                //Do nothing
         }
-        return false;
+        return true;
     }
 }
