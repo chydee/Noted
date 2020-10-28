@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding binding;
 
     private AppBarConfiguration appBarConfiguration;
-    private NavController mNavController;
 
     private NavController navController;
 
@@ -49,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment,
-                R.id.editNoteFragment
+                R.id.editNoteFragment,
+                R.id.trashFragment,
+                R.id.aboutFragment
         )
-                .setDrawerLayout(binding.mainDrawer)
+                .setOpenableLayout(binding.mainDrawer)
                 .build();
         setUpNavController();
         initNavDrawer();
