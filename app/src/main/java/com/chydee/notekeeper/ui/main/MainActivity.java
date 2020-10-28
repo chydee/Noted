@@ -1,5 +1,6 @@
 package com.chydee.notekeeper.ui.main;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
@@ -24,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
@@ -50,17 +52,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.id.homeFragment,
                 R.id.editNoteFragment,
                 R.id.trashFragment,
-                R.id.aboutFragment
+                R.id.aboutFragment,
+                R.id.settingsFragment
         )
                 .setOpenableLayout(binding.mainDrawer)
                 .build();
         setUpNavController();
         initNavDrawer();
         greetUser();
+        setupSharedPreferences();
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.editNoteFragment:
+                case R.id.settingsFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup();
                 case R.id.trashFragment:
@@ -174,6 +179,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.burgerMenu.setChecked(true);
     }
 
+    private void setupSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -188,8 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return navController.navigateUp();
+        return NavigationUI.navigateUp(navController, appBarConfiguration);
     }
 
 
@@ -199,18 +208,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
 
         switch (item.getItemId()) {
-            case R.id.homeFragment:
-                navController.navigate(R.id.homeFragment);
-                break;
             case R.id.aboutFragment:
                 navController.navigate(R.id.aboutFragment);
                 break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);
                 break;
+            case R.id.settingsFragment:
+                navController.navigate(R.id.settingsFragment);
+                break;
             default:
-                //Do nothing
+                navController.navigate(R.id.homeFragment);
+                break;
         }
         return true;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 }

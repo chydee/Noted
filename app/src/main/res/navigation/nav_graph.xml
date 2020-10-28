@@ -40,6 +40,11 @@
         android:name="com.chydee.notekeeper.ui.AboutFragment"
         android:label="AboutFragment"
         tools:layout="@layout/about_fragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.chydee.notekeeper.ui.SettingsFragment"
+        android:label="SettingsFragment" />
     <action
         android:id="@+id/action_global_trashFragment"
         app:destination="@id/trashFragment"
@@ -55,4 +60,13 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out" />
+
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
 </navigation>

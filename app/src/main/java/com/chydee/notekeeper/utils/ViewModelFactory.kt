@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chydee.notekeeper.ui.addoreditnote.EditNoteViewModel
 import com.chydee.notekeeper.ui.home.HomeViewModel
+import com.chydee.notekeeper.ui.trash.TrashViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val context: Context) :
@@ -16,6 +17,10 @@ class ViewModelFactory(private val context: Context) :
 
         if (modelClass.isAssignableFrom(EditNoteViewModel::class.java)) {
             return EditNoteViewModel(context) as T
+        }
+
+        if (modelClass.isAssignableFrom(TrashViewModel::class.java)) {
+            return TrashViewModel(context) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

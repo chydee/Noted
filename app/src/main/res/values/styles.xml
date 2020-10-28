@@ -12,6 +12,8 @@
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/colorWhite</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="Widget.MaterialComponents.CardView.NoteItems">
