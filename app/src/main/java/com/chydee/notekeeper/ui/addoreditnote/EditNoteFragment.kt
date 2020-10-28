@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,15 +13,15 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.EditorBottomSheet
+import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ViewModelFactory
-import com.google.android.material.appbar.MaterialToolbar
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickListener {
+class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener {
 
     private lateinit var binding: EditNoteFragmentBinding
 
@@ -52,15 +50,6 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
         setDisplay()
 
         handleClickListeners()
-        val callback = object : OnBackPressedCallback(true
-                /** true means that the callback is enabled */) {
-            override fun handleOnBackPressed() {
-                // Show your dialog and handle navigation
-                // Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
-                findNavController().popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun handleClickListeners() {
@@ -69,7 +58,7 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
         }
     }
 
-    fun addOrUpdate() {
+    private fun addOrUpdate() {
 
         if (args.selectedNoteProperty != null) {
             val note = Note(
@@ -111,23 +100,10 @@ class EditNoteFragment : Fragment(), EditorBottomSheet.EditorBottomSheetClickLis
         }
     }
 
-    private fun noteIsEmpty(): Boolean {
-        if (binding.noteTitle.text.toString().isEmpty() and binding.noteContent.text.toString().isEmpty()) {
-            return false
-        }
-        return true
-    }
-
-    private fun showNavigationIcon() {
-        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
-        appbar.setNavigationIcon(R.drawable.ic_up)
-    }
-
 
     override fun onDeleteClick() {
         args.selectedNoteProperty?.let { viewModel.deleteNote(it) }
         findNavController().popBackStack()
-
     }
 
     override fun onCopyClick() {

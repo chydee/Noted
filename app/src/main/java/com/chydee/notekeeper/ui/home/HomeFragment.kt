@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -12,12 +11,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.NoteAdapter
+import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private lateinit var binding: HomeFragmentBinding
 

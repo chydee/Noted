@@ -59,20 +59,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         greetUser();
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-
-            if (destination.getId() == R.id.editNoteFragment) {
-                binding.hello.setVisibility(View.GONE);
-                binding.greetings.setVisibility(View.GONE);
-                binding.burgerMenu.setVisibility(View.GONE);
-            } else {
-                binding.hello.setVisibility(View.VISIBLE);
-                binding.greetings.setVisibility(View.VISIBLE);
-                binding.burgerMenu.setVisibility(View.VISIBLE);
+            switch (destination.getId()) {
+                case R.id.editNoteFragment:
+                case R.id.trashFragment:
+                case R.id.aboutFragment:
+                    hideWelcomingGroup();
+                    break;
+                default:
+                    showWelcomingGroup();
             }
         });
 
         this.toolBar.setNavigationIcon(null);
+    }
 
+    private void hideWelcomingGroup() {
+        binding.hello.setVisibility(View.GONE);
+        binding.greetings.setVisibility(View.GONE);
+        binding.burgerMenu.setVisibility(View.GONE);
+    }
+
+    private void showWelcomingGroup() {
+        binding.hello.setVisibility(View.VISIBLE);
+        binding.greetings.setVisibility(View.VISIBLE);
+        binding.burgerMenu.setVisibility(View.VISIBLE);
     }
 
     private void setUpAppBar() {
