@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.editNoteFragment:
+                    binding.burgerMenu.setVisibility(View.GONE);
+                    hideWelcomingGroup();
                 case R.id.trashFragment:
                 case R.id.aboutFragment:
                     hideWelcomingGroup();
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void hideWelcomingGroup() {
         binding.hello.setVisibility(View.GONE);
         binding.greetings.setVisibility(View.GONE);
-        binding.burgerMenu.setVisibility(View.GONE);
     }
 
     private void showWelcomingGroup() {

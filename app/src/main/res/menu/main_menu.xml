@@ -11,24 +11,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/trashFragment"
-            android:icon="@drawable/ic_delete_black_24dp"
+            android:icon="@drawable/ic_delete"
             android:title="@string/menu_trash" />
     </group>
 
     <item android:title="@string/others">
-        <group android:checkableBehavior="single">
-            <menu>
-                <item
-                    android:id="@+id/aboutFragment"
-                    android:icon="@drawable/ic_about"
-                    android:title="@string/menu_about" />
+        <menu>
+            <item android:title="@string/others">
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/aboutFragment"
+                        android:icon="@drawable/ic_about"
+                        android:title="@string/menu_about" />
 
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings"
-                    android:title="@string/menu_settings" />
-            </menu>
-        </group>
+                    <item
+                        android:id="@+id/nav_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/menu_settings" />
+                </group>
+            </item>
+        </menu>
     </item>
 
 </menu>
