@@ -37,6 +37,7 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_trash">Trash</string>
     <string name="others">Others</string>
+    <string name="empty_trash">Your Trash Is Empty</string>
 
 
 </resources>
