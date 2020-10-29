@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setDisplayShowHomeEnabled(false);
             toolBar.setNavigationIcon(R.drawable.ic_up);
         }
+        toolBar.setNavigationOnClickListener(v -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                closeDrawer();
+            } else {
+                super.onBackPressed();
+            }
+        });
 
         binding.burgerMenu.setOnCheckedChangeListener(((buttonView, isChecked) -> {
             if (isChecked) {
