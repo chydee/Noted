@@ -91,7 +91,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quisque imperdiet nunc at massa dictum volutpat. Etiam id orci ipsum. Integer id ex dignissim"
+                android:text="@string/made_by"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/secondaryDarkColor" />
 

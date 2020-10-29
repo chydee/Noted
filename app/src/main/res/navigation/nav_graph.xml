@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.chydee.notekeeper.ui.SettingsFragment"
+        android:name="com.chydee.notekeeper.ui.preferences.SettingsFragment"
         android:label="SettingsFragment" />
     <action
         android:id="@+id/action_global_trashFragment"

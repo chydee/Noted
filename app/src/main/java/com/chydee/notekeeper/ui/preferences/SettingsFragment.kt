@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.ui
+package com.chydee.notekeeper.ui.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle

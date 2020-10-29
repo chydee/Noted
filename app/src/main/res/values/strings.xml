@@ -48,6 +48,7 @@
     <string name="mode_night">MODE_NIGHT_YES</string>
     <string name="mode_auto">MODE_NIGHT_AUTO_BATTERY</string>
     <string name="mode_system">MODE_NIGHT_FOLLOW_SYSTEM</string>
+    <string name="made_by">Created with ❤️ by Desmond Ngwuta</string>
 
 
 </resources>
