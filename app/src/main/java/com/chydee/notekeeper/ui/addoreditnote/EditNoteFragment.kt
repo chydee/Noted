@@ -88,7 +88,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         } else {
             val date = Date()
             val formatter = SimpleDateFormat(getString(R.string.date_time_string_format), Locale.ROOT)
-            binding.lastEdited.text = formatter.format(date)
+            binding.lastEdited.text = getString(R.string.edited, formatter.format(date))
         }
     }
 

@@ -6,7 +6,8 @@
     <string name="note_placeholder">Note</string>
     <string name="switch_list_display">Switch List Display</string>
     <string name="save_note">Save Note</string>
-    <string name="date_time_string_format">MMM dd, yyyy kk:mm</string>
+    <string name="date_time_string_format">MMM dd, yyyy hh:mm a</string>
+    <string name="edited">Edited %1$s</string>
     <string name="send">Send</string>
     <string name="make_a_copy">Make a Copy</string>
     <string name="delete">Delete</string>
@@ -41,6 +42,12 @@
 
     <string name="theme_header">Theme</string>
     <string name="theme_sub">Change App theme</string>
+
+    <string name="pref_theme_key">theme</string>
+    <string name="mode_day">MODE_NIGHT_NO</string>
+    <string name="mode_night">MODE_NIGHT_YES</string>
+    <string name="mode_auto">MODE_NIGHT_AUTO_BATTERY</string>
+    <string name="mode_system">MODE_NIGHT_FOLLOW_SYSTEM</string>
 
 
 </resources>

@@ -3,6 +3,7 @@ package com.chydee.notekeeper.ui.main;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -64,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
-                case R.id.editNoteFragment:
                 case R.id.settingsFragment:
+                case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup();
                 case R.id.trashFragment:
@@ -182,6 +184,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupSharedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
+        loadThemeFromPreference(sharedPreferences);
+    }
+
+    private void loadThemeFromPreference(SharedPreferences sharedPreferences) {
+        changeAppTheme(sharedPreferences.getString(getString(R.string.pref_theme_key), getString(R.string.mode_system)));
+    }
+
+    // Method to set Color of Text.
+    private void changeAppTheme(String theme) {
+        Log.d("Noted", theme);
+        switch (theme) {
+            case "MODE_NIGHT_YES":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                getDelegate().applyDayNight();
+                break;
+            case "MODE_NIGHT_NO":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                getDelegate().applyDayNight();
+                break;
+            case "MODE_NIGHT_AUTO_BATTERY":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                getDelegate().applyDayNight();
+                break;
+            case "MODE_NIGHT_FOLLOW_SYSTEM":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                getDelegate().applyDayNight();
+                break;
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED);
+                getDelegate().applyDayNight();
+                break;
+        }
     }
 
     @Override
@@ -226,7 +261,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
+        if (key.equals(getString(R.string.pref_theme_key))) {
+            loadThemeFromPreference(sharedPreferences);
+        } else {
+            Log.d("Noted", "Error loading theme");
+        }
     }
 
     @Override

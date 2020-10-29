@@ -28,7 +28,7 @@
             android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
             android:padding="@dimen/text_area_padding"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/secondaryDarkColor" />
 
         <EditText
             android:id="@+id/noteContent"
@@ -43,7 +43,7 @@
             android:inputType="text|textAutoCorrect|textMultiLine"
             android:padding="@dimen/text_area_padding"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/secondaryDarkColor" />
 
         <LinearLayout
             android:id="@+id/bottom_layout"
@@ -57,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/vector_distinct_color"
                 android:text="Edited Oct 25, 2020 08:31PM"
                 android:textAlignment="center" />
 
