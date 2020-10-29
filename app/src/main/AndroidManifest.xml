@@ -11,9 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
-        <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme">

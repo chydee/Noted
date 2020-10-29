@@ -1,4 +1,4 @@
-<!--?xml version="1.0" encoding="UTF-8"?-->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryColor">#64dd17</color>
     <color name="primaryLightColor">#9cff57</color>
@@ -8,11 +8,11 @@
     <color name="secondaryDarkColor">#000000</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
-    <color name="backgroundColor">#ffffff</color>
+    <color name="backgroundColor">#000000</color>
 
     <color name="colorWhite">#ffffff</color>
 
-    <color name="vector_distinct_color">#2f2e41</color>
+    <color name="vector_distinct_color">@color/grey_3</color>
 
     <color name="grey_3">#f7f7f7</color>
     <color name="grey_5">#f2f2f2</color>
