@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@color/grey_90"
+                android:textColor="@color/secondaryDarkColor"
                 app:fontFamily="sans-serif-light" />
 
             <View
@@ -48,14 +48,14 @@
                     android:layout_height="wrap_content"
                     android:text="Version"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/grey_40" />
+                    android:textColor="@color/vector_distinct_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.0"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/grey_90" />
+                    android:textColor="@color/secondaryDarkColor" />
 
             </LinearLayout>
 
@@ -73,14 +73,14 @@
                     android:layout_height="wrap_content"
                     android:text="Last Update"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/grey_40" />
+                    android:textColor="@color/vector_distinct_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="October 2020"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/grey_90" />
+                    android:textColor="@color/secondaryDarkColor" />
 
             </LinearLayout>
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="Quisque imperdiet nunc at massa dictum volutpat. Etiam id orci ipsum. Integer id ex dignissim"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/grey_90" />
+                android:textColor="@color/secondaryDarkColor" />
 
             <View
                 android:layout_width="0dp"
