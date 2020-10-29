@@ -14,6 +14,7 @@
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView.NoteItems"
         android:layout_width="match_parent"
+        android:id="@+id/noteCard"
         android:layout_height="wrap_content"
         app:rippleColor="@color/secondaryLightColor"
         app:strokeColor="@android:color/darker_gray"

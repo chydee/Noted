@@ -17,6 +17,8 @@
 
     <color name="vector_distinct_color">@color/grey_3</color>
 
+    <color name="search_field_bg">@color/grey_60</color>
+
     <color name="grey_3">#f7f7f7</color>
     <color name="grey_5">#f2f2f2</color>
     <color name="grey_10">#e6e6e6</color>

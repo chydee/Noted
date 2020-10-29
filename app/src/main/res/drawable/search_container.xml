@@ -5,6 +5,6 @@
     android:viewportWidth="344"
     android:viewportHeight="39">
     <path
-        android:fillColor="#F2F2F2"
+        android:fillColor="@color/search_field_bg"
         android:pathData="M0.292,5.728C0.292,2.967 2.531,0.728 5.292,0.728H338.292C341.053,0.728 343.292,2.967 343.292,5.728V33.728C343.292,36.489 341.053,38.728 338.292,38.728H5.292C2.531,38.728 0.292,36.489 0.292,33.728V5.728Z" />
 </vector>

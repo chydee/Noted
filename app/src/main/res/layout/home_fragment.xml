@@ -43,20 +43,75 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                style="@style/HomeRecyclerViewStyle"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/searchNote"
                 app:layout_constraintStart_toStartOf="@+id/searchNote"
-                app:layout_constraintTop_toBottomOf="@+id/searchNote"
-                app:spanCount="2"
-                tools:listitem="@layout/note_item" />
+                app:layout_constraintTop_toBottomOf="@+id/searchNote">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/selectedOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/searchNote"
+                    app:layout_constraintStart_toStartOf="@+id/searchNote"
+                    app:layout_constraintTop_toBottomOf="@+id/searchNote">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelSelection"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:icon="@drawable/ic_close"
+                        app:iconSize="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/selectedCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/default_selection_count"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cancelSelection"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/deleteSelected"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:icon="@drawable/ic_delete"
+                        app:iconSize="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    style="@style/HomeRecyclerViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/note_item" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/emptyNotesState"
