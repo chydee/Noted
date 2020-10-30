@@ -23,6 +23,9 @@ data class Note(
         val lastEdit: String,
 
         @ColumnInfo(name = "isEncrypted")
-        val isEncrypted: Boolean
+        val isEncrypted: Boolean,
+
+        @ColumnInfo(name = "color")
+        val color: Int
 ) : Parcelable
 

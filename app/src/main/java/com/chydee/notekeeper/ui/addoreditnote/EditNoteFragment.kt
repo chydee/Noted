@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.chydee.notekeeper.R
+import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.EditorBottomSheet
@@ -31,6 +32,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     private var isEncrypted: Boolean = false
 
     private val args: EditNoteFragmentArgs by navArgs()
+
+    private var selectedColor: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -61,22 +64,24 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     private fun addOrUpdate() {
 
         if (args.selectedNoteProperty != null) {
-            val note = Note(
+            val updateNote = Note(
                     noteId = args.selectedNoteProperty?.noteId!!,
                     noteTitle = binding.noteTitle.text.toString(),
                     noteDetail = binding.noteContent.text.toString(),
                     lastEdit = binding.lastEdited.text.toString(),
-                    isEncrypted = isEncrypted
+                    isEncrypted = isEncrypted,
+                    color = selectedColor
             )
-            viewModel.updateNote(note)
+            viewModel.updateNote(updateNote)
         } else {
-            val note = Note(
+            val newNote = Note(
                     noteTitle = binding.noteTitle.text.toString(),
                     noteDetail = binding.noteContent.text.toString(),
                     lastEdit = binding.lastEdited.text.toString(),
-                    isEncrypted = isEncrypted
+                    isEncrypted = isEncrypted,
+                    color = selectedColor
             )
-            viewModel.insertNote(note)
+            viewModel.insertNote(newNote)
         }
     }
 
@@ -113,6 +118,10 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     override fun onEncryptClicked() {
+    }
+
+    override fun onColorSelected(color: Color) {
+        selectedColor = color.colorRes
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

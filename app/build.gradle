@@ -68,6 +68,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
 
+    // flex box #help for overflowing child views
+    implementation "com.google.android:flexbox:$flex_box_version"
+
     //Life-cycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
     kapt "androidx.lifecycle:lifecycle-compiler:$version_lifecycle"

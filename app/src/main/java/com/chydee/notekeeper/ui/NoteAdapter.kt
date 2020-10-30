@@ -29,6 +29,7 @@ class NoteAdapter : ListAdapter<Note, NoteAdapter.NoteViewHolder>(DiffCallback) 
             binding.notes = note
             itemView.isActivated = isActivated
             binding.noteCard.strokeColor = if (isActivated) Color.GREEN else Color.GRAY
+            if (note.color != 0) binding.noteCard.setCardBackgroundColor(note.color)
             binding.executePendingBindings()
         }
 
