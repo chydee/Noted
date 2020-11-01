@@ -1,7 +1,6 @@
 package com.chydee.notekeeper.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,7 +92,7 @@ class HomeFragment : BaseFragment() {
             }
         })
 
-        tracker = SelectionTracker.Builder<Long>(
+        tracker = SelectionTracker.Builder(
                 "mySelection",
                 binding.recyclerView,
                 StableIdKeyProvider(binding.recyclerView),
@@ -145,12 +144,10 @@ class HomeFragment : BaseFragment() {
                 viewModel.deleteNote(notes[it.toInt()])
             }
         }
+        notes.removeAll(newNotes)
         viewModel.addToTrash(deleteList)
         adapter.notifyDataSetChanged()
 
-        for (trash in deleteList) {
-            Log.d("Trash", "$trash")
-        }
     }
 
     private fun setupViewModel() {

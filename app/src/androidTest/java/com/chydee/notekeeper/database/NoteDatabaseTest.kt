@@ -39,7 +39,7 @@ class NoteDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetNote() {
-        val note = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm", isEncrypted = false, lastEdit = "12")
+        val note = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm", isEncrypted = false, lastEdit = "12", color = -1)
         noteDao.insert(note)
         //val thisNote = noteDao.getThisNote()
         // Assert.assertEquals(thisNote.noteTitle, "Hi")
@@ -48,7 +48,7 @@ class NoteDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun updateAndGetNote() {
-        noteDao.update(Note(noteId = 1, noteTitle = "Test", noteDetail = "Testing Testing"))
+        noteDao.update(Note(noteId = 1, noteTitle = "Test", noteDetail = "Testing Testing", isEncrypted = false, lastEdit = "12", color = -1))
         // val updatedNote = noteDao.getThisNote()
         //Assert.assertNotEquals(updatedNote.noteTitle, "Hi")
     }
