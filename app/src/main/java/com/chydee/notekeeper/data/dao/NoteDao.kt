@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.data
+package com.chydee.notekeeper.data.dao
 
 import androidx.room.*
 import com.chydee.notekeeper.data.model.Note

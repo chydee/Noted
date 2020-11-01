@@ -3,9 +3,9 @@ package com.chydee.notekeeper.ui.addoreditnote
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,7 +33,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private val args: EditNoteFragmentArgs by navArgs()
 
-    private var selectedColor: Int = 0
+    private var selectedColor: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,12 +47,12 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory)[EditNoteViewModel::class.java]
         binding.lifecycleOwner = this
-
         showNavigationIcon()
         setLastEditedTime()
         setDisplay()
-
         handleClickListeners()
+
+        onBackPressed()
     }
 
     private fun handleClickListeners() {
@@ -97,6 +97,19 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         }
     }
 
+    private fun onBackPressed() {
+        val callback = object : OnBackPressedCallback(true
+                /** true means that the callback is enabled */) {
+            override fun handleOnBackPressed() {
+                // Show your dialog and handle navigation
+                // Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
+                addOrUpdate()
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
     private fun setDisplay() {
         if (args.selectedNoteProperty != null) {
             binding.noteTitle.setText(args.selectedNoteProperty?.noteTitle)
@@ -108,6 +121,17 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     override fun onDeleteClick() {
         args.selectedNoteProperty?.let { viewModel.deleteNote(it) }
+        /* args.selectedNoteProperty?.let {
+             val updateNote = Note(
+                     noteId = it.noteId,
+                     noteTitle = binding.noteTitle.text.toString(),
+                     noteDetail = binding.noteContent.text.toString(),
+                     lastEdit = binding.lastEdited.text.toString(),
+                     isEncrypted = isEncrypted,
+                     color = selectedColor
+             )
+             viewModel.updateNote(updateNote)
+         }*/
         findNavController().popBackStack()
     }
 
@@ -124,12 +148,4 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         selectedColor = color.colorRes
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            addOrUpdate()
-            findNavController().popBackStack()
-            return true
-        }
-        return false
-    }
 }

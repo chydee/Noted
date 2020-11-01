@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chydee.notekeeper.data.DBHelperImpl
 import com.chydee.notekeeper.data.model.Note
+import com.chydee.notekeeper.data.model.Trash
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,8 +41,21 @@ class HomeViewModel constructor(context: Context) : ViewModel() {
                 }, {}).let { compositeDisposable.add(it) }
     }
 
-    fun deleteAllNotes() {
-        dbHelper.deleteAllNotes().subscribeOn(Schedulers.io())
+    fun deleteNote(note: Note) {
+        dbHelper.delete(note).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {}).let { compositeDisposable.add(it) }
+        Log.d("DeleteHome", "$note deleted")
+    }
+
+    fun addToTrash(trash: Trash) {
+        dbHelper.insertTrash(trash).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {}).let { compositeDisposable.add(it) }
+    }
+
+    fun addToTrash(trash: List<Trash>) {
+        dbHelper.insertTrash(trash).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {}).let { compositeDisposable.add(it) }
     }

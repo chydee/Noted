@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.chydee.notekeeper.data.NoteDao
+import com.chydee.notekeeper.data.dao.NoteDao
+import com.chydee.notekeeper.data.dao.TrashDao
 import com.chydee.notekeeper.data.model.Note
+import com.chydee.notekeeper.data.model.Trash
 
 
-@Database(entities = [Note::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class, Trash::class], version = 1, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 
-    abstract val noteDao: NoteDao //Connects the database to the DAO
+    abstract val noteDao: NoteDao
+    abstract val trashDao: TrashDao
 
     companion object {
         /*
@@ -32,7 +35,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                             context.applicationContext,
                             NoteDatabase::class.java,
-                            "NoteDB"
+                            "TestDB"
                     ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }

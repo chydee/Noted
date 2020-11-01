@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "note")
-data class Note(
+@Entity(tableName = "trash")
+data class Trash(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "id")
         val noteId: Int = 0,
@@ -26,6 +26,6 @@ data class Note(
         val isEncrypted: Boolean,
 
         @ColumnInfo(name = "color")
-        val color: Int,
+        val color: Int
 ) : Parcelable
 

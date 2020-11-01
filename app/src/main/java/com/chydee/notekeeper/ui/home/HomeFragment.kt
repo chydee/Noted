@@ -1,6 +1,7 @@
 package com.chydee.notekeeper.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,14 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
+import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.NoteAdapter
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.MyLookup
 import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.chydee.notekeeper.utils.toTrash
 import com.google.android.material.appbar.MaterialToolbar
 
 
@@ -32,7 +35,7 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var adapter: NoteAdapter
 
-    private lateinit var deleteList: ArrayList<Note>
+    private lateinit var deleteList: ArrayList<Trash>
     private var tracker: SelectionTracker<Long>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +50,8 @@ class HomeFragment : BaseFragment() {
         setupViewModel()
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
-
-        deleteList = arrayListOf()
         val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
         appbar.navigationIcon = null
-
-        viewModel.getNotes()
         setupListener()
         setupRV()
     }
@@ -63,9 +62,20 @@ class HomeFragment : BaseFragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(null)
             view.findNavController().navigate(action)
         }
+        binding.cancelSelection.setOnClickListener {
+            clearSelection()
+        }
+
+        binding.deleteSelected.setOnClickListener {
+            moveToTrash()
+            clearSelection()
+        }
     }
 
+
     private fun setupRV() {
+        viewModel.getNotes()
+
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = manager
         adapter = NoteAdapter()
@@ -75,7 +85,8 @@ class HomeFragment : BaseFragment() {
             if (it != null) {
                 if (it.isNotEmpty()) {
                     binding.emptyNotesState.visibility = View.GONE
-                    adapter.submitList(it)
+                    adapter.items = it as ArrayList<Note>
+                    adapter.notifyDataSetChanged()
                 } else {
                     binding.emptyNotesState.visibility = View.VISIBLE
                 }
@@ -93,7 +104,22 @@ class HomeFragment : BaseFragment() {
         ).build()
 
         adapter.tracker = tracker
+        observeTracker()
 
+
+        adapter.setOnClickListener(object : NoteAdapter.OnItemClickListener {
+            override fun onNoteClick(note: Note) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
+            }
+        })
+    }
+
+    private fun clearSelection() {
+        val isCleared = tracker?.clearSelection()
+        binding.selectedOptions.visibility = if (isCleared!!) View.GONE else View.VISIBLE
+    }
+
+    private fun observeTracker() {
         tracker?.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
@@ -104,28 +130,27 @@ class HomeFragment : BaseFragment() {
                         selectedCount.text = getString(R.string.default_selection_count, selected.toString())
                     }
                 }
-                /* val notes: List<Note> = adapter.currentList
-                if (selectionIds != null) {
-                    for (i in 0..selectionIds.size()) {
-                        deleteList.add(notes[i])
-                    }
-                    Log.d("Selected ", tracker?.selection.toString())
-                    Log.d("Selected ", "First Item to be deleted ${deleteList[0].noteDetail}")
-                }
-            */
             }
         })
+    }
 
-        binding.cancelSelection.setOnClickListener {
-            val isCleared = tracker?.clearSelection()
-            binding.selectedOptions.visibility = if (isCleared!!) View.GONE else View.VISIBLE
+    private fun moveToTrash() {
+        deleteList = arrayListOf()
+        val notes: ArrayList<Note> = adapter.items
+        val newNotes: ArrayList<Note> = arrayListOf()
+        tracker?.selection?.forEach {
+            if (tracker?.isSelected(it)!!) {
+                deleteList.add(notes[it.toInt()].toTrash())
+                newNotes.add(notes[it.toInt()])
+                viewModel.deleteNote(notes[it.toInt()])
+            }
         }
+        viewModel.addToTrash(deleteList)
+        adapter.notifyDataSetChanged()
 
-        adapter.setOnClickListener(object : NoteAdapter.OnItemClickListener {
-            override fun onNoteClick(note: Note) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
-            }
-        })
+        for (trash in deleteList) {
+            Log.d("Trash", "$trash")
+        }
     }
 
     private fun setupViewModel() {

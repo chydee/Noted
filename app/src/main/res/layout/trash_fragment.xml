@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="trashViewModel"
+            type="com.chydee.notekeeper.ui.trash.TrashViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,10 +22,9 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                style="@style/HomeRecyclerViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:spanCount="2"
-                tools:listitem="@layout/note_item" />
+                tools:listitem="@layout/trash_item" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/emptyTrashState"
@@ -34,7 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="16dp"
                 android:background="@color/backgroundColor"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +79,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
+            android:id="@+id/clearTrash"
             style="@style/Widget.MaterialComponents.FloatingActionButton.Custom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

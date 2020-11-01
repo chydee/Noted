@@ -3,7 +3,7 @@ package com.chydee.notekeeper.database
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.chydee.notekeeper.data.NoteDao
+import com.chydee.notekeeper.data.dao.NoteDao
 import com.chydee.notekeeper.data.database.NoteDatabase
 import com.chydee.notekeeper.data.model.Note
 import org.junit.After

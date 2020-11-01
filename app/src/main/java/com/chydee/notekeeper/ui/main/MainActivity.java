@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        this.toolBar.setNavigationIcon(null);
+        //this.toolBar.setNavigationIcon(null);
     }
 
     private void hideWelcomingGroup() {
@@ -104,13 +104,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setDisplayShowHomeEnabled(false);
             toolBar.setNavigationIcon(R.drawable.ic_up);
         }
-        toolBar.setNavigationOnClickListener(v -> {
+        /*toolBar.setNavigationOnClickListener(v -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 closeDrawer();
             } else {
-                super.onBackPressed();
+                onBackPressed();
             }
-        });
+        });*/
 
         binding.burgerMenu.setOnCheckedChangeListener(((buttonView, isChecked) -> {
             if (isChecked) {
@@ -141,15 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             binding.greetings.setText(getString(R.string.good_night));
         } else {
             binding.greetings.setText(getString(R.string.good_day));
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            closeDrawer();
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -276,9 +267,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
