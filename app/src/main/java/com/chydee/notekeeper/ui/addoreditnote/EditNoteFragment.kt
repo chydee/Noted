@@ -1,7 +1,13 @@
 package com.chydee.notekeeper.ui.addoreditnote
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +22,8 @@ import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.EditorBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.chydee.notekeeper.utils.toTrash
+import kotlinx.android.synthetic.main.note_item.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -51,7 +59,6 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         setLastEditedTime()
         setDisplay()
         handleClickListeners()
-
         onBackPressed()
     }
 
@@ -116,32 +123,45 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
             binding.noteContent.setText(args.selectedNoteProperty?.noteDetail)
             binding.lastEdited.text = args.selectedNoteProperty?.lastEdit
         }
+
+        binding.noteContent.movementMethod = LinkMovementMethod.getInstance()
+        Linkify.addLinks(binding.noteContent, Linkify.ALL)
+    }
+
+    private fun sendNote() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "${noteTitle.text}\n ${noteContent.text}")
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, noteTitle.text.toString())
+        startActivity(shareIntent)
     }
 
 
     override fun onDeleteClick() {
+        args.selectedNoteProperty?.toTrash()?.let { viewModel.addToTrash(it) }
         args.selectedNoteProperty?.let { viewModel.deleteNote(it) }
-        /* args.selectedNoteProperty?.let {
-             val updateNote = Note(
-                     noteId = it.noteId,
-                     noteTitle = binding.noteTitle.text.toString(),
-                     noteDetail = binding.noteContent.text.toString(),
-                     lastEdit = binding.lastEdited.text.toString(),
-                     isEncrypted = isEncrypted,
-                     color = selectedColor
-             )
-             viewModel.updateNote(updateNote)
-         }*/
         findNavController().popBackStack()
     }
 
     override fun onCopyClick() {
+        // if the user selects copy
+        // Gets a handle to the clipboard service.
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // Creates a new text clip to put on the clipboard
+        val clip: ClipData = ClipData.newPlainText(noteTitle.text.toString(), "${noteTitle.text} \n ${noteContent.text}")
+        // Set the clipboard's primary clip.
+        clipboard.setPrimaryClip(clip)
     }
 
     override fun onSendClick() {
+        sendNote()
     }
 
     override fun onEncryptClicked() {
+
     }
 
     override fun onColorSelected(color: Color) {

@@ -8,6 +8,8 @@ import io.reactivex.Single
 interface DBHelper {
     fun insert(note: Note): Completable
 
+    fun insert(notes: List<Note>): Completable
+
     fun update(note: Note): Completable
 
     fun delete(note: Note): Completable

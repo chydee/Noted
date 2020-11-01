@@ -16,6 +16,9 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(note: Note): Completable
 
+    @Insert
+    fun insert(notes: List<Note>): Completable
+
     /*
     * This method updates a single note from the note database
      */

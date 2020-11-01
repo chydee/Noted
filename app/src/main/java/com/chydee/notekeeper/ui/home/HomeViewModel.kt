@@ -48,8 +48,8 @@ class HomeViewModel constructor(context: Context) : ViewModel() {
         Log.d("DeleteHome", "$note deleted")
     }
 
-    fun addToTrash(trash: Trash) {
-        dbHelper.insertTrash(trash).subscribeOn(Schedulers.io())
+    fun insertNote(note: Note) {
+        dbHelper.insert(note).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {}).let { compositeDisposable.add(it) }
     }

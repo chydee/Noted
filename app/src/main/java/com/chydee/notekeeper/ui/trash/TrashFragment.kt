@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
@@ -14,6 +13,7 @@ import com.chydee.notekeeper.ui.TrashAdapter
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.chydee.notekeeper.utils.toNote
 
 class TrashFragment : BaseFragment() {
 
@@ -73,10 +73,19 @@ class TrashFragment : BaseFragment() {
             override fun onTrashClick(trash: Trash) {
                 //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
                 snackBarWithAction("Can't open items in trash", getString(R.string.restore)) {
-                    Toast.makeText(context, "Note restore", Toast.LENGTH_LONG).show()
+                    restoreNotes(trash)
                 }
             }
         })
+    }
+
+    private fun restoreNotes(trash: Trash) {
+        val trashes: ArrayList<Trash> = adapter.trashes
+        viewModel.insertNote(trash.toNote())
+        viewModel.removeTrash(trash)
+
+        trashes.remove(trash)
+        adapter.notifyDataSetChanged()
     }
 
 }

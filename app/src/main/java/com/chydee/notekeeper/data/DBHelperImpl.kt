@@ -16,6 +16,10 @@ class DBHelperImpl(context: Context) : DBHelper {
         return noteTable.insert(note)
     }
 
+    override fun insert(notes: List<Note>): Completable {
+        return noteTable.insert(notes)
+    }
+
     override fun update(note: Note): Completable {
         return noteTable.update(note)
     }

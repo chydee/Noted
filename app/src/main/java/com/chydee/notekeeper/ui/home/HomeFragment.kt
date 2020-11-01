@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -168,9 +167,19 @@ class HomeFragment : BaseFragment() {
         adapter.notifyDataSetChanged()
 
         snackBarWithAction("${deleteList.size} item(s) removed", getString(R.string.undo)) {
-            Toast.makeText(context, "Remove undone", Toast.LENGTH_LONG).show()
+            undoDelete(newNotes)
         }
 
+    }
+
+
+    private fun undoDelete(notes: List<Note>) {
+        if (notes.isNotEmpty()) {
+            notes.forEach {
+                viewModel.insertNote(it)
+            }
+        }
+        showSnackBar("Note(s) restored")
     }
 
     private fun setupViewModel() {
