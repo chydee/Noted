@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -147,6 +148,10 @@ class HomeFragment : BaseFragment() {
         notes.removeAll(newNotes)
         viewModel.addToTrash(deleteList)
         adapter.notifyDataSetChanged()
+
+        snackBarWithAction("${deleteList.size} item(s) removed", getString(R.string.undo)) {
+            Toast.makeText(context, "Remove undone", Toast.LENGTH_LONG).show()
+        }
 
     }
 

@@ -14,6 +14,7 @@
     <color name="backgroundColor">#000000</color>
 
     <color name="colorWhite">#ffffff</color>
+    <color name="titleBarColor">@color/primaryColor</color>
 
     <color name="vector_distinct_color">@color/grey_3</color>
 

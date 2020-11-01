@@ -17,80 +17,68 @@
             android:foregroundGravity="left"
             android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/backgroundColor"
+                android:layout_gravity="end"
                 android:elevation="0dp"
                 android:nestedScrollingEnabled="true"
                 android:overScrollMode="ifContentScrolls"
-                android:showDividers="none"
-                app:elevation="0dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:liftOnScroll="true">
+                android:touchscreenBlocksFocus="false"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:elevation="0dp"
-                    android:touchscreenBlocksFocus="false"
-                    app:layout_scrollFlags="scroll|enterAlways|snap">
+                    android:layout_height="match_parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/hello"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="@string/hello"
-                            android:textColor="@color/secondaryColor"
-                            android:textSize="30sp"
-                            app:layout_constraintEnd_toStartOf="@+id/burger_menu"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/hello"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/hello"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/burger_menu"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                        <TextView
-                            android:id="@+id/greetings"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="@string/good_afternoon"
-                            android:textColor="@color/secondaryColor"
-                            android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/hello"
-                            app:layout_constraintStart_toStartOf="@+id/hello"
-                            app:layout_constraintTop_toBottomOf="@+id/hello" />
+                    <TextView
+                        android:id="@+id/greetings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/good_afternoon"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/hello"
+                        app:layout_constraintStart_toStartOf="@+id/hello"
+                        app:layout_constraintTop_toBottomOf="@+id/hello" />
 
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/burger_menu"
-                            android:layout_width="34dp"
-                            android:layout_height="34dp"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@drawable/burger_menu"
-                            android:backgroundTint="@color/primaryDarkColor"
-                            android:checked="false"
-                            android:contentDescription="@null"
-                            android:thumb="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/burger_menu"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/burger_menu"
+                        android:backgroundTint="@color/primaryDarkColor"
+                        android:checked="false"
+                        android:contentDescription="@null"
+                        android:thumb="@null"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </com.google.android.material.appbar.MaterialToolbar>
 
-            </com.google.android.material.appbar.AppBarLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <fragment
                 android:id="@+id/nav_host_fragment"

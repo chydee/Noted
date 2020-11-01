@@ -8,7 +8,6 @@
         android:id="@+id/options_bottom_sheet_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundColor"
         android:clipToPadding="true"
         android:orientation="vertical"
         android:padding="20dp"

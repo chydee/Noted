@@ -51,5 +51,11 @@
     <string name="made_by">Created with ❤️ by Desmond Ngwuta</string>
     <string name="default_selection_count">%1$s Selected</string>
 
+    <string name="restore">Restore</string>
+    <string name="undo">Undo</string>
+    <string name="about">About</string>
+    <string name="trash">Trash</string>
+    <string name="settings">Settings</string>
+
 
 </resources>

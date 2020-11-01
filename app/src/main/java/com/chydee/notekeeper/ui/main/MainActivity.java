@@ -67,28 +67,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.settingsFragment:
+                    binding.burgerMenu.setVisibility(View.GONE);
+                    hideWelcomingGroup(getString(R.string.settings));
+                    break;
                 case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
-                    hideWelcomingGroup();
+                    hideWelcomingGroup("");
+                    break;
                 case R.id.trashFragment:
+                    hideWelcomingGroup(getString(R.string.trash));
+                    break;
                 case R.id.aboutFragment:
-                    hideWelcomingGroup();
+                    hideWelcomingGroup(getString(R.string.about));
                     break;
                 default:
                     showWelcomingGroup();
             }
         });
-
-        //this.toolBar.setNavigationIcon(null);
     }
 
-    private void hideWelcomingGroup() {
-        binding.hello.setVisibility(View.GONE);
+    private void hideWelcomingGroup(String title) {
+        binding.hello.setVisibility(View.VISIBLE);
+        binding.hello.setText(title);
         binding.greetings.setVisibility(View.GONE);
     }
 
     private void showWelcomingGroup() {
         binding.hello.setVisibility(View.VISIBLE);
+        binding.hello.setText(getString(R.string.hello));
         binding.greetings.setVisibility(View.VISIBLE);
         binding.burgerMenu.setVisibility(View.VISIBLE);
     }
@@ -104,13 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setDisplayShowHomeEnabled(false);
             toolBar.setNavigationIcon(R.drawable.ic_up);
         }
-        /*toolBar.setNavigationOnClickListener(v -> {
-            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                closeDrawer();
-            } else {
-                onBackPressed();
-            }
-        });*/
 
         binding.burgerMenu.setOnCheckedChangeListener(((buttonView, isChecked) -> {
             if (isChecked) {
