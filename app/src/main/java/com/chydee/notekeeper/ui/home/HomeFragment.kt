@@ -1,6 +1,8 @@
 package com.chydee.notekeeper.ui.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,8 +56,24 @@ class HomeFragment : BaseFragment() {
         appbar.navigationIcon = null
         setupListener()
         setupRV()
+        doSearch()
     }
 
+    private fun doSearch() {
+        binding.searchNote.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Do nothing here
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                adapter.filter.filter(s)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                adapter.filter.filter(s)
+            }
+        })
+    }
 
     private fun setupListener() {
         binding.floatingActionButton.setOnClickListener { view: View ->

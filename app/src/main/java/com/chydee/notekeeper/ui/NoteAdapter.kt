@@ -3,15 +3,22 @@ package com.chydee.notekeeper.ui
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.NoteItemBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
 
+    private lateinit var itemsFilter: MutableList<Note>
+    private var duration: Long = 500
+    private var onAttach = true
 
     private lateinit var listener: OnItemClickListener
 
@@ -96,6 +103,37 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    override fun getFilter(): Filter {
+        return itemFilter
+    }
+
+    private val itemFilter: Filter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            val filteredList: MutableList<Note> = ArrayList()
+            if (constraint == null || constraint.isEmpty()) {
+                filteredList.addAll(itemsFilter)
+            } else {
+                val filterPattern =
+                        constraint.toString().toLowerCase(Locale.ENGLISH).trim { it <= ' ' }
+                for (item in itemsFilter) {
+                    if (item.noteTitle.toLowerCase(Locale.ENGLISH).contains(filterPattern) or item.noteDetail.toLowerCase(Locale.ENGLISH).contains(filterPattern)) {
+                        filteredList.add(item)
+                    }
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        override fun publishResults(
+                constraint: CharSequence,
+                results: FilterResults
+        ) {
+            items = results.values as ArrayList<Note>
+        }
     }
 
 }
