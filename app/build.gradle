@@ -47,20 +47,22 @@ dependencies {
 
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"
-    implementation "androidx.fragment:fragment:$version_fragment"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
     implementation "com.google.android.material:material:$version_material_design"
 
     // Android KTX
     implementation "androidx.core:core-ktx:$version_core"
 
     // Core
-    implementation "androidx.core:core:$version_core"
+    implementation "androidx.core:core-ktx:$version_core"
 
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
     implementation "androidx.legacy:legacy-support-v4:$version_legacy_support"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
     implementation "androidx.recyclerview:recyclerview-selection:$version_recyclerview_selection"
+
+    implementation "androidx.preference:preference-ktx:$preference_version"
 
     // flex box #help for overflowing child views
     implementation "com.google.android:flexbox:$flex_box_version"

@@ -7,24 +7,28 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.NoteItemBinding
+import com.chydee.notekeeper.utils.AutoUpdatableAdapter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
+class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpdatableAdapter, Filterable {
+
+    private var items: ArrayList<Note> by Delegates.observable(ArrayList()) { _, oldList, newList ->
+        autoNotify(oldList, newList) { o, n -> o.noteId == n.noteId }
+    }
 
     private lateinit var itemsFilter: MutableList<Note>
-    private var duration: Long = 500
+
     private var onAttach = true
 
     private lateinit var listener: OnItemClickListener
 
     var tracker: SelectionTracker<Long>? = null
 
-    var items: ArrayList<Note> = arrayListOf()
 
     init {
         setHasStableIds(true)
@@ -32,6 +36,16 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterab
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(NoteItemBinding.inflate(LayoutInflater.from(parent.context)))
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                onAttach = false
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
+        super.onAttachedToRecyclerView(recyclerView)
     }
 
     inner class NoteViewHolder(private var binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -56,25 +70,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterab
         return position.toLong()
     }
 
-    inner class DiffCallback(private val oldList: List<Note>, private val newList: List<Note>) : DiffUtil.Callback() {
-
-        override fun getOldListSize(): Int {
-            return oldList.size
-        }
-
-        override fun getNewListSize(): Int {
-            return newList.size
-        }
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].noteId == newList[newItemPosition].noteId
-        }
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].noteDetail == newList[newItemPosition].noteDetail
-        }
-    }
-
     interface OnItemClickListener {
         fun onNoteClick(note: Note)
     }
@@ -83,13 +78,12 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterab
         this.listener = listener
     }
 
-    internal fun updateNotes(newItems: List<Note>) {
-        val diffCallback = DiffCallback(items, newItems)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.items.clear()
-        this.items.addAll(newItems)
-        diffResult.dispatchUpdatesTo(this)
+    internal fun setNotes(notes: ArrayList<Note>) {
+        this.items = notes
+        itemsFilter = ArrayList(notes)
     }
+
+    internal fun getNotes() = this.items
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = items[position]
@@ -132,7 +126,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterab
                 constraint: CharSequence,
                 results: FilterResults
         ) {
-            items = results.values as ArrayList<Note>
+            items = (results.values as ArrayList<Note>?)!!
         }
     }
 

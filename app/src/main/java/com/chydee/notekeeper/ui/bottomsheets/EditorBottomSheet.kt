@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.databinding.BottomSheetLayoutBinding
 import com.chydee.notekeeper.ui.ColorsAdapter
@@ -60,17 +61,25 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
         with(binding) {
             deleteBtn.setOnClickListener {
                 mListener.onDeleteClick()
+                dismiss()
             }
             copyBtn.setOnClickListener {
                 mListener.onCopyClick()
+                dismiss()
             }
             sendBtn.setOnClickListener {
                 mListener.onSendClick()
+                dismiss()
             }
             encryptionBtn.setOnClickListener {
                 mListener.onEncryptClicked()
+                dismiss()
             }
         }
+    }
+
+    override fun getTheme(): Int {
+        return R.style.CustomBottomSheetDialog
     }
 
     private fun loadColors() {

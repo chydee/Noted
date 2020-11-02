@@ -14,6 +14,24 @@
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearance">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
     </style>
 
     <style name="Widget.MaterialComponents.CardView.NoteItems">
@@ -72,6 +90,12 @@
         <item name="itemIconTint">?attr/colorNavigationItem</item>
         <item name="itemTextColor">?attr/colorNavigationItem</item>
         <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
+
+    <style name="BottomSheetButtons" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="iconTint">@color/primaryColor</item>
     </style>
 
 </resources>

@@ -15,32 +15,32 @@
 
         <Button
             android:id="@+id/deleteBtn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/delete"
             app:icon="@drawable/ic_delete_black_24dp" />
 
         <Button
             android:id="@+id/copyBtn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/make_a_copy"
             app:icon="@drawable/ic_content_copy" />
 
         <Button
             android:id="@+id/sendBtn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/send"
             app:icon="@drawable/ic_share" />
 
         <Button
             android:id="@+id/encryptionBtn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/encrypt_note"
             app:icon="@drawable/ic_encrypt" />

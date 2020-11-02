@@ -22,6 +22,7 @@ import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.chydee.notekeeper.utils.toTrash
 import kotlinx.android.synthetic.main.note_item.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -71,7 +72,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
         if (args.selectedNoteProperty != null) {
             val updateNote = Note(
-                    noteId = args.selectedNoteProperty.noteId!!,
+                    noteId = args.selectedNoteProperty?.noteId!!,
                     noteTitle = binding.noteTitle.text.toString(),
                     noteDetail = binding.noteContent.text.toString(),
                     lastEdit = binding.lastEdited.text.toString(),
@@ -95,7 +96,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern(getString(R.string.date_time_string_format))
-            binding.lastEdited.text = current.format(formatter)
+            binding.lastEdited.text = getString(R.string.edited, current.format(formatter))
         } else {
             val date = Date()
             val formatter = SimpleDateFormat(getString(R.string.date_time_string_format), Locale.ROOT)
@@ -118,9 +119,9 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private fun setDisplay() {
         if (args.selectedNoteProperty != null) {
-            binding.noteTitle.setText(args.selectedNoteProperty.noteTitle)
-            binding.noteContent.setText(args.selectedNoteProperty.noteDetail)
-            binding.lastEdited.text = args.selectedNoteProperty.lastEdit
+            binding.noteTitle.setText(args.selectedNoteProperty?.noteTitle)
+            binding.noteContent.setText(args.selectedNoteProperty?.noteDetail)
+            binding.lastEdited.text = args.selectedNoteProperty?.lastEdit
         }
 
         binding.noteContent.movementMethod = LinkMovementMethod.getInstance()
@@ -140,8 +141,12 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
 
     override fun onDeleteClick() {
-        args.selectedNoteProperty.toTrash().let { viewModel.addToTrash(it) }
-        args.selectedNoteProperty.let { viewModel.deleteNote(it) }
+        args.selectedNoteProperty?.toTrash()?.let { viewModel.addToTrash(it) }
+        args.selectedNoteProperty.let {
+            if (it != null) {
+                viewModel.deleteNote(it)
+            }
+        }
         findNavController().popBackStack()
     }
 

@@ -54,7 +54,6 @@ class HomeFragment : BaseFragment() {
         appbar.navigationIcon = null
         setupListener()
         setupRV()
-        doSearch()
     }
 
     private fun doSearch() {
@@ -101,8 +100,10 @@ class HomeFragment : BaseFragment() {
             if (it != null) {
                 if (it.isNotEmpty()) {
                     binding.emptyNotesState.visibility = View.GONE
-                    adapter.items = it as ArrayList<Note>
+                    adapter.setNotes(it as ArrayList)
                     adapter.notifyDataSetChanged()
+
+                    doSearch()
                 } else {
                     binding.emptyNotesState.visibility = View.VISIBLE
                 }
@@ -152,7 +153,7 @@ class HomeFragment : BaseFragment() {
 
     private fun moveToTrash() {
         deleteList = arrayListOf()
-        val notes: ArrayList<Note> = adapter.items
+        val notes: ArrayList<Note> = adapter.getNotes()
         val newNotes: ArrayList<Note> = arrayListOf()
         tracker?.selection?.forEach {
             if (tracker?.isSelected(it)!!) {
@@ -166,19 +167,21 @@ class HomeFragment : BaseFragment() {
         adapter.notifyDataSetChanged()
 
         snackBarWithAction("${deleteList.size} item(s) removed", getString(R.string.undo)) {
-            undoDelete(newNotes)
+            notes.addAll(undoDelete(newNotes))
+            adapter.notifyDataSetChanged()
+            showSnackBar("Note(s) restored")
         }
 
     }
 
 
-    private fun undoDelete(notes: List<Note>) {
+    private fun undoDelete(notes: List<Note>): List<Note> {
         if (notes.isNotEmpty()) {
             notes.forEach {
                 viewModel.insertNote(it)
             }
         }
-        showSnackBar("Note(s) restored")
+        return notes
     }
 
     private fun setupViewModel() {
