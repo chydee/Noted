@@ -3,7 +3,7 @@ package com.chydee.notekeeper.utils
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
-import com.chydee.notekeeper.ui.NoteAdapter
+import com.chydee.notekeeper.ui.home.NoteAdapter
 
 class MyLookup(private val recyclerView: RecyclerView) :
         ItemDetailsLookup<Long>() {

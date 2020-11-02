@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.ui
+package com.chydee.notekeeper.ui.bottomsheets
 
 
 import android.graphics.Color.*
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.databinding.BottomSheetLayoutBinding
+import com.chydee.notekeeper.ui.ColorsAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent

@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.ui
+package com.chydee.notekeeper.ui.home
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -91,7 +91,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterab
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onBindViewHolder(holder: NoteAdapter.NoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = items[position]
         tracker?.let {
             holder.bind(note, it.isSelected(position.toLong()))

@@ -37,7 +37,7 @@
         tools:layout="@layout/trash_fragment" />
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.chydee.notekeeper.ui.AboutFragment"
+        android:name="com.chydee.notekeeper.ui.about.AboutFragment"
         android:label="AboutFragment"
         tools:layout="@layout/about_fragment" />
 

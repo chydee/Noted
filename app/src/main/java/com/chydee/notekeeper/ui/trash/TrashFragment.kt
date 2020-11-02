@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.TrashFragmentBinding
-import com.chydee.notekeeper.ui.TrashAdapter
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.SpacesItemDecoration
 import com.chydee.notekeeper.utils.ViewModelFactory

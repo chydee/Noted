@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.ui
+package com.chydee.notekeeper.ui.trash
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

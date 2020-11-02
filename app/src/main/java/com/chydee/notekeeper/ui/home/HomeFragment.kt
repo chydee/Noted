@@ -18,7 +18,6 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
-import com.chydee.notekeeper.ui.NoteAdapter
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.MyLookup
 import com.chydee.notekeeper.utils.SpacesItemDecoration
