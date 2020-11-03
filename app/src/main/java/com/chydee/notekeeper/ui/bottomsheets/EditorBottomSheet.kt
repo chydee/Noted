@@ -57,7 +57,20 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Before anything check to see the Device's API version
+        // if the version code is greater than 26 then allow encryption if not hide the encryption button
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
+            binding.encryptionBtn.visibility = View.GONE
+        }
         loadColors()
+        handleBtnClicks()
+    }
+
+    override fun getTheme(): Int {
+        return R.style.CustomBottomSheetDialog
+    }
+
+    private fun handleBtnClicks() {
         with(binding) {
             deleteBtn.setOnClickListener {
                 mListener.onDeleteClick()
@@ -76,10 +89,6 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
                 dismiss()
             }
         }
-    }
-
-    override fun getTheme(): Int {
-        return R.style.CustomBottomSheetDialog
     }
 
     private fun loadColors() {
