@@ -20,6 +20,7 @@ import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
+import com.chydee.notekeeper.ui.bottomsheets.SecurityBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ViewModelFactory
 import com.chydee.notekeeper.utils.toTrash
@@ -30,7 +31,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener {
+class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener, SecurityBottomSheet.OnClickListener {
 
     private lateinit var binding: EditNoteFragmentBinding
 
@@ -165,11 +166,16 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     override fun onEncryptClicked() {
-
+        SecurityBottomSheet.instance(this).show(childFragmentManager, "Encryption")
     }
 
     override fun onColorSelected(color: Color) {
         selectedColor = color.colorRes
+    }
+
+    override fun onEncryptionComplete(content: String) {
+        //Do nothing here
+        showSnackBar(content)
     }
 
 }
