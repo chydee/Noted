@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,9 @@ import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
 import com.chydee.notekeeper.ui.bottomsheets.SecurityBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
+import com.chydee.notekeeper.utils.Encrypto
 import com.chydee.notekeeper.utils.ViewModelFactory
+import com.chydee.notekeeper.utils.takeText
 import com.chydee.notekeeper.utils.toTrash
 import kotlinx.android.synthetic.main.note_item.*
 import java.text.SimpleDateFormat
@@ -44,6 +47,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private var selectedColor: Int = -1
 
+    private lateinit var encrypto: Encrypto
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = EditNoteFragmentBinding.inflate(inflater)
@@ -56,6 +61,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory)[EditNoteViewModel::class.java]
         binding.lifecycleOwner = this
+        encrypto = Encrypto()
         showNavigationIcon()
         setLastEditedTime()
         setDisplay()
@@ -173,9 +179,23 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         selectedColor = color.colorRes
     }
 
-    override fun onEncryptionComplete(content: String) {
-        //Do nothing here
-        showSnackBar(content)
+    override fun onEncryptionComplete(key: String) {
+        encrypto.encrypt(strToEncrypt = "${binding.noteTitle.takeText()} \n ${binding.noteContent.takeText()}", secret_key = key)
+        encrypto.encrypt(strToEncrypt = "${binding.noteTitle.takeText()} \n" +
+                " ${binding.noteContent.takeText()}", secret_key = key)?.let { it1 -> Log.d("Encrypted", it1) }
+        if (args.selectedNoteProperty != null) {
+            val updateNote = Note(
+                    noteId = args.selectedNoteProperty?.noteId!!,
+                    noteTitle = binding.noteTitle.text.toString(),
+                    noteDetail = binding.noteContent.text.toString(),
+                    lastEdit = binding.lastEdited.text.toString(),
+                    isEncrypted = isEncrypted,
+                    color = selectedColor
+            )
+            viewModel.updateNote(updateNote)
+        } else {
+            isEncrypted = true
+        }
     }
 
 }

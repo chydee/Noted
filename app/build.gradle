@@ -88,4 +88,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$version_ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
 
+    implementation 'bouncycastle:bcprov-jdk16:136'
+
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.SecuritySheetLayoutBinding
-import com.chydee.notekeeper.utils.Encrypto
 import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.security_sheet_layout.*
@@ -21,7 +20,6 @@ class SecurityBottomSheet : BottomSheetDialogFragment() {
     private lateinit var mListener: OnClickListener
     private lateinit var binding: SecuritySheetLayoutBinding
 
-
     companion object {
         fun instance(listener: OnClickListener) =
                 SecurityBottomSheet()
@@ -31,7 +29,7 @@ class SecurityBottomSheet : BottomSheetDialogFragment() {
     }
 
     interface OnClickListener {
-        fun onEncryptionComplete(content: String)
+        fun onEncryptionComplete(key: String)
     }
 
     override fun onCreateView(
@@ -46,21 +44,20 @@ class SecurityBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.secretKeyField.doOnTextChanged { text, start, before, count ->
-            while (count < 16) {
-                secretKeyField.error = "SecretKey length is less than 16 characters"
+            when (count) {
+                in 0..8 -> secretKeyField.error = "Your SecretKey must be at least 8 characters"
+                8 -> secretKeyField.error = null
+                else -> secretKeyField.error = null
             }
 
         }
         binding.continueBtn.setOnClickListener {
             if (isKeyStrong(binding.secretKeyField.takeText())) {
-                //Start encrypting
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    mListener.onEncryptionComplete(Encrypto.aesEncrypt("Desmond", binding.secretKeyField.takeText()))
-                }
+                mListener.onEncryptionComplete(binding.secretKeyField.takeText())
                 dismiss()
             } else {
                 val error = """
-                    Key length must be at least 13.
+                    Key length must be at least 8.
                     It must contain at least one digit.
                     It must contains at least one lowercase English character.
                     It must contains at least one uppercase English character.
@@ -80,12 +77,12 @@ class SecurityBottomSheet : BottomSheetDialogFragment() {
         val pattern: Pattern
         val matcher: Matcher
 
-        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{32,}$"
+        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
 
         pattern = Pattern.compile(PASSWORD_PATTERN)
         matcher = pattern.matcher(key)
 
-        return key.length >= 32 && matcher.matches()
+        return key.length >= 8 && matcher.matches()
     }
 
 
