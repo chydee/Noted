@@ -60,5 +60,7 @@
     <string name="create_secret_key">Secret Key</string>
     <string name="secret_key">Enter Secret Key</string>
 
+    <string name="ecrypted_title">_-_-_-_-_-_  🔏</string>
+
 
 </resources>

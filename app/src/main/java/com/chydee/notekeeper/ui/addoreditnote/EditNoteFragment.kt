@@ -48,6 +48,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     private var selectedColor: Int = -1
 
     private lateinit var encrypto: Encrypto
+    private lateinit var title: String
+    private lateinit var content: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -77,11 +79,14 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private fun addOrUpdate() {
 
+        title = binding.noteTitle.takeText()
+        content = binding.noteContent.takeText()
+
         if (args.selectedNoteProperty != null) {
             val updateNote = Note(
                     noteId = args.selectedNoteProperty?.noteId!!,
-                    noteTitle = binding.noteTitle.text.toString(),
-                    noteDetail = binding.noteContent.text.toString(),
+                    noteTitle = title,
+                    noteDetail = content,
                     lastEdit = binding.lastEdited.text.toString(),
                     isEncrypted = isEncrypted,
                     color = selectedColor
@@ -89,8 +94,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
             viewModel.updateNote(updateNote)
         } else {
             val newNote = Note(
-                    noteTitle = binding.noteTitle.text.toString(),
-                    noteDetail = binding.noteContent.text.toString(),
+                    noteTitle = title,
+                    noteDetail = content,
                     lastEdit = binding.lastEdited.text.toString(),
                     isEncrypted = isEncrypted,
                     color = selectedColor
@@ -180,22 +185,17 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     override fun onEncryptionComplete(key: String) {
-        encrypto.encrypt(strToEncrypt = "${binding.noteTitle.takeText()} \n ${binding.noteContent.takeText()}", secret_key = key)
-        encrypto.encrypt(strToEncrypt = "${binding.noteTitle.takeText()} \n" +
-                " ${binding.noteContent.takeText()}", secret_key = key)?.let { it1 -> Log.d("Encrypted", it1) }
-        if (args.selectedNoteProperty != null) {
-            val updateNote = Note(
-                    noteId = args.selectedNoteProperty?.noteId!!,
-                    noteTitle = binding.noteTitle.text.toString(),
-                    noteDetail = binding.noteContent.text.toString(),
-                    lastEdit = binding.lastEdited.text.toString(),
-                    isEncrypted = isEncrypted,
-                    color = selectedColor
-            )
-            viewModel.updateNote(updateNote)
-        } else {
-            isEncrypted = true
-        }
+        val strToEncrypt = """
+           ${binding.noteTitle.takeText()}
+           ${binding.noteContent.takeText()}
+       """.trimIndent()
+        val encryptedString = encrypto.encrypt(strToEncrypt = strToEncrypt, secret_key = key)
+        encryptedString?.let { it1 -> Log.d("Encrypted", it1) }
+        isEncrypted = true
+        binding.noteTitle.setText(getString(R.string.ecrypted_title))
+        binding.noteContent.setText(encryptedString)
+        showSnackBar("This note is now encrypted")
+        onBackPressed()
     }
 
 }
