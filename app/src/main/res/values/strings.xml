@@ -61,6 +61,8 @@
     <string name="secret_key">Enter Secret Key</string>
 
     <string name="ecrypted_title">_-_-_-_-_-_  🔏</string>
+    <string name="key_to_decrypt">Enter your secret key to decrypt this note</string>
+    <string name="decrypt">Decrypt</string>
 
 
 </resources>

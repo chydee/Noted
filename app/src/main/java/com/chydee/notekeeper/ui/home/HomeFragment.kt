@@ -18,6 +18,7 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
+import com.chydee.notekeeper.ui.bottomsheets.DecryptBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.MyLookup
 import com.chydee.notekeeper.utils.SpacesItemDecoration
@@ -26,7 +27,7 @@ import com.chydee.notekeeper.utils.toTrash
 import com.google.android.material.appbar.MaterialToolbar
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), DecryptBottomSheet.OnClickListener {
 
     private lateinit var binding: HomeFragmentBinding
 
@@ -126,7 +127,11 @@ class HomeFragment : BaseFragment() {
 
         adapter.setOnClickListener(object : NoteAdapter.OnItemClickListener {
             override fun onNoteClick(note: Note) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
+                if (note.isEncrypted) {
+                    showBottomSheet(note)
+                } else {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
+                }
             }
         })
     }
@@ -179,6 +184,7 @@ class HomeFragment : BaseFragment() {
         if (notes.isNotEmpty()) {
             notes.forEach {
                 viewModel.insertNote(it)
+                viewModel.removeFromTrash(it.toTrash())
             }
         }
         return notes
@@ -188,4 +194,19 @@ class HomeFragment : BaseFragment() {
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
     }
+
+    private fun showBottomSheet(note: Note) {
+        val decryptSheet = DecryptBottomSheet.instance(this)
+        val bundle = Bundle()
+        bundle.putParcelable("Note", note)
+        decryptSheet.arguments = bundle
+        decryptSheet.show(childFragmentManager, "DecryptNote")
+    }
+
+    override fun onNoteDecrypted(note: Note) {
+        viewModel.updateNote(note)
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
+
+    }
+
 }

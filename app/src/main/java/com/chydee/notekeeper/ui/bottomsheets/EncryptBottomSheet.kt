@@ -7,22 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import com.chydee.notekeeper.R
-import com.chydee.notekeeper.databinding.SecuritySheetLayoutBinding
+import com.chydee.notekeeper.databinding.EncryptSheetLayoutBinding
 import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.security_sheet_layout.*
+import kotlinx.android.synthetic.main.encrypt_sheet_layout.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
-class SecurityBottomSheet : BottomSheetDialogFragment() {
+class EncryptBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var mListener: OnClickListener
-    private lateinit var binding: SecuritySheetLayoutBinding
+    private lateinit var binding: EncryptSheetLayoutBinding
 
     companion object {
         fun instance(listener: OnClickListener) =
-                SecurityBottomSheet()
+                EncryptBottomSheet()
                         .apply {
                             mListener = listener
                         }
@@ -37,7 +37,7 @@ class SecurityBottomSheet : BottomSheetDialogFragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        binding = SecuritySheetLayoutBinding.inflate(inflater)
+        binding = EncryptSheetLayoutBinding.inflate(inflater)
         return binding.root
     }
 

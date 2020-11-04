@@ -60,6 +60,17 @@ class HomeViewModel constructor(context: Context) : ViewModel() {
                 .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
+    fun removeFromTrash(trash: Trash) {
+        dbHelper.deleteTrash(trash).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {}).let { compositeDisposable.add(it) }
+    }
+
+    fun updateNote(note: Note) {
+        dbHelper.update(note).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {}).let { compositeDisposable.add(it) }
+    }
 
     fun displayNoteDetails(note: Note) {
         _navigateToSelectedNote.value = note
