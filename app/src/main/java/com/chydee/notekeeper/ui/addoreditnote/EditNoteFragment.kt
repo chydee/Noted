@@ -194,8 +194,11 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         isEncrypted = true
         binding.noteTitle.setText(getString(R.string.ecrypted_title))
         binding.noteContent.setText(encryptedString)
-        showSnackBar("This note is now encrypted")
+        if (encryptedString != null) {
+            showSnackBar(encryptedString)
+        }
         onBackPressed()
+        //Des123@#$
     }
 
 }
