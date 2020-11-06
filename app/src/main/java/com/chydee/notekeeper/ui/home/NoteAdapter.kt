@@ -54,7 +54,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
             binding.notes = note
             itemView.isActivated = isActivated
             binding.noteCard.strokeColor = if (isActivated) Color.GREEN else Color.GRAY
-            binding.noteEncrypted.visibility = if (note.isEncrypted) View.VISIBLE else View.GONE
+            binding.noteEncrypted.visibility = if (note.isLocked) View.VISIBLE else View.GONE
             if (note.color != -1) {
                 binding.noteCard.setCardBackgroundColor(note.color)
             }

@@ -170,7 +170,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         sendNote()
     }
 
-    override fun onEncryptClicked() {
+    override fun onLockNoteClicked() {
         LockNoteBottomSheet.instance(this).show(childFragmentManager, "Lock Note")
     }
 
