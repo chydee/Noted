@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="@string/create_secret_key"
+            android:text="@string/lock_note"
             android:textColor="@color/primaryTextColor"
             android:textSize="18sp" />
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/secret_key"
+            android:hint="@string/password_hint"
             app:counterEnabled="true"
             app:counterMaxLength="8"
             app:errorEnabled="true"
@@ -57,7 +57,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Continue"
+            android:text="@string/lock"
             android:textColor="?android:textColorSecondary"
             app:backgroundTint="@color/primaryColor"
             app:cornerRadius="8dp" />

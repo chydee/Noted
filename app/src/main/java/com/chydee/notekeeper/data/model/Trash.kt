@@ -22,10 +22,13 @@ data class Trash(
         @ColumnInfo(name = "last_edit")
         val lastEdit: String,
 
-        @ColumnInfo(name = "isEncrypted")
-        val isEncrypted: Boolean,
+        @ColumnInfo(name = "is_note_locked")
+        val isLocked: Boolean,
 
         @ColumnInfo(name = "color")
-        val color: Int
+        val color: Int,
+
+        @ColumnInfo(name = "password")
+        val password: String?
 ) : Parcelable
 

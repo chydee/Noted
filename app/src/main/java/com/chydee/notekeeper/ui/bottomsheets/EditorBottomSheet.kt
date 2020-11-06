@@ -42,7 +42,7 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
         fun onDeleteClick()
         fun onCopyClick()
         fun onSendClick()
-        fun onEncryptClicked()
+        fun onLockNoteClicked()
         fun onColorSelected(color: Color)
     }
 
@@ -57,11 +57,6 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Before anything check to see the Device's API version
-        // if the version code is greater than 26 then allow encryption if not hide the encryption button
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
-            binding.encryptionBtn.visibility = View.GONE
-        }
         loadColors()
         handleBtnClicks()
     }
@@ -84,8 +79,8 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
                 mListener.onSendClick()
                 dismiss()
             }
-            encryptionBtn.setOnClickListener {
-                mListener.onEncryptClicked()
+            lockeNoteBtn.setOnClickListener {
+                mListener.onLockNoteClicked()
                 dismiss()
             }
         }

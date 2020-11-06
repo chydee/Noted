@@ -18,7 +18,7 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
-import com.chydee.notekeeper.ui.bottomsheets.DecryptBottomSheet
+import com.chydee.notekeeper.ui.bottomsheets.UnlockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.MyLookup
 import com.chydee.notekeeper.utils.SpacesItemDecoration
@@ -27,7 +27,7 @@ import com.chydee.notekeeper.utils.toTrash
 import com.google.android.material.appbar.MaterialToolbar
 
 
-class HomeFragment : BaseFragment(), DecryptBottomSheet.OnClickListener {
+class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
 
     private lateinit var binding: HomeFragmentBinding
 
@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment(), DecryptBottomSheet.OnClickListener {
 
         adapter.setOnClickListener(object : NoteAdapter.OnItemClickListener {
             override fun onNoteClick(note: Note) {
-                if (note.isEncrypted) {
+                if (note.isLocked) {
                     showBottomSheet(note)
                 } else {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
@@ -196,17 +196,16 @@ class HomeFragment : BaseFragment(), DecryptBottomSheet.OnClickListener {
     }
 
     private fun showBottomSheet(note: Note) {
-        val decryptSheet = DecryptBottomSheet.instance(this)
+        val unlockSheet = UnlockNoteBottomSheet.instance(this)
         val bundle = Bundle()
         bundle.putParcelable("Note", note)
-        decryptSheet.arguments = bundle
-        decryptSheet.show(childFragmentManager, "DecryptNote")
+        unlockSheet.arguments = bundle
+        unlockSheet.show(childFragmentManager, "UnlockNote")
     }
 
-    override fun onNoteDecrypted(note: Note) {
+    override fun onNoteUnlocked(note: Note) {
         viewModel.updateNote(note)
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
-
     }
 
 }

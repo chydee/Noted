@@ -38,7 +38,7 @@
             app:icon="@drawable/ic_share" />
 
         <Button
-            android:id="@+id/encryptionBtn"
+            android:id="@+id/lockeNoteBtn"
             style="@style/BottomSheetButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +48,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/coloursRV"
             android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
             android:layout_height="wrap_content"
             tools:itemCount="1"
             tools:listitem="@layout/color_item" />

@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +20,8 @@ import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
-import com.chydee.notekeeper.ui.bottomsheets.EncryptBottomSheet
+import com.chydee.notekeeper.ui.bottomsheets.LockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.Encrypto
 import com.chydee.notekeeper.utils.ViewModelFactory
 import com.chydee.notekeeper.utils.takeText
 import com.chydee.notekeeper.utils.toTrash
@@ -34,22 +32,20 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener, EncryptBottomSheet.OnClickListener {
+class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener, LockNoteBottomSheet.OnClickListener {
 
     private lateinit var binding: EditNoteFragmentBinding
 
     private lateinit var viewModel: EditNoteViewModel
     private lateinit var viewModelFactory: ViewModelFactory
 
-    private var isEncrypted: Boolean = false
+    private var isLocked: Boolean = false
 
     private val args: EditNoteFragmentArgs by navArgs()
 
     private var selectedColor: Int = -1
 
-    private lateinit var encrypto: Encrypto
-    private lateinit var title: String
-    private lateinit var content: String
+    private var password: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,7 +59,6 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory)[EditNoteViewModel::class.java]
         binding.lifecycleOwner = this
-        encrypto = Encrypto()
         showNavigationIcon()
         setLastEditedTime()
         setDisplay()
@@ -79,26 +74,25 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private fun addOrUpdate() {
 
-        title = binding.noteTitle.takeText()
-        content = binding.noteContent.takeText()
-
         if (args.selectedNoteProperty != null) {
             val updateNote = Note(
                     noteId = args.selectedNoteProperty?.noteId!!,
-                    noteTitle = title,
-                    noteDetail = content,
+                    noteTitle = binding.noteTitle.takeText(),
+                    noteDetail = binding.noteContent.takeText(),
                     lastEdit = binding.lastEdited.text.toString(),
-                    isEncrypted = isEncrypted,
-                    color = selectedColor
+                    isLocked = isLocked,
+                    color = selectedColor,
+                    password = password
             )
             viewModel.updateNote(updateNote)
         } else {
             val newNote = Note(
-                    noteTitle = title,
-                    noteDetail = content,
+                    noteTitle = binding.noteTitle.takeText(),
+                    noteDetail = binding.noteContent.takeText(),
                     lastEdit = binding.lastEdited.text.toString(),
-                    isEncrypted = isEncrypted,
-                    color = selectedColor
+                    isLocked = isLocked,
+                    color = selectedColor,
+                    password = password
             )
             viewModel.insertNote(newNote)
         }
@@ -177,28 +171,18 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     override fun onEncryptClicked() {
-        EncryptBottomSheet.instance(this).show(childFragmentManager, "Encryption")
+        LockNoteBottomSheet.instance(this).show(childFragmentManager, "Lock Note")
     }
 
     override fun onColorSelected(color: Color) {
         selectedColor = color.colorRes
     }
 
-    override fun onEncryptionComplete(key: String) {
-        val strToEncrypt = """
-           ${binding.noteTitle.takeText()}
-           ${binding.noteContent.takeText()}
-       """.trimIndent()
-        val encryptedString = encrypto.encrypt(strToEncrypt = strToEncrypt, secret_key = key)
-        encryptedString?.let { it1 -> Log.d("Encrypted", it1) }
-        isEncrypted = true
-        binding.noteTitle.setText(getString(R.string.ecrypted_title))
-        binding.noteContent.setText(encryptedString)
-        if (encryptedString != null) {
-            showSnackBar(encryptedString)
-        }
+    override fun onPasswordCreated(password: String) {
+        isLocked = true
+        this.password = password
+        showSnackBar(getString(R.string.note_locked))
         onBackPressed()
-        //Des123@#$
     }
 
 }

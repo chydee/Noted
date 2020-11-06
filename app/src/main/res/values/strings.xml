@@ -25,7 +25,7 @@
     <string name="burger_menu_top_path_line">M8,0 C 13,0 53,0 56,0</string>
     <string name="burger_menu_top_path_curve">M8,0 C 13,-22 51,-22 56,0</string>
     <string name="burger_menu_drip_path">M42,0 l4,5 l4,-5z</string>
-    <string name="encrypt_note">Encrypt Note</string>
+    <string name="encrypt_note">Lock Note</string>
     <string name="search">Search</string>
     <string name="empty_notes">You haven\'t saved any note</string>
 
@@ -56,13 +56,17 @@
     <string name="about">About</string>
     <string name="trash">Trash</string>
     <string name="settings">Settings</string>
-    <string name="dont_forget">Try not to forget your secret key 🙏</string>
-    <string name="create_secret_key">Secret Key</string>
-    <string name="secret_key">Enter Secret Key</string>
+    <string name="dont_forget">Try not to forget your password 🙏</string>
+    <string name="lock_note">Lock this note</string>
+    <string name="key_to_decrypt">Create a password to lock this note</string>
+    <string name="lock">Lock</string>
+    <string name="password_hint">Password</string>
+    <string name="unlock_note">Unlock this note</string>
+    <string name="enter_key_to_unlock">Enter password to unlock note</string>
+    <string name="unlock">Unlock</string>
 
-    <string name="ecrypted_title">_-_-_-_-_-_  🔏</string>
-    <string name="key_to_decrypt">Enter your secret key to decrypt this note</string>
-    <string name="decrypt">Decrypt</string>
+    <string name="note_locked">Note locked 🔒</string>
+    <string name="note_unlocked">Note unlocked 🔓</string>
 
 
 </resources>
