@@ -243,6 +243,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.aboutFragment:
                 navController.navigate(R.id.aboutFragment);
                 break;
+            case R.id.voiceNotesFragment:
+                navController.navigate(R.id.voiceNotesFragment);
+                break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);
                 break;

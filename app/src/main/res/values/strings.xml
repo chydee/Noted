@@ -68,9 +68,11 @@
 
     <string name="note_locked">Note locked 🔒</string>
     <string name="note_unlocked">Note unlocked 🔓</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="voice_notes">Voice Notes</string>
 
-
+    <string name="pause_left">M26,23 V41</string>
+    <string name="pause_right_pause">M37,23 L37,32 L37,41</string>
+    <string name="pause_right_play">M26,23 L41,32 L27,41</string>
+    <string name="unlock_instruction">Unlock to view content</string>
+    <string name="lock_indicator">Note Locked</string>
 </resources>

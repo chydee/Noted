@@ -59,13 +59,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/noteEncrypted"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/noteLocked"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="end|top"
             android:layout_margin="16dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_shield" />
+            app:srcCompat="@drawable/ic_lock_note" />
 
     </com.google.android.material.card.MaterialCardView>
 </layout>
