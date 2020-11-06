@@ -19,6 +19,15 @@
             app:popExitAnim="@anim/fade_out"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_voiceNotesFragment"
+            app:destination="@id/voiceNotesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
@@ -68,5 +77,18 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out" />
+    <fragment
+        android:id="@+id/voiceNotesFragment"
+        android:name="com.chydee.notekeeper.ui.voice.VoiceNotesFragment"
+        android:label="VoiceNotesFragment"
+        tools:layout="@layout/voice_notes_fragment" />
+    <action
+        android:id="@+id/action_global_voiceNotesFragment"
+        app:destination="@id/voiceNotesFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"
+        app:popUpTo="@id/nav_graph" />
 
 </navigation>
