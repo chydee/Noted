@@ -28,6 +28,7 @@
     <string name="encrypt_note">Lock Note</string>
     <string name="search">Search</string>
     <string name="empty_notes">You haven\'t saved any note</string>
+    <string name="empty_voice_notes">You haven\'t saved any voice note</string>
 
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
@@ -67,6 +68,8 @@
 
     <string name="note_locked">Note locked 🔒</string>
     <string name="note_unlocked">Note unlocked 🔓</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

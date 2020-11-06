@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.voice.RecordNoteBottomSheet">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/grey_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins"
+            android:text="0:00"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/recordingAnimation"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/timer"
+            app:layout_constraintStart_toStartOf="@+id/timer"
+            app:layout_constraintTop_toBottomOf="@+id/timer"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/recording_animation" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/playPauseCircle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/play_pause_circle"
+            android:backgroundTint="@color/primaryDarkColor"
+            android:checked="false"
+            android:contentDescription="@null"
+            android:thumb="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/stopRecordingBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/recordingAnimation"
+            app:layout_constraintTop_toBottomOf="@+id/recordingAnimation" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/stopRecordingBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="24dp"
+            app:icon="@drawable/ic_outline_stop"
+            app:iconGravity="textEnd"
+            app:iconSize="48dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/playPauseCircle"
+            app:layout_constraintEnd_toEndOf="@+id/recordingAnimation"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/playPauseCircle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

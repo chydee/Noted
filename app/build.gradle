@@ -69,6 +69,7 @@ dependencies {
 
     //Life-cycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     kapt "androidx.lifecycle:lifecycle-compiler:$version_lifecycle"
 
     //Room components
@@ -88,6 +89,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$version_ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
 
-    implementation 'bouncycastle:bcprov-jdk16:136'
+    implementation "com.airbnb.android:lottie:$version_lottie"
 
 }
