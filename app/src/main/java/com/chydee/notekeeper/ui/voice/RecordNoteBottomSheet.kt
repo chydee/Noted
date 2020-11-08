@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Chronometer.OnChronometerTickListener
-import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.chydee.notekeeper.R
@@ -44,7 +42,8 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLottie()
-        binding.playPauseCircle.setOnCheckedChangeListener { buttonView, isChecked ->
+        setupChronometer()
+        binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
             onRecord(isChecked)
         }
 
@@ -57,14 +56,8 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupChronometer() {
         binding.durationCounter.apply {
-            format = "Time: %s"
+            format = "Duration: %s"
             base = SystemClock.elapsedRealtime()
-            onChronometerTickListener = OnChronometerTickListener { chronometer ->
-                if (SystemClock.elapsedRealtime() - chronometer.base >= 10000) {
-                    chronometer.base = SystemClock.elapsedRealtime()
-                    Toast.makeText(context, "Bing!", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 
