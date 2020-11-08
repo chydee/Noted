@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+
     private void hideWelcomingGroup(String title) {
         binding.hello.setVisibility(View.VISIBLE);
         binding.hello.setText(title);
