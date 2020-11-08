@@ -182,7 +182,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         isLocked = true
         this.password = password
         showSnackBar(getString(R.string.note_locked))
-        onBackPressed()
+        addOrUpdate()
+        findNavController().popBackStack()
     }
 
 }

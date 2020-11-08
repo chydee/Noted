@@ -46,7 +46,7 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
         note = requireArguments().getParcelable("Note")
         binding.continueBtn.setOnClickListener {
             if (note != null) {
-                if (binding.secretKeyField.takeText() === note?.password) {
+                if (binding.secretKeyField.takeText().contentEquals(note?.password!!)) {
                     val updatedNote = Note(
                             noteId = note!!.noteId,
                             noteTitle = note!!.noteTitle,
