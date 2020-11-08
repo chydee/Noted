@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="notes"
             type="com.chydee.notekeeper.data.model.Note" />
@@ -34,7 +36,7 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{notes.noteTitle}"
+                android:text="@{notes.isLocked ? @string/lock_indicator : notes.noteTitle }"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +52,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins"
                 android:maxLines="15"
-                android:text="@{notes.noteDetail}"
+                android:text="@{notes.isLocked ? @string/unlock_instruction:  notes.noteDetail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/noteTitle"
                 app:layout_constraintStart_toStartOf="@+id/noteTitle"
@@ -65,6 +67,7 @@
             android:layout_gravity="end|top"
             android:layout_margin="16dp"
             android:scaleType="centerInside"
+            android:visibility="@{notes.isLocked ? View.VISIBLE : View.GONE }"
             app:srcCompat="@drawable/ic_lock_note" />
 
     </com.google.android.material.card.MaterialCardView>

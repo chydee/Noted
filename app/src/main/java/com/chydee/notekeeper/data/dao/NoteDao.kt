@@ -13,7 +13,7 @@ interface NoteDao {
     /*
     * This method inserts the note into the database
     */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(note: Note): Completable
 
     @Insert

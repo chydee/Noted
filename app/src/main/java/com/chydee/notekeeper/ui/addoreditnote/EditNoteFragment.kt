@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.view.LayoutInflater
@@ -126,6 +127,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private fun setDisplay() {
         binding.noteTitle.imeOptions = EditorInfo.IME_ACTION_NEXT
+        binding.noteTitle.setRawInputType(InputType.TYPE_CLASS_TEXT)
         if (args.selectedNoteProperty != null) {
             binding.noteTitle.setText(args.selectedNoteProperty?.noteTitle)
             binding.noteContent.setText(args.selectedNoteProperty?.noteDetail)
@@ -204,6 +206,11 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         showSnackBar(getString(R.string.note_locked))
         addOrUpdate()
         findNavController().popBackStack()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        addOrUpdate()
     }
 
 }
