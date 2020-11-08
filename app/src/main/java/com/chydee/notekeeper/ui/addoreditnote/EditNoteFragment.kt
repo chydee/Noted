@@ -11,6 +11,7 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -124,6 +125,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     private fun setDisplay() {
+        binding.noteTitle.imeOptions = EditorInfo.IME_ACTION_NEXT
         if (args.selectedNoteProperty != null) {
             binding.noteTitle.setText(args.selectedNoteProperty?.noteTitle)
             binding.noteContent.setText(args.selectedNoteProperty?.noteDetail)
@@ -132,6 +134,24 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
         binding.noteContent.movementMethod = LinkMovementMethod.getInstance()
         Linkify.addLinks(binding.noteContent, Linkify.ALL)
+
+        binding.noteTitle.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_NEXT -> {
+                    binding.noteContent.requestFocus()
+                    true
+                }
+                EditorInfo.IME_ACTION_SEND -> {
+                    binding.noteContent.requestFocus()
+                    true
+                }
+                EditorInfo.IME_ACTION_UNSPECIFIED -> {
+                    binding.noteContent.requestFocus()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun sendNote() {

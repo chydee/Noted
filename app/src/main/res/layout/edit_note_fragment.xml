@@ -23,8 +23,9 @@
             android:focusable="auto"
             android:fontFamily="@font/poppins_medium"
             android:hint="@string/title_hint"
+            android:imeOptions="actionNext"
             android:importantForAutofill="no"
-            android:inputType="textCapWords|text|textAutoCorrect|textMultiLine|textEmailSubject"
+            android:inputType="textCapSentences|textAutoCorrect"
             android:padding="@dimen/text_area_padding"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/secondaryDarkColor" />
@@ -57,9 +58,9 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/vector_distinct_color"
                 android:text="Edited Oct 25, 2020 08:31PM"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/vector_distinct_color" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/optionsBtn"
