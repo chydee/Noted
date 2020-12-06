@@ -52,16 +52,27 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
             android:background="@drawable/play_pause_circle"
             android:backgroundTint="@color/primaryColor"
             android:checked="false"
             android:contentDescription="@null"
             android:thumb="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/recordingAnimation"
             app:layout_constraintStart_toStartOf="@+id/recordingAnimation"
             app:layout_constraintTop_toBottomOf="@+id/recordingAnimation" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/stopRecording"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/stop_recording"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/playPauseCircle"
+            app:layout_constraintStart_toStartOf="@+id/playPauseCircle"
+            app:layout_constraintTop_toBottomOf="@+id/playPauseCircle" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,10 +59,10 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         }
 
 
-        /* binding.stopRecordingBtn.setOnClickListener {
-             stopRecordingAnimation()
-             listener.onStopRecording()
-         }*/
+        binding.stopRecording.setOnClickListener {
+            stopRecording()
+            listener.onStopRecording()
+        }
     }
 
     private fun setupChronometer() {

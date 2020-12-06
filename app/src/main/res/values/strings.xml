@@ -75,4 +75,5 @@
     <string name="pause_right_play">M26,23 L41,32 L27,41</string>
     <string name="unlock_instruction">Unlock to view content</string>
     <string name="lock_indicator">Note Locked</string>
+    <string name="stop_recording">Stop Recording</string>
 </resources>
