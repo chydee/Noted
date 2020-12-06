@@ -29,6 +29,7 @@ import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -229,6 +230,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ActivityCompat.requestPermissions(this, permissions, 0);
         } else {
             navController.navigate(R.id.voiceNotesFragment);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            navController.navigate(R.id.voiceNotesFragment);
+        } else {
+            Snackbar.make(binding.getRoot(), "You need to give permission", Snackbar.LENGTH_LONG).show();
         }
     }
 

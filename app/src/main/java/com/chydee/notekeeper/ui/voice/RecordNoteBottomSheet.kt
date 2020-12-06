@@ -102,6 +102,7 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
             stop()
         }
         running = true
+        resetChronometer()
     }
 
     private fun pauseRecording() {
@@ -116,7 +117,7 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    fun resetChronometer(v: View?) {
+    private fun resetChronometer() {
         binding.durationCounter.base = SystemClock.elapsedRealtime()
         pauseOffset = 0
     }

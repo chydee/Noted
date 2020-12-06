@@ -56,6 +56,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             setOutputFile(output)
         }
+
+        val folder = getOutputDirectory(requireContext())
+        if (folder.exists()) {
+            val files = folder.listFiles()
+            files.forEach {
+                Log.d("Voice Note: ", it.name)
+            }
+        }
     }
 
     private fun startRecording() {
