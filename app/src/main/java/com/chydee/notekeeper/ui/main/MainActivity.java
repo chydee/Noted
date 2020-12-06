@@ -1,6 +1,8 @@
 package com.chydee.notekeeper.ui.main;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -217,6 +221,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void checkPermissionAndOpenFragment() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this, permissions, 0);
+        } else {
+            navController.navigate(R.id.voiceNotesFragment);
+        }
+    }
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -245,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navController.navigate(R.id.aboutFragment);
                 break;
             case R.id.voiceNotesFragment:
-                navController.navigate(R.id.voiceNotesFragment);
+                checkPermissionAndOpenFragment();
                 break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);

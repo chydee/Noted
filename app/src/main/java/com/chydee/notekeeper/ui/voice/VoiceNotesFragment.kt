@@ -1,10 +1,8 @@
 package com.chydee.notekeeper.ui.voice
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
@@ -14,8 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
@@ -45,7 +41,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(VoiceNotesViewModel::class.java)
-        requestPermission()
         binding.recordNewVoiceNote.setOnClickListener {
             RecordNoteBottomSheet.instanceOfThis(this).show(childFragmentManager, "RecordNotes")
         }
@@ -62,16 +57,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             setOutputFile(output)
         }
     }
-
-    private fun requestPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(),
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            val permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-            ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
-        }
-    }
-
 
     private fun startRecording() {
         try {
