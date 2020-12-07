@@ -31,7 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:spanCount="2"
-                tools:listitem="@layout/trash_item" />
+                tools:listitem="@layout/item_trash" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/emptyTrashState"

@@ -1,33 +1,32 @@
 package com.chydee.notekeeper.ui.voice
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
-import android.content.Context
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
-import java.io.File
+import com.chydee.notekeeper.utils.takeText
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import timber.log.Timber
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener {
 
     private lateinit var viewModel: VoiceNotesViewModel
-
     private lateinit var binding: VoiceNotesFragmentBinding
+    private lateinit var dialogBuilder: MaterialAlertDialogBuilder
+    private lateinit var dialogView: View
+    private lateinit var noteTitleField: TextInputEditText
 
     private var output: String? = null
+    private var noteTitle: String? = null
     private var mediaRecorder: MediaRecorder? = null
     private var state: Boolean = false
     private var recordingStopped: Boolean = false
@@ -44,11 +43,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         binding.recordNewVoiceNote.setOnClickListener {
             RecordNoteBottomSheet.instanceOfThis(this).show(childFragmentManager, "RecordNotes")
         }
-        output = "${getOutputDirectory(requireContext())}/${
-            SimpleDateFormat(
-                    getString(R.string.date_time_string_format), Locale.ROOT
-            ).format(System.currentTimeMillis())
-        }.mp3"
+        noteTitle = getString(R.string.new_voice_note)
+        output = "${getOutputDirectory(requireContext())}/$noteTitleField.mp3"
+        dialogBuilder = MaterialAlertDialogBuilder(requireContext())
         mediaRecorder = MediaRecorder()
         mediaRecorder?.apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -56,12 +53,11 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             setOutputFile(output)
         }
-
         val folder = getOutputDirectory(requireContext())
         if (folder.exists()) {
             val files = folder.listFiles()
             files.forEach {
-                Log.d("Voice Note: ", it.name)
+                Timber.tag("Voice Note: ").d(it.name)
             }
         }
     }
@@ -71,7 +67,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             mediaRecorder?.prepare()
             mediaRecorder?.start()
             state = true
-            Toast.makeText(context, "Recording started!", Toast.LENGTH_SHORT).show()
+            Timber.d("Recording started!")
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         } catch (e: IOException) {
@@ -85,16 +81,20 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             mediaRecorder?.release()
             state = false
         } else {
-            Toast.makeText(context, "You are not recording right now!", Toast.LENGTH_SHORT).show()
+            Timber.d("You are not recording right now!")
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
+
     private fun pauseRecording() {
         if (state) {
             if (!recordingStopped) {
-                Toast.makeText(context, "Stopped!", Toast.LENGTH_SHORT).show()
-                mediaRecorder?.pause()
+                Timber.d("Stopped!")
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mediaRecorder?.pause()
+                } else {
+                    stopRecording()
+                }
                 recordingStopped = true
             } else {
                 resumeRecording()
@@ -103,22 +103,31 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     }
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
-    @TargetApi(Build.VERSION_CODES.N)
     private fun resumeRecording() {
-        Toast.makeText(context, "Resume!", Toast.LENGTH_SHORT).show()
-        mediaRecorder?.resume()
+        Timber.d("Resume!")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mediaRecorder?.resume()
+        } else {
+            startRecording()
+        }
         recordingStopped = false
     }
 
-    fun getAppSpecificAudios(context: Context, albumName: String): File? {
-        // Get the pictures directory that's inside the app-specific directory on
-        // external storage.
-        val file = File(context.getExternalFilesDir(
-                Environment.DIRECTORY_MUSIC), albumName)
-        if (!file.mkdirs()) {
-            Log.e("VoiceNotesFragment", "Directory not created")
-        }
-        return file
+    private fun launchDialog() {
+        noteTitleField = dialogView.findViewById(R.id.noteTitle)
+        dialogBuilder.setView(dialogView)
+                .setTitle(getString(R.string.save_note))
+                .setMessage(getString(R.string.save_note_hint))
+                .setPositiveButton(getString(R.string.save)) { dialog, _ ->
+                    noteTitle = noteTitleField.takeText()
+                    stopRecording()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    showSnackBar(getString(R.string.recording_cancelled))
+                    dialog.dismiss()
+                }
+                .show()
     }
 
     override fun onStartRecording() {
@@ -133,7 +142,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
     override fun onStopRecording() {
         //Stop Recording and Release Media
-        stopRecording()
+        dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_note_name, null, false)
+        pauseRecording()
+        launchDialog()
     }
 
 }

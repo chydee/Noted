@@ -5,8 +5,6 @@ import androidx.databinding.library.BuildConfig
 import timber.log.Timber
 
 class NotedApp : Application() {
-
-
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

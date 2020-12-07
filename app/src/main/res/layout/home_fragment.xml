@@ -109,7 +109,7 @@
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
-                    tools:listitem="@layout/note_item" />
+                    tools:listitem="@layout/item_note" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

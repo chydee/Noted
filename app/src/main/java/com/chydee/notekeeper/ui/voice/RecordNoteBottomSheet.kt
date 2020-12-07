@@ -5,7 +5,6 @@ import android.animation.Animator
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.airbnb.lottie.LottieDrawable
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.RecordNoteSheetLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
 
 
 class RecordNoteBottomSheet : BottomSheetDialogFragment() {
@@ -47,6 +47,10 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLottie()
         setupChronometer()
+        onClickEvents()
+    }
+
+    private fun onClickEvents() {
         binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
             if (ContextCompat.checkSelfPermission(requireContext(),
                             Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireContext(),
@@ -131,20 +135,20 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         lottieView.addAnimatorListener(object :
                 Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
-                Log.e("Animation:", "started")
+                Timber.tag("Animation:").e("started")
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                Log.e("Animation:", "ended")
+                Timber.tag("Animation:").e("ended")
 
             }
 
             override fun onAnimationCancel(animation: Animator) {
-                Log.e("Animation:", "cancel")
+                Timber.tag("Animation:").e("cancel")
             }
 
             override fun onAnimationRepeat(animation: Animator) {
-                Log.e("Animation:", "repeat")
+                Timber.tag("Animation:").e("repeat")
             }
         })
     }
