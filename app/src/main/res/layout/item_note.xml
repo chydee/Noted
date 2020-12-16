@@ -11,8 +11,6 @@
             name="notes"
             type="com.chydee.notekeeper.data.model.Note" />
     </data>
-
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/noteCard"
         style="@style/Widget.MaterialComponents.CardView.NoteItems"

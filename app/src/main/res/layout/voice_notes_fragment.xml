@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
-            android:visibility="gone"
+            android:visibility="visible"
+            tools:listitem="@layout/item_voice_note"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/appCompatImageView"

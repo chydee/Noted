@@ -27,7 +27,7 @@ import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ViewModelFactory
 import com.chydee.notekeeper.utils.takeText
 import com.chydee.notekeeper.utils.toTrash
-import kotlinx.android.synthetic.main.note_item.*
+import kotlinx.android.synthetic.main.edit_note_fragment.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
