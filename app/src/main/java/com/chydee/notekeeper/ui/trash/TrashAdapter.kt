@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Trash
-import com.chydee.notekeeper.databinding.TrashItemBinding
+import com.chydee.notekeeper.databinding.ItemTrashBinding
 
 class TrashAdapter : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
 
@@ -15,10 +15,10 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
     var trashes: ArrayList<Trash> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrashViewHolder {
-        return TrashViewHolder(TrashItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return TrashViewHolder(ItemTrashBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    inner class TrashViewHolder(private var binding: TrashItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TrashViewHolder(private var binding: ItemTrashBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(trash: Trash) {
             binding.trash = trash
             if (trash.color != -1) {

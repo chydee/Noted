@@ -77,7 +77,6 @@
     <string name="lock_indicator">Note Locked</string>
     <string name="stop_recording">Stop Recording</string>
     <string name="recording_cancelled">Operation cancelled!</string>
-    <string name="save_note">Save Note</string>
     <string name="save_note_hint">Enter Note Title</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>

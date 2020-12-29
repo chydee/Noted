@@ -9,7 +9,7 @@ import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Note
-import com.chydee.notekeeper.databinding.NoteItemBinding
+import com.chydee.notekeeper.databinding.ItemNoteBinding
 import com.chydee.notekeeper.utils.AutoUpdatableAdapter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,7 +35,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(NoteItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return NoteViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -48,7 +48,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
         super.onAttachedToRecyclerView(recyclerView)
     }
 
-    inner class NoteViewHolder(private var binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NoteViewHolder(private var binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note, isActivated: Boolean = false) {
             binding.notes = note
             itemView.isActivated = isActivated

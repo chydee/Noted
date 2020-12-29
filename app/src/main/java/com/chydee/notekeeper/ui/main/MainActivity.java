@@ -1,6 +1,7 @@
 package com.chydee.notekeeper.ui.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -24,15 +25,26 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
+import com.chydee.notekeeper.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
+
+/**
+ * @author Desmond Ngwuta
+ * @email: demsondchidi311@gmail.com
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DrawerLayout drawerLayout;
@@ -46,15 +58,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private MaterialToolbar toolBar;
 
+    private WorkManager workManager;
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        setUpAppBar();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
+        workManager = WorkManager.getInstance(getApplicationContext());
+        workerClearTrashInTheBackground();
+        setUpAppBar();
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment,
                 R.id.editNoteFragment,
@@ -69,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         greetUser();
         setupSharedPreferences();
 
+        // Listens tp the NavController for DestinationChange and
+        // Hides or show views based on the destinationID
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.settingsFragment:
@@ -91,13 +108,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-
+    /**
+     * Hides views for when the currentDestination is set to !homeFragment
+     */
     private void hideWelcomingGroup(String title) {
         binding.hello.setVisibility(View.VISIBLE);
         binding.hello.setText(title);
         binding.greetings.setVisibility(View.GONE);
     }
 
+    /**
+     * Shows views for when the currentDestination is set to homeFragment
+     */
     private void showWelcomingGroup() {
         binding.hello.setVisibility(View.VISIBLE);
         binding.hello.setText(getString(R.string.hello));
@@ -105,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.burgerMenu.setVisibility(View.VISIBLE);
     }
 
+    //Set up AppBar
     private void setUpAppBar() {
         toolBar = binding.getRoot().findViewById(R.id.topAppBar);
         setSupportActionBar(toolBar);
@@ -128,11 +151,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }));
     }
 
+    //Sets up NevController with ActionBar
     private void setUpNavController() {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
     }
 
+    // Displays a greeting on startScreen based on the current time of the day
     private void greetUser() {
         Calendar c = Calendar.getInstance();
         if (c.get(Calendar.HOUR_OF_DAY) <= 11) {
@@ -148,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //Initialise and set up NavDrawer
     private void initNavDrawer() {
         drawerLayout = findViewById(R.id.mainDrawer);
         toggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -172,17 +198,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolBar.setNavigationIcon(null);
     }
 
-
+    // Closes NavDrawer when the @{link SwitchButton} burgerMenu is clicked and isChecked is set to false
     private void closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
         binding.burgerMenu.setChecked(false);
     }
 
+    // Opens NavDrawer when the @{link SwitchButton} burgerMenu is clicked and isChecked is set to true
     private void openDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);
         binding.burgerMenu.setChecked(true);
     }
 
+    // Set up SharedPref
     private void setupSharedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
@@ -190,11 +218,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadThemeFromPreference(sharedPreferences);
     }
 
+    // Loads Theme based onn the values in the SharedPreference
     private void loadThemeFromPreference(SharedPreferences sharedPreferences) {
         changeAppTheme(sharedPreferences.getString(getString(R.string.pref_theme_key), getString(R.string.mode_system)));
     }
 
-    // Method to set Color of Text.
+    /**
+     * Changes the App's Theme based on
+     *
+     * @param theme is a String value of the AppCompatDelegate.<Mode>
+     *              then gets the Delegate and applyDayNight() theme.
+     */
     private void changeAppTheme(String theme) {
         Log.d("Noted", theme);
         switch (theme) {
@@ -221,6 +255,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Checks and ensures user already allowed  permissions for Manifest.permission.RECORD_AUDIO &
+     * Manifest.permission.WRITE_EXTERNAL_STORAGE.
+     * if these permissions have been granted then it inflates the VoiceNotesFragment else it prompts the user to allow
+     * the permissions
+     */
     private void checkPermissionAndOpenFragment() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
@@ -230,6 +270,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             navController.navigate(R.id.voiceNotesFragment);
         }
+    }
+
+
+    /**
+     * creates and enqueues a work in the background using the WorkManager.
+     * clears the trash every 7 days intervals
+     */
+    private void workerClearTrashInTheBackground() {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                .setRequiresBatteryNotLow(true)
+                .setRequiresCharging(false)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+                ClearTrashWorker.class, 7, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .build();
+        workManager.enqueue(periodicWorkRequest);
     }
 
     @Override
