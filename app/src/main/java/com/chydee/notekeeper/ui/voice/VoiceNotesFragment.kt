@@ -53,6 +53,8 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             setOutputFile(output)
         }
+
+        // Create a new directory
         val folder = getOutputDirectory(requireContext())
         if (folder.exists()) {
             val files = folder.listFiles()
@@ -62,6 +64,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         }
     }
 
+    /**
+     *  Prepare and start recording
+     */
     private fun startRecording() {
         try {
             mediaRecorder?.prepare()
@@ -75,6 +80,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         }
     }
 
+    /**
+     *  Stop Recording and release recorder
+     */
     private fun stopRecording() {
         if (state) {
             mediaRecorder?.stop()
@@ -85,7 +93,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         }
     }
 
-
+    /**
+     *  Pause Recording
+     */
     private fun pauseRecording() {
         if (state) {
             if (!recordingStopped) {
@@ -103,6 +113,9 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     }
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
+    /**
+     *  Resume Recording after pause
+     */
     private fun resumeRecording() {
         Timber.d("Resume!")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -113,6 +126,10 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         recordingStopped = false
     }
 
+    /**
+     *  show an MaterialAlertDialog and prompt to enter file name before
+     *  exiting process completely
+     */
     private fun launchDialog() {
         noteTitleField = dialogView.findViewById(R.id.noteTitle)
         dialogBuilder.setView(dialogView)
