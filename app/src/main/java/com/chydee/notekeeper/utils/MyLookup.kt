@@ -4,14 +4,16 @@ import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.ui.home.NoteAdapter
+import com.chydee.notekeeper.ui.voice.VoiceNotesAdapter
 
-class MyLookup(private val recyclerView: RecyclerView) :
+class MyLookup(private val recyclerView: RecyclerView, private val callingClassID: Int) :
         ItemDetailsLookup<Long>() {
-    override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
+    override fun getItemDetails(event: MotionEvent): ItemDetailsLookup.ItemDetails<Long>? {
         val view = recyclerView.findChildViewUnder(event.x, event.y)
-        if (view != null) {
-            return (recyclerView.getChildViewHolder(view) as NoteAdapter.NoteViewHolder).getItemDetails()
-        }
-        return null
+        return if (view != null && callingClassID == 1) {
+            (recyclerView.getChildViewHolder(view) as NoteAdapter.NoteViewHolder).getItemDetails()
+        } else if (view != null && callingClassID == 2) {
+            (recyclerView.getChildViewHolder(view) as VoiceNotesAdapter.VoiceNoteViewHolder).getItemDetails()
+        } else null
     }
 }

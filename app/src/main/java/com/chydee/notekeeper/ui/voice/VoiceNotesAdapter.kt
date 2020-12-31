@@ -10,6 +10,8 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.databinding.ItemVoiceNoteBinding
 import com.chydee.notekeeper.utils.AutoUpdatableAdapter
+import com.chydee.notekeeper.utils.remove
+import com.chydee.notekeeper.utils.show
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,8 +52,16 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
 
     inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: File, isActivated: Boolean = false) {
+            binding.file = note
             itemView.isActivated = isActivated
             binding.container.strokeColor = if (isActivated) Color.GREEN else Color.GRAY
+            binding.playPauseCircle.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    binding.optionsArea.show()
+                } else {
+                    binding.optionsArea.remove()
+                }
+            }
             binding.executePendingBindings()
         }
 
@@ -93,6 +103,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         holder.itemView.setOnClickListener {
             listener.onFileClicked(note)
         }
+
     }
 
     override fun getItemCount(): Int {

@@ -1,15 +1,11 @@
 package com.chydee.notekeeper.ui.voice
 
-import android.Manifest
 import android.animation.Animator
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.chydee.notekeeper.R
@@ -58,20 +54,14 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      */
     private fun onClickEvents() {
         binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
-            if (ContextCompat.checkSelfPermission(requireContext(),
-                            Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireContext(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                val permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
-            } else {
-                onRecord(isChecked)
-            }
+            onRecord(isChecked)
         }
 
 
         binding.stopRecording.setOnClickListener {
             stopRecording()
             listener.onStopRecording()
+            dismiss()
         }
     }
 

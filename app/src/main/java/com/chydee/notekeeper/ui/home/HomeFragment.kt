@@ -115,7 +115,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
                 "mySelection",
                 binding.recyclerView,
                 StableIdKeyProvider(binding.recyclerView),
-                MyLookup(binding.recyclerView),
+                MyLookup(binding.recyclerView, 1),
                 StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
                 SelectionPredicates.createSelectAnything()

@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/noteTitle"
+            android:id="@+id/noteTitleTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="text"
