@@ -15,8 +15,10 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/dp_8"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_8"
+        android:minWidth="300dp"
+        android:minHeight="50dp"
         app:cardBackgroundColor="@color/grey_80"
         app:cardCornerRadius="@dimen/dp_16"
         app:rippleColor="@color/secondaryLightColor"
@@ -46,13 +48,13 @@
                     android:fontFamily="@font/poppins_medium"
                     android:singleLine="true"
                     android:text="@{file.name}"
-                    android:textColor="@color/colorWhite"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_18"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/playPauseCircle"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="File Name" />
 
                 <androidx.appcompat.widget.SwitchCompat
