@@ -134,23 +134,31 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
         adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
             override fun onFileClicked(file: File) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onPlayPauseClicked() {
-                TODO("Not yet implemented")
+
             }
 
             override fun onStopPlaying() {
-                TODO("Not yet implemented")
+
             }
 
             override fun onSkipForward() {
-                TODO("Not yet implemented")
+
             }
 
             override fun onSkipBackward() {
-                TODO("Not yet implemented")
+
+            }
+
+            override fun onRenameClicked(file: File) {
+
+            }
+
+            override fun onDeleteClicked(file: File) {
+
             }
         })
     }

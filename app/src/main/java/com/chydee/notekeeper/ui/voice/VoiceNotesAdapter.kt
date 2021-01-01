@@ -1,7 +1,6 @@
 package com.chydee.notekeeper.ui.voice
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
@@ -28,24 +27,60 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         return VoiceNoteViewHolder(ItemVoiceNoteBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) : RecyclerView.ViewHolder(binding.root), View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+        private var currentFile: File? = null
         fun bind(file: File) {
-            //binding.file = file
-            binding.fileName.text = file.name
-            binding.playPauseCircle.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.file = file
+            this.currentFile = file
+            //binding.fileName.text = file.name
+            binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     binding.optionsArea.show()
                 } else {
                     binding.optionsArea.remove()
                 }
             }
+            itemView.setOnCreateContextMenuListener(this)
             binding.executePendingBindings()
         }
+
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            menu?.setHeaderTitle("Options")
+            val renameOption: MenuItem? = menu?.add(Menu.NONE, 1, 1, "Rename")
+            val deleteOption: MenuItem? = menu?.add(Menu.NONE, 2, 2, "Delete")
+
+            renameOption?.setOnMenuItemClickListener(this)
+            deleteOption?.setOnMenuItemClickListener(this)
+        }
+
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            if (currentFile != null) {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    return when (item?.itemId) {
+                        1 -> {
+                            listener.onRenameClicked(file = currentFile!!)
+                            true
+                        }
+                        2 -> {
+                            listener.onDeleteClicked(currentFile!!)
+                            true
+                        }
+                        else -> {
+                            false
+                        }
+                    }
+                }
+            }
+            return false
+        }
+
+
     }
 
-    /*override fun getItemId(position: Int): Long {
+    override fun getItemId(position: Int): Long {
         return position.toLong()
-    }*/
+    }
 
     interface OnItemClickListener {
         fun onFileClicked(file: File)
@@ -53,6 +88,8 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         fun onStopPlaying()
         fun onSkipForward()
         fun onSkipBackward()
+        fun onRenameClicked(file: File)
+        fun onDeleteClicked(file: File)
     }
 
     internal fun setOnClickListener(listener: OnItemClickListener) {
@@ -64,7 +101,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         itemsFilter = ArrayList(voiceNotes)
     }
 
-    internal fun getNotes() = this.items
+    internal fun getItems() = this.items
 
     override fun onBindViewHolder(holder: VoiceNotesAdapter.VoiceNoteViewHolder, position: Int) {
         val voiceNote = items[position]
