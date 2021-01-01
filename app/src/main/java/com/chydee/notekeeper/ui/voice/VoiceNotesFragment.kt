@@ -10,11 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
@@ -71,6 +71,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(VoiceNotesViewModel::class.java)
+        adapter = VoiceNotesAdapter()
         hideNavigationIcon()
         binding.recordNewVoiceNote.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireActivity(),
@@ -80,29 +81,89 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 ActivityCompat.requestPermissions(requireActivity(), recordAudioPermission, REQUEST_RECORD_AUDIO_PERMISSION)
             }
         }
-        retrieveVoiceNotes()
-        setupRV()
+        checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
         dialogBuilder = MaterialAlertDialogBuilder(requireContext())
     }
 
-
-    private fun retrieveVoiceNotes() {
+    /**
+     *  Check if the  Manifest.permission.WRITE_EXTERNAL_STORAGE and Manifest.permission.READ_EXTERNAL_STORAGE
+     *  has been granted by the user and then retrieve VoiceNotes from App Specific Storage else
+     *  !retrieve any VoiceNote and
+     *  Show reason why they should grant the permission
+     */
+    private fun checkIfFilePermissionsAreGrantedAndFetchVoiceNotes() {
         if (ContextCompat.checkSelfPermission(requireActivity(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            val dir = getOutputDirectory(requireContext())
-            if (dir.exists()) {
-                val files = dir.listFiles()
-                files?.forEach {
-                    Log.d("Voice Note: ", it.name)
-                }
-            } else {
-                Timber.e("Folder no exist")
-            }
+            fetchAndDisplayVoiceNotes()
         } else {
             ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
         }
-
     }
+
+    /**
+     *
+     *  Fetch And Display Voice Notes
+     */
+    private fun fetchAndDisplayVoiceNotes() {
+        viewModel.fetchAudioFiles(getOutputDirectory(requireContext()))
+        loadVoiceNotes()
+    }
+
+    /**
+     *  Observe voiceNotes and load to RecyclerView
+     */
+    private fun loadVoiceNotes() {
+        viewModel.voiceNotes.observe(viewLifecycleOwner, {
+            if (it != null && it.isNotEmpty()) {
+                setupRecyclerView(it as ArrayList<File>)
+            } else {
+                showEmptyState()
+            }
+        })
+    }
+
+    /**
+     *  Set up the RecyclerView and set adapter
+     */
+    private fun setupRecyclerView(audios: ArrayList<File>) {
+        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.vnRecyclerView.layoutManager = manager
+        binding.vnRecyclerView.adapter = adapter
+        adapter.submitList(audios)
+        adapter.notifyDataSetChanged()
+
+        adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
+            override fun onFileClicked(file: File) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onPlayPauseClicked() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStopPlaying() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSkipForward() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSkipBackward() {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    /**
+     *  Hide the RecyclerView and Show the empty state
+     *  when there's no voice note available
+     */
+    private fun showEmptyState() {
+        binding.vnRecyclerView.hide()
+        binding.emptyNotesState.show()
+    }
+
 
     /**
      *  Prepare and start recording
@@ -193,53 +254,10 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 .show()
     }
 
-    private fun setupRV() {
-        adapter = VoiceNotesAdapter()
-        /*val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.vnRecyclerView.layoutManager = manager*/
-        binding.vnRecyclerView.adapter = adapter
-        val dir = getOutputDirectory(requireContext())
-        if (dir.exists()) {
-            val files = dir.listFiles()
-            val vns = ArrayList<File>()
-            files?.forEach { vns.add(it) }
-            if (vns.isNotEmpty()) {
-                adapter.setNotes(vns)
-                adapter.notifyDataSetChanged()
-            } else {
-                binding.vnRecyclerView.hide()
-                binding.emptyNotesState.show()
-            }
-        } else {
-            binding.vnRecyclerView.hide()
-            binding.emptyNotesState.show()
-        }
-
-
-        adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
-
-            override fun onFileClicked(file: File) {
-                Toast.makeText(context, file.name, Toast.LENGTH_LONG).show()
-            }
-
-            override fun onPlayPauseClicked() {
-            }
-
-            override fun onStopPlaying() {
-            }
-
-            override fun onSkipForward() {
-            }
-
-            override fun onSkipBackward() {
-            }
-        })
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_ACCESS_FILES_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            retrieveVoiceNotes()
+            checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
         } else {
             //TODO: Show reason for need of permission and ask again
             Snackbar.make(binding.root, "You need to give permission", Snackbar.LENGTH_LONG).show()

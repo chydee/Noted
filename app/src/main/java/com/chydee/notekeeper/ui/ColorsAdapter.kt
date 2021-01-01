@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.data.model.Color
-import com.chydee.notekeeper.databinding.ColorItemBinding
+import com.chydee.notekeeper.databinding.ItemColorBinding
 
 class ColorsAdapter : ListAdapter<Color, ColorsAdapter.MyViewHolder>(DiffCallback) {
 
@@ -17,7 +17,7 @@ class ColorsAdapter : ListAdapter<Color, ColorsAdapter.MyViewHolder>(DiffCallbac
     private lateinit var listener: OnItemClickListener
 
 
-    inner class MyViewHolder(val binding: ColorItemBinding) :
+    inner class MyViewHolder(val binding: ItemColorBinding) :
             RecyclerView.ViewHolder(binding.root) {
         fun bind(color: Color) {
             with(binding) {
@@ -35,7 +35,7 @@ class ColorsAdapter : ListAdapter<Color, ColorsAdapter.MyViewHolder>(DiffCallbac
 
     private fun from(parent: ViewGroup): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ColorItemBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemColorBinding.inflate(layoutInflater, parent, false)
         return MyViewHolder(binding)
     }
 

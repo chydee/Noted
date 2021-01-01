@@ -51,7 +51,7 @@
             android:layout_marginTop="16dp"
             android:layout_height="wrap_content"
             tools:itemCount="1"
-            tools:listitem="@layout/color_item" />
+            tools:listitem="@layout/item_color" />
     </LinearLayout>
 
 </layout>

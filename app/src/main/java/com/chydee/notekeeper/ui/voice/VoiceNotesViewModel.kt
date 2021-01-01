@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -13,6 +14,11 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class VoiceNotesViewModel : ViewModel() {
+
+    private val _voiceNotes = MutableLiveData<List<File>>()
+    val voiceNotes: LiveData<List<File>>
+        get() = _voiceNotes
+
     private val _isFileRenaming = MutableLiveData<Boolean>()
     private val _isFileDeleting = MutableLiveData<Boolean>()
 
@@ -28,16 +34,19 @@ class VoiceNotesViewModel : ViewModel() {
         get() = _isFileDeleting
 
     fun fetchAudioFiles(dir: File) {
-        val filesList = ArrayList<File>()
-        val files = dir.listFiles()
-        files?.forEach { file ->
-            if (file.isDirectory) {
-                fetchAudioFiles(file)
-            } else {
-                if (file.name.endsWith(".pdf")) {
-                    filesList.add(file)
+        viewModelScope.launch {
+            val filesList = ArrayList<File>()
+            val files = dir.listFiles()
+            files?.forEach { file ->
+                if (file.isDirectory) {
+                    fetchAudioFiles(file)
+                } else {
+                    if (file.name.endsWith(".mp3")) {
+                        filesList.add(file)
+                    }
                 }
             }
+            _voiceNotes.postValue(filesList)
         }
     }
 
@@ -71,5 +80,10 @@ class VoiceNotesViewModel : ViewModel() {
         withContext(Dispatchers.Main) {
             _isFileDeleting.postValue(false)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }

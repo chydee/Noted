@@ -12,7 +12,7 @@ class MyLookup(private val recyclerView: RecyclerView, private val callingClassI
         return if (view != null && callingClassID == 1) {
             (recyclerView.getChildViewHolder(view) as NoteAdapter.NoteViewHolder).getItemDetails()
             /* } else if (view != null && callingClassID == 2) {
-                 (recyclerView.getChildViewHolder(view) as VoiceNotesAdapter.VoiceNoteViewHolder).getItemDetails()*/
+                 (recyclerView.getChildViewHolder(view) as VoiceNotesAdapter.ViewHolder).getItemDetails()*/
         } else null
     }
 }

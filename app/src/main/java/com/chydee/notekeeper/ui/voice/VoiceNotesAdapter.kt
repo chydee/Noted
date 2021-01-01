@@ -59,7 +59,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         this.listener = listener
     }
 
-    internal fun setNotes(voiceNotes: ArrayList<File>) {
+    internal fun submitList(voiceNotes: ArrayList<File>) {
         this.items = voiceNotes
         itemsFilter = ArrayList(voiceNotes)
     }
