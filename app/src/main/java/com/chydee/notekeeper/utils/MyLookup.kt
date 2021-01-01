@@ -4,7 +4,6 @@ import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.ui.home.NoteAdapter
-import com.chydee.notekeeper.ui.voice.VoiceNotesAdapter
 
 class MyLookup(private val recyclerView: RecyclerView, private val callingClassID: Int) :
         ItemDetailsLookup<Long>() {
@@ -12,8 +11,8 @@ class MyLookup(private val recyclerView: RecyclerView, private val callingClassI
         val view = recyclerView.findChildViewUnder(event.x, event.y)
         return if (view != null && callingClassID == 1) {
             (recyclerView.getChildViewHolder(view) as NoteAdapter.NoteViewHolder).getItemDetails()
-        } else if (view != null && callingClassID == 2) {
-            (recyclerView.getChildViewHolder(view) as VoiceNotesAdapter.VoiceNoteViewHolder).getItemDetails()
+            /* } else if (view != null && callingClassID == 2) {
+                 (recyclerView.getChildViewHolder(view) as VoiceNotesAdapter.VoiceNoteViewHolder).getItemDetails()*/
         } else null
     }
 }

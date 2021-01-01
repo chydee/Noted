@@ -10,14 +10,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
+import com.chydee.notekeeper.utils.hide
+import com.chydee.notekeeper.utils.show
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -69,6 +71,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(VoiceNotesViewModel::class.java)
+        hideNavigationIcon()
         binding.recordNewVoiceNote.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireActivity(),
                             Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
@@ -192,38 +195,31 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
     private fun setupRV() {
         adapter = VoiceNotesAdapter()
-        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.vnRecyclerView.layoutManager = manager
+        /*val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.vnRecyclerView.layoutManager = manager*/
         binding.vnRecyclerView.adapter = adapter
         val dir = getOutputDirectory(requireContext())
         if (dir.exists()) {
             val files = dir.listFiles()
             val vns = ArrayList<File>()
             files?.forEach { vns.add(it) }
-            adapter.setNotes(vns)
-            adapter.notifyDataSetChanged()
+            if (vns.isNotEmpty()) {
+                adapter.setNotes(vns)
+                adapter.notifyDataSetChanged()
+            } else {
+                binding.vnRecyclerView.hide()
+                binding.emptyNotesState.show()
+            }
         } else {
-            binding.emptyNotesState.visibility = View.VISIBLE
+            binding.vnRecyclerView.hide()
+            binding.emptyNotesState.show()
         }
-
-
-        /*tracker = SelectionTracker.Builder(
-                "mySelection",
-                binding.vnRecyclerView,
-                StableIdKeyProvider(binding.vnRecyclerView),
-                MyLookup(binding.vnRecyclerView, 2),
-                StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-                SelectionPredicates.createSelectAnything()
-        ).build()
-
-        adapter.tracker = tracker*/
-        //observeTracker()
 
 
         adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
 
             override fun onFileClicked(file: File) {
+                Toast.makeText(context, file.name, Toast.LENGTH_LONG).show()
             }
 
             override fun onPlayPauseClicked() {
