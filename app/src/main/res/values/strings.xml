@@ -81,4 +81,10 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="new_voice_note">New Voice Note</string>
+    <string name="new_name_instruction">Enter a new name for your note file</string>
+    <string name="new_name_hint">ABCD</string>
+    <string name="file_extension">.mp3</string>
+    <string name="cancel">Cancel</string>
+    <string name="rename">Rename</string>
+    <string name="progress_info">Renaming your note file. Please wait..</string>
 </resources>

@@ -1,29 +1,105 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_text_field"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/new_name_instruction"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/save_note_hint"
-        android:textColorHint="@color/primaryDarkColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/noteTitleTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:singleLine="true" />
+        <EditText
+            android:id="@+id/etFileName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.75"
+            android:background="@drawable/et_background"
+            android:padding="10dp"
+            android:text="@string/new_name_hint"
+            android:textColor="@color/primaryTextColor"
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.25"
+            android:text="@string/file_extension"
+            android:textColor="@color/primaryTextColor" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linRenamingFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/primaryDarkColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/progress_info"
+            android:textColor="@color/primaryTextColor" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:backgroundTint="@color/grey_60" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="@string/rename"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:backgroundTint="@color/primaryDarkColor" />
+
+    </LinearLayout>
+
+</LinearLayout>
