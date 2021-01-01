@@ -2,6 +2,7 @@ package com.chydee.notekeeper.ui.voice
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -10,19 +11,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.hide
+import com.chydee.notekeeper.utils.isContainsSpecialCharacter
 import com.chydee.notekeeper.utils.show
+import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.dialog_note_name.*
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -51,8 +55,8 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
     private lateinit var adapter: VoiceNotesAdapter
 
-    private lateinit var deleteList: ArrayList<File>
-    private var tracker: SelectionTracker<Long>? = null
+    private lateinit var renameDialog: Dialog
+    private lateinit var renameDialogView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -242,25 +246,68 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         recordingStopped = false
     }
 
+    private fun initDialogs() {
+        renameDialog = Dialog(requireContext())
+        renameDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_note_name, null)
+        renameDialog.setContentView(renameDialogView)
+    }
+
     /**
      *  show an MaterialAlertDialog and prompt to enter file name before
      *  exiting process completely
      */
-    private fun launchDialog() {
-        noteTitleField = dialogView.findViewById(R.id.noteTitleTextInputEditText)
-        dialogBuilder.setView(dialogView)
-                .setTitle(getString(R.string.save_note))
-                .setMessage(getString(R.string.save_note_hint))
-                .setPositiveButton(getString(R.string.save)) { dialog, _ ->
-                    //stopRecording("${noteTitleField.takeText()}.mp3")
-                    dialog.dismiss()
+    private fun renameVoiceNoteFile(item: File?) {
+        renameDialogView.apply {
+            val fileName = item?.name?.split(".")?.get(0)
+            etFileName.setText(fileName.toString())
+
+            btnGoBack.setOnClickListener {
+                renameDialog.cancel()
+            }
+
+            btnRename.setOnClickListener {
+
+                var name: String = ""
+
+                if (etFileName.takeText().isEmpty()) {
+                    etFileName.error = "Cannot be empty"
+                    return@setOnClickListener
                 }
-                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                    showSnackBar(getString(R.string.recording_cancelled))
-                    dialog.dismiss()
+
+                if (etFileName.isContainsSpecialCharacter()) {
+                    etFileName.error = "Cannot contain special characters"
+                    return@setOnClickListener
                 }
-                .show()
+
+                etFileName.error = null
+
+                if (etFileName.takeText().endsWith(".mp3")) {
+                    name = etFileName.takeText().split(".mp3")[0]
+                }
+
+                Timber.d("filename: $name")
+
+                val fromfile = File(getOutputDirectory(requireActivity()), item?.name.toString())
+                val newFile = File(getOutputDirectory(requireActivity()), "$name.pdf")
+                try {
+                    Timber.d("file last modified: ${newFile.lastModified()}")
+                    viewModel.renameFile(fromfile, newFile)
+
+                } catch (e: IOException) {
+                    //Toast.makeText(this@MainActivity, SyncStateContract.Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
+        renameDialog.show()
+
+        val window = renameDialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+
+
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
