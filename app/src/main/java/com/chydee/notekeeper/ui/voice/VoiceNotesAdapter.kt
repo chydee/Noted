@@ -44,6 +44,9 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             binding.executePendingBindings()
         }
 
+        /**
+         *  Create Context Menu
+         */
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             menu?.setHeaderTitle("Options")
             val renameOption: MenuItem? = menu?.add(Menu.NONE, 1, 1, "Rename")
@@ -53,6 +56,9 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             deleteOption?.setOnMenuItemClickListener(this)
         }
 
+        /**
+         * Listen to MenuItem's click event and perform set listener
+         */
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             if (currentFile != null) {
                 val position = adapterPosition
