@@ -70,21 +70,6 @@
     <string name="note_unlocked">Note unlocked 🔓</string>
     <string name="voice_notes">Voice Notes</string>
 
-    <string name="pause_left">M26,23 V41</string>
-    <string name="pause_right_pause">M37,23 L37,32 L37,41</string>
-    <string name="pause_right_play">M26,23 L41,32 L27,41</string>
     <string name="unlock_instruction">Unlock to view content</string>
     <string name="lock_indicator">Note Locked</string>
-    <string name="stop_recording">Stop Recording</string>
-    <string name="recording_cancelled">Operation cancelled!</string>
-    <string name="save_note_hint">Enter Note Title</string>
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
-    <string name="new_voice_note">New Voice Note</string>
-    <string name="new_name_instruction">Enter a new name for your note file</string>
-    <string name="new_name_hint">ABCD</string>
-    <string name="file_extension">.mp3</string>
-    <string name="cancel">Cancel</string>
-    <string name="rename">Rename</string>
-    <string name="progress_info">Renaming your note file. Please wait..</string>
 </resources>
