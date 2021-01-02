@@ -2,7 +2,6 @@ package com.chydee.notekeeper.ui.main;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +31,6 @@ import com.chydee.notekeeper.databinding.ActivityMainBinding;
 import com.chydee.notekeeper.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -269,16 +267,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setConstraints(constraints)
                 .build();
         workManager.enqueue(periodicWorkRequest);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            navController.navigate(R.id.voiceNotesFragment);
-        } else {
-            Snackbar.make(binding.getRoot(), "You need to give permission", Snackbar.LENGTH_LONG).show();
-        }
     }
 
     @Override
