@@ -35,8 +35,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import static com.chydee.notekeeper.utils.ExtensionsKt.setLightStatusBar;
-
 
 /**
  * @author Desmond Ngwuta
@@ -64,14 +62,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        setLightStatusBar(getWindow().getDecorView());
-
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         workManager = WorkManager.getInstance(getApplicationContext());
         workerClearTrashInTheBackground();
         setUpAppBar();
         appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.startFragment,
                 R.id.homeFragment,
                 R.id.editNoteFragment,
                 R.id.trashFragment,
@@ -89,13 +85,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Hides or show views based on the destinationID
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
-                case R.id.settingsFragment:
-                    binding.burgerMenu.setVisibility(View.GONE);
-                    hideWelcomingGroup(getString(R.string.settings));
-                    break;
+                case R.id.startFragment:
                 case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup("");
+                    break;
+                case R.id.settingsFragment:
+                    binding.burgerMenu.setVisibility(View.GONE);
+                    hideWelcomingGroup(getString(R.string.settings));
                     break;
                 case R.id.trashFragment:
                     hideWelcomingGroup(getString(R.string.trash));
