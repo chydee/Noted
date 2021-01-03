@@ -35,6 +35,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import static com.chydee.notekeeper.utils.ExtensionsKt.setLightStatusBar;
+
 
 /**
  * @author Desmond Ngwuta
@@ -61,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        setLightStatusBar(getWindow().getDecorView());
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         workManager = WorkManager.getInstance(getApplicationContext());
         workerClearTrashInTheBackground();
