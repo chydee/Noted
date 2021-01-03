@@ -125,7 +125,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/secondaryColor"
                 android:textSize="18sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_anchorGravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/searchNote"

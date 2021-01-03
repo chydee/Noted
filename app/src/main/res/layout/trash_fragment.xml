@@ -50,47 +50,25 @@
                     app:spanCount="2"
                     tools:listitem="@layout/item_trash" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
                     android:id="@+id/emptyTrashState"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:layout_margin="16dp"
-                    android:background="@color/backgroundColor"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/empty_trash"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="18sp"
                     android:visibility="gone"
+                    app:layout_anchorGravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/appCompatImageView"
-                        android:layout_width="350dp"
-                        android:layout_height="300dp"
-                        android:layout_marginTop="100dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="0dp"
-                        android:scaleType="centerInside"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_trash" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/empty_trash"
-                        android:textAlignment="center"
-                        android:textColor="@color/secondaryColor"
-                        android:textSize="18sp"
-                        app:layout_anchorGravity="center"
-                        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
-                        app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
-                        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
