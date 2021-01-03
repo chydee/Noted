@@ -3,10 +3,13 @@ package com.chydee.notekeeper.ui.main;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,11 +84,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         greetUser();
         setupSharedPreferences();
 
-        // Listens tp the NavController for DestinationChange and
+        // Listens to the NavController for DestinationChange and
         // Hides or show views based on the destinationID
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.startFragment:
+                    setStatusBarColor(android.R.color.background_dark);
+                    binding.burgerMenu.setVisibility(View.GONE);
+                    hideWelcomingGroup("");
+                    break;
                 case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup("");
@@ -250,6 +257,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED);
                 getDelegate().applyDayNight();
                 break;
+        }
+    }
+
+    /**
+     * change the status bar color programmatically (and provided the device has Android 5.0)
+     * then you can use Window.setStatusBarColor().
+     * It shouldn't make a difference whether the activity is derived from Activity or
+     * ActionBarActivity.
+     */
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(color);
         }
     }
 

@@ -8,7 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.StartFragment">
 
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
@@ -64,7 +63,6 @@
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
