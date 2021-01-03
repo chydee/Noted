@@ -112,45 +112,26 @@
                     tools:listitem="@layout/item_note" />
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
                 android:id="@+id/emptyNotesState"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="gone"
+                android:background=""
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/empty_notes"
+                android:textAlignment="center"
+                android:textColor="@color/secondaryColor"
+                android:textSize="18sp"
+                android:visibility="visible"
+                app:layout_anchorGravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/searchNote"
                 app:layout_constraintStart_toStartOf="@+id/searchNote"
-                app:layout_constraintTop_toBottomOf="@+id/searchNote">
+                app:layout_constraintTop_toBottomOf="@+id/searchNote" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView"
-                    android:layout_width="350dp"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="100dp"
-                    android:padding="20dp"
-                    android:scaleType="centerInside"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_undraw_taking_notes" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/empty_notes"
-                    android:textAlignment="center"
-                    android:textColor="@color/secondaryColor"
-                    android:textSize="18sp"
-                    app:layout_anchorGravity="center"
-                    app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
-                    app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

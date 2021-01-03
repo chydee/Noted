@@ -10,9 +10,7 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.TrashFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.SpacesItemDecoration
-import com.chydee.notekeeper.utils.ViewModelFactory
-import com.chydee.notekeeper.utils.toNote
+import com.chydee.notekeeper.utils.*
 
 class TrashFragment : BaseFragment() {
 
@@ -51,10 +49,10 @@ class TrashFragment : BaseFragment() {
         viewModel.deletedNotes.observe(viewLifecycleOwner, { exNote ->
             if (exNote != null) {
                 if (exNote.isNotEmpty()) {
-                    binding.emptyTrashState.visibility = View.GONE
+                    showAndHideViewsWhenTrashIsNotEmpty()
                     setupRV(exNote)
                 } else {
-                    binding.emptyTrashState.visibility = View.VISIBLE
+                    hideAndShowViewsWhenTrashIsEmpty()
                 }
             }
         })
@@ -82,9 +80,27 @@ class TrashFragment : BaseFragment() {
         val trashes: ArrayList<Trash> = adapter.trashes
         viewModel.insertNote(trash.toNote())
         viewModel.removeTrash(trash)
-
         trashes.remove(trash)
         adapter.notifyDataSetChanged()
     }
+
+    /**
+     *  Show the RecyclerView, Trash Disclaimer and Hide The EmptyState for the trash when the trash is not empty
+     */
+    private fun showAndHideViewsWhenTrashIsNotEmpty() {
+        binding.trashDisclaimer.show()
+        binding.recyclerView.show()
+        binding.emptyTrashState.hide()
+    }
+
+    /**
+     *  Show the EmptyState for the trash, and Hide the RecyclerView Trash Disclaimer when the trash is  empty
+     */
+    private fun hideAndShowViewsWhenTrashIsEmpty() {
+        binding.trashDisclaimer.hide()
+        binding.recyclerView.hide()
+        binding.emptyTrashState.show()
+    }
+
 
 }
