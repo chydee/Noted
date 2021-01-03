@@ -4,9 +4,8 @@
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![License](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
- Noted is a note taking app, that's inspired by the note app -Google Keep. It leverages the latest improvement in the android ecosystem and improved on the parent application
- with extended functionalities such as vault-like behaviour which allows user's to add security to notes by using a user-generated password to a key, also
- allows users to store voice notes solving the problems of a user's inability to make use of the devices keyboard.
+ Noted is a simple note taking app, that's inspired by - Google Keep. It leverages the latest improvement in the android ecosystem and improved on the parent application
+ with extended functionalities such as vault-like behaviour which allows user's to add security to notes by using a user-generated password to a key.
 
  ## Table of Contents
 
@@ -89,7 +88,7 @@
  * The icons and application icons were created and downloaded at [FlatIcons](https://flaticons.com/)
 
  ```license
- Copyright 2020 Desmond Ngwuta
+ Copyright 2021 Desmond Ngwuta
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
