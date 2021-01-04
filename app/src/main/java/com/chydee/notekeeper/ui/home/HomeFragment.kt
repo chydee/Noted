@@ -20,11 +20,7 @@ import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.UnlockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.MyLookup
-import com.chydee.notekeeper.utils.SpacesItemDecoration
-import com.chydee.notekeeper.utils.ViewModelFactory
-import com.chydee.notekeeper.utils.toTrash
-import com.google.android.material.appbar.MaterialToolbar
+import com.chydee.notekeeper.utils.*
 
 
 class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
@@ -40,7 +36,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
     private var tracker: SelectionTracker<Long>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = HomeFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return binding.root
@@ -51,9 +47,8 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         setupViewModel()
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
-        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
-        appbar.navigationIcon = null
-        setupListener()
+        hideNavigationIcon()
+        handleOnClickEvents()
         setupRV()
     }
 
@@ -73,7 +68,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         })
     }
 
-    private fun setupListener() {
+    private fun handleOnClickEvents() {
         binding.floatingActionButton.setOnClickListener { view: View ->
             val action = HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(null)
             view.findNavController().navigate(action)
@@ -88,7 +83,9 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         }
     }
 
-
+    /**
+     *  Set up the RecyclerView and link with the adapter
+     */
     private fun setupRV() {
         viewModel.getNotes()
 
@@ -97,34 +94,8 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         adapter = NoteAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(14))
-        viewModel.notes.observe(viewLifecycleOwner, {
-            if (it != null) {
-                if (it.isNotEmpty()) {
-                    binding.emptyNotesState.visibility = View.GONE
-                    adapter.setNotes(it as ArrayList)
-                    adapter.notifyDataSetChanged()
-
-                    doSearch()
-                } else {
-                    binding.emptyNotesState.visibility = View.VISIBLE
-                }
-            }
-        })
-
-        tracker = SelectionTracker.Builder(
-                "mySelection",
-                binding.recyclerView,
-                StableIdKeyProvider(binding.recyclerView),
-                MyLookup(binding.recyclerView, 1),
-                StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-                SelectionPredicates.createSelectAnything()
-        ).build()
-
-        adapter.tracker = tracker
-        observeTracker()
-
-
+        observeNotes()
+        buildSelectionTracker()
         adapter.setOnClickListener(object : NoteAdapter.OnItemClickListener {
             override fun onNoteClick(note: Note) {
                 if (note.isLocked) {
@@ -136,11 +107,51 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         })
     }
 
+
+    private fun observeNotes() {
+        viewModel.notes.observe(viewLifecycleOwner, {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    binding.emptyNotesState.hide()
+                    adapter.setNotes(it as ArrayList)
+                    adapter.notifyDataSetChanged()
+
+                    doSearch()
+                } else {
+                    binding.emptyNotesState.show()
+                }
+            }
+        })
+    }
+
+    private fun buildSelectionTracker() {
+        tracker = SelectionTracker.Builder(
+                "mySelection",
+                binding.recyclerView,
+                StableIdKeyProvider(binding.recyclerView),
+                MyLookup(binding.recyclerView),
+                StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+                SelectionPredicates.createSelectAnything()
+        ).build()
+
+        adapter.tracker = tracker
+        observeTracker()
+    }
+
+    /**
+     *  Clear or cancel selection amd return back to the initial state
+     *  by setting the visibility of the selectedOptions View to View.GONE
+     *  when isCleared is true
+     */
     private fun clearSelection() {
         val isCleared = tracker?.clearSelection()
         binding.selectedOptions.visibility = if (isCleared!!) View.GONE else View.VISIBLE
     }
 
+    /**
+     *  Listen to the RecyclerView Selection Tracker and update the selectedCount TextView with the number selected
+     */
     private fun observeTracker() {
         tracker?.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
             override fun onSelectionChanged() {
@@ -148,7 +159,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
                 val selected: Int? = tracker?.selection?.size()
                 if (selected != null && selected > 0) {
                     with(binding) {
-                        selectedOptions.visibility = View.VISIBLE
+                        selectedOptions.show()
                         selectedCount.text = getString(R.string.default_selection_count, selected.toString())
                     }
                 }
@@ -156,6 +167,9 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         })
     }
 
+    /**
+     *  Move selected Note items to trash and remove or delete them from the NoteTable or Entity
+     */
     private fun moveToTrash() {
         deleteList = arrayListOf()
         val notes: ArrayList<Note> = adapter.getNotes()
@@ -170,7 +184,10 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         notes.removeAll(newNotes)
         viewModel.addToTrash(deleteList)
         adapter.notifyDataSetChanged()
+        observeNotes()
 
+        // Show a snack bar indicating the number of notes deleted and an options to undo
+        // This action
         snackBarWithAction("${deleteList.size} item(s) removed", getString(R.string.undo)) {
             notes.addAll(undoDelete(newNotes))
             adapter.notifyDataSetChanged()
