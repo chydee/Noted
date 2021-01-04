@@ -32,9 +32,9 @@ class TrashFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModelFactory = ViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrashViewModel::class.java)
-        hideNavigationIcon()
         binding.trashViewModel = viewModel
         binding.lifecycleOwner = this
+        hideNavigationIcon()
         showNavigationIcon()
         loadTrash()
         handleOnClickEvents()

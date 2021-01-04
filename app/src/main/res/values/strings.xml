@@ -74,4 +74,5 @@
     <string name="lock_indicator">Note Locked</string>
     <string name="trash_info">Notes in Trash are deleted after 7 days</string>
     <string name="create_new_note_icon_desc">Create New Note Icon</string>
+    <string name="clear_trash_icon_desc">Clear Trash Icon</string>
 </resources>

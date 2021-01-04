@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="trashViewModel"
             type="com.chydee.notekeeper.ui.trash.TrashViewModel" />
@@ -80,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            android:contentDescription="@string/clear_trash_icon_desc"
             app:srcCompat="@drawable/ic_delete" />
 
 
