@@ -78,4 +78,5 @@
     <string name="collect_your_thoughts">Collect Your Thoughts.</string>
     <string name="get_started">Get Started</string>
     <string name="trash_info">Notes in Trash are deleted after 7 days</string>
+    <string name="create_new_note_icon_desc">Create New Note Icon</string>
 </resources>

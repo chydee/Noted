@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -37,6 +36,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+
+import timber.log.Timber;
 
 
 /**
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         workerClearTrashInTheBackground();
         setUpAppBar();
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.startFragment,
                 R.id.homeFragment,
                 R.id.editNoteFragment,
                 R.id.trashFragment,
@@ -88,11 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Hides or show views based on the destinationID
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
-                case R.id.startFragment:
-                    setStatusBarColor(android.R.color.background_dark);
-                    binding.burgerMenu.setVisibility(View.GONE);
-                    hideWelcomingGroup("");
-                    break;
                 case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup("");
@@ -235,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *              then gets the Delegate and applyDayNight() theme.
      */
     private void changeAppTheme(String theme) {
-        Log.d("Noted", theme);
+        Timber.d(theme);
         switch (theme) {
             case "MODE_NIGHT_YES":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -311,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
@@ -338,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (key.equals(getString(R.string.pref_theme_key))) {
             loadThemeFromPreference(sharedPreferences);
         } else {
-            Log.d("Noted", "Error loading theme");
+            Timber.d("Error loading theme");
         }
     }
 
