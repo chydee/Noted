@@ -50,7 +50,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     private var password: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = EditNoteFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return binding.root
@@ -76,7 +76,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private fun addOrUpdate() {
 
-        if (args.selectedNoteProperty != null) {
+        if (args.selectedNoteProperty != null && args.selectedNoteProperty?.noteId != -1) {
             val updateNote = Note(
                     noteId = args.selectedNoteProperty?.noteId!!,
                     noteTitle = binding.noteTitle.takeText(),
@@ -116,8 +116,7 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         val callback = object : OnBackPressedCallback(true
                 /** true means that the callback is enabled */) {
             override fun handleOnBackPressed() {
-                // Show your dialog and handle navigation
-                // Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
+                // update note and handle navigation
                 addOrUpdate()
                 findNavController().popBackStack()
             }
@@ -208,9 +207,5 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         findNavController().popBackStack()
     }
 
-    override fun onPause() {
-        super.onPause()
-        addOrUpdate()
-    }
 
 }
