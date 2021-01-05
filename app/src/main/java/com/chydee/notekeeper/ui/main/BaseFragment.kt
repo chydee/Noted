@@ -41,7 +41,6 @@ abstract class BaseFragment : Fragment() {
         val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
             File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
         }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else appContext.filesDir
+        return if (mediaDir != null && mediaDir.exists()) mediaDir else appContext.filesDir
     }
 }

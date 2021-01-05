@@ -70,15 +70,9 @@
     <string name="note_unlocked">Note unlocked 🔓</string>
     <string name="voice_notes">Voice Notes</string>
 
-    <string name="pause_left">M26,23 V41</string>
-    <string name="pause_right_pause">M37,23 L37,32 L37,41</string>
-    <string name="pause_right_play">M26,23 L41,32 L27,41</string>
     <string name="unlock_instruction">Unlock to view content</string>
     <string name="lock_indicator">Note Locked</string>
-    <string name="stop_recording">Stop Recording</string>
-    <string name="recording_cancelled">Operation cancelled!</string>
-    <string name="save_note_hint">Enter Note Title</string>
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
-    <string name="new_voice_note">New Voice Note</string>
+    <string name="trash_info">Notes in Trash are deleted after 7 days</string>
+    <string name="create_new_note_icon_desc">Create New Note Icon</string>
+    <string name="clear_trash_icon_desc">Clear Trash Icon</string>
 </resources>

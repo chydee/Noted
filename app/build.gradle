@@ -91,8 +91,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$version_ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
 
-    implementation "com.airbnb.android:lottie:$version_lottie"
-
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 

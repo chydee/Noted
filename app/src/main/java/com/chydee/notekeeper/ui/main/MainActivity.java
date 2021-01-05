@@ -1,14 +1,14 @@
 package com.chydee.notekeeper.ui.main;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +16,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -35,10 +33,11 @@ import com.chydee.notekeeper.databinding.ActivityMainBinding;
 import com.chydee.notekeeper.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+
+import timber.log.Timber;
 
 
 /**
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         workManager = WorkManager.getInstance(getApplicationContext());
         workerClearTrashInTheBackground();
@@ -84,17 +84,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         greetUser();
         setupSharedPreferences();
 
-        // Listens tp the NavController for DestinationChange and
+        // Listens to the NavController for DestinationChange and
         // Hides or show views based on the destinationID
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
-                case R.id.settingsFragment:
-                    binding.burgerMenu.setVisibility(View.GONE);
-                    hideWelcomingGroup(getString(R.string.settings));
-                    break;
                 case R.id.editNoteFragment:
                     binding.burgerMenu.setVisibility(View.GONE);
                     hideWelcomingGroup("");
+                    break;
+                case R.id.settingsFragment:
+                    binding.burgerMenu.setVisibility(View.GONE);
+                    hideWelcomingGroup(getString(R.string.settings));
                     break;
                 case R.id.trashFragment:
                     hideWelcomingGroup(getString(R.string.trash));
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *              then gets the Delegate and applyDayNight() theme.
      */
     private void changeAppTheme(String theme) {
-        Log.d("Noted", theme);
+        Timber.d(theme);
         switch (theme) {
             case "MODE_NIGHT_YES":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -256,19 +256,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * Checks and ensures user already allowed  permissions for Manifest.permission.RECORD_AUDIO &
-     * Manifest.permission.WRITE_EXTERNAL_STORAGE.
-     * if these permissions have been granted then it inflates the VoiceNotesFragment else it prompts the user to allow
-     * the permissions
+     * change the status bar color programmatically (and provided the device has Android 5.0)
+     * then you can use Window.setStatusBarColor().
+     * It shouldn't make a difference whether the activity is derived from Activity or
+     * ActionBarActivity.
      */
-    private void checkPermissionAndOpenFragment() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this, permissions, 0);
-        } else {
-            navController.navigate(R.id.voiceNotesFragment);
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(color);
         }
     }
 
@@ -292,16 +289,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            navController.navigate(R.id.voiceNotesFragment);
-        } else {
-            Snackbar.make(binding.getRoot(), "You need to give permission", Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         toggle.syncState();
@@ -319,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
@@ -327,9 +315,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.aboutFragment:
                 navController.navigate(R.id.aboutFragment);
-                break;
-            case R.id.voiceNotesFragment:
-                checkPermissionAndOpenFragment();
                 break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);
@@ -349,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (key.equals(getString(R.string.pref_theme_key))) {
             loadThemeFromPreference(sharedPreferences);
         } else {
-            Log.d("Noted", "Error loading theme");
+            Timber.d("Error loading theme");
         }
     }
 
