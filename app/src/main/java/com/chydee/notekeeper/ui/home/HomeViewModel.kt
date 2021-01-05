@@ -1,7 +1,7 @@
 package com.chydee.notekeeper.ui.home
 
-import android.content.Context
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,10 +11,10 @@ import com.chydee.notekeeper.data.model.Trash
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
-class HomeViewModel constructor(context: Context) : ViewModel() {
+class HomeViewModel @ViewModelInject constructor(private val dbHelper: DBHelperImpl) : ViewModel() {
 
-    private val dbHelper: DBHelperImpl = DBHelperImpl(context)
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -36,7 +36,7 @@ class HomeViewModel constructor(context: Context) : ViewModel() {
                         _notes.postValue(listOf())
                     }
                     notes.forEach {
-                        Log.d("Notes", it.noteTitle)
+                        Timber.d(it.noteTitle)
                     }
                 }, {}).let { compositeDisposable.add(it) }
     }

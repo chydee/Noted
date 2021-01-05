@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
@@ -21,14 +21,14 @@ import com.chydee.notekeeper.databinding.HomeFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.UnlockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
 
     private lateinit var binding: HomeFragmentBinding
 
-    private lateinit var viewModel: HomeViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var adapter: NoteAdapter
 
@@ -44,7 +44,6 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
         hideNavigationIcon()
@@ -205,11 +204,6 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
             }
         }
         return notes
-    }
-
-    private fun setupViewModel() {
-        viewModelFactory = ViewModelFactory(requireContext())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
     }
 
     private fun showBottomSheet(note: Note) {

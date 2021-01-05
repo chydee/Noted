@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.chydee.notekeeper.R
@@ -24,22 +24,21 @@ import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
 import com.chydee.notekeeper.ui.bottomsheets.LockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.ViewModelFactory
 import com.chydee.notekeeper.utils.takeText
 import com.chydee.notekeeper.utils.toTrash
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.edit_note_fragment.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
+@AndroidEntryPoint
 class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener, LockNoteBottomSheet.OnClickListener {
 
     private lateinit var binding: EditNoteFragmentBinding
 
-    private lateinit var viewModel: EditNoteViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: EditNoteViewModel by viewModels()
 
     private var isLocked: Boolean = false
 
@@ -58,8 +57,6 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelFactory = ViewModelFactory(requireContext())
-        viewModel = ViewModelProvider(this, viewModelFactory)[EditNoteViewModel::class.java]
         binding.lifecycleOwner = this
         showNavigationIcon()
         setLastEditedTime()

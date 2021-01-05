@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.TrashFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.*
+import com.chydee.notekeeper.utils.SpacesItemDecoration
+import com.chydee.notekeeper.utils.hide
+import com.chydee.notekeeper.utils.show
+import com.chydee.notekeeper.utils.toNote
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrashFragment : BaseFragment() {
 
 
-    private lateinit var viewModel: TrashViewModel
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: TrashViewModel by viewModels()
 
     private lateinit var binding: TrashFragmentBinding
 
@@ -30,8 +34,6 @@ class TrashFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelFactory = ViewModelFactory(requireContext())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TrashViewModel::class.java)
         binding.trashViewModel = viewModel
         binding.lifecycleOwner = this
         hideNavigationIcon()

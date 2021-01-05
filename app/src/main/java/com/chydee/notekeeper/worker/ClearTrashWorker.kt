@@ -8,17 +8,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class ClearTrashWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
 
     //Create an instance of DBHelperImpl and CompositeDisposable
-    private lateinit var dbHelperImpl: DBHelperImpl
     private val compositeDisposable = CompositeDisposable()
+
+    @Inject
+    lateinit var dbHelperImpl: DBHelperImpl
 
     override fun doWork(): Result {
         val appContext = applicationContext
-        dbHelperImpl = DBHelperImpl(appContext)
+
         return try {
             //Perform the delete operation
             dbHelperImpl.clearTrash().subscribeOn(Schedulers.io())
@@ -34,4 +37,5 @@ class ClearTrashWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, par
             Result.failure()
         }
     }
+
 }

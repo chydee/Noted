@@ -1,6 +1,6 @@
 package com.chydee.notekeeper.ui.trash
 
-import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class TrashViewModel constructor(val context: Context) : ViewModel() {
-    private val dbHelper: DBHelperImpl = DBHelperImpl(context)
+class TrashViewModel @ViewModelInject constructor(private val dbHelper: DBHelperImpl) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
