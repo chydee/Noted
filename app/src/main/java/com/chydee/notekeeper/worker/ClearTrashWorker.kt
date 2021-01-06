@@ -1,6 +1,9 @@
 package com.chydee.notekeeper.worker
 
 import android.content.Context
+import android.util.Log
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.chydee.notekeeper.data.DBHelperImpl
@@ -8,16 +11,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import javax.inject.Inject
 
-class ClearTrashWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
+class ClearTrashWorker @WorkerInject constructor(@Assisted ctx: Context, @Assisted params: WorkerParameters, val dbHelperImpl: DBHelperImpl) : Worker(ctx, params) {
 
 
     //Create an instance of DBHelperImpl and CompositeDisposable
     private val compositeDisposable = CompositeDisposable()
-
-    @Inject
-    lateinit var dbHelperImpl: DBHelperImpl
 
     override fun doWork(): Result {
         val appContext = applicationContext
@@ -33,6 +32,7 @@ class ClearTrashWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, par
             Result.success()
         } catch (throwable: Throwable) {
             //Throw exception if anything goes wrong
+            Log.e("ClearTrashWorker", "$throwable")
             Timber.e(throwable)
             Result.failure()
         }

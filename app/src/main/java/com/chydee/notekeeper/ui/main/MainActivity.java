@@ -37,6 +37,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
 
@@ -44,6 +45,7 @@ import timber.log.Timber;
  * @author Desmond Ngwuta
  * @email: demsondchidi311@gmail.com
  */
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DrawerLayout drawerLayout;
