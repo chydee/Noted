@@ -9,20 +9,28 @@
 
  ## Table of Contents
 
--   [Development](https://github.com/chydee/Noted#development)
+-   [Installation](https://github.com/chydee/Noted#nstallation)
 -   [Design](https://github.com/chydee/Noted#design)
 -   [Architecture](https://github.com/chydee/Noted#architecture)
 -   [Tech-stack](https://github.com/chydee/Noted#tech-stack)
 -   [Author](https://github.com/chydee/Noted#author)
 -   [License](https://github.com/chydee/Noted#license)
 
- ## Development
+ ## Installation
+    Follow these steps if you want to get a local copy of the project.
 
- ### Environment setup
+    Prerequisites
+    Android Studio IDE 3.0+
+    Android SDK v28
+    Android Build Tools v28.0.3
+    Gradle 4.10.1
+    1. Clone or fork the repository (Master Branch) by running the command below
+    on your git terminal
 
- First off, you require the latest Android Studio 3.6.0 (or newer) to be able to build the app.
-
- Moreover, to sign your app for release
+    git clone https://github.com/chydee/Noted.git
+    2. Import the project in AndroidStudio, and add API Key
+    In Android Studio, go to File -> New -> Import project
+    Follow the dialog for set up instructions
 
 
  ## Design
