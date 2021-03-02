@@ -15,9 +15,9 @@
             android:title="@string/menu_trash" />
     </group>
 
-    <item android:title="@string/others">
+    <item android:title="">
         <menu>
-            <item android:title="@string/others">
+            <item android:title="">
                 <group android:checkableBehavior="single">
                     <item
                         android:id="@+id/aboutFragment"

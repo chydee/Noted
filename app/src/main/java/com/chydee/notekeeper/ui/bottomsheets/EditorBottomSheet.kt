@@ -1,4 +1,4 @@
-package com.chydee.notekeeper.ui.bottomsheets
+    package com.chydee.notekeeper.ui.bottomsheets
 
 
 import android.graphics.Color.*
@@ -47,10 +47,10 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = BottomSheetLayoutBinding.inflate(inflater)
         return binding.root
     }

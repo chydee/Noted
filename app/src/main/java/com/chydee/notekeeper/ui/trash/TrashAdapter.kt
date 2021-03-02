@@ -20,6 +20,7 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
 
     inner class TrashViewHolder(private var binding: ItemTrashBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(trash: Trash) {
+            c
             binding.trash = trash
             if (trash.color != -1) {
                 binding.noteCard.setCardBackgroundColor(trash.color)
