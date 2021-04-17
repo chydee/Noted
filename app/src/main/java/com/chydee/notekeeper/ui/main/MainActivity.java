@@ -1,7 +1,9 @@
 package com.chydee.notekeeper.ui.main;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -33,6 +37,7 @@ import com.chydee.notekeeper.databinding.ActivityMainBinding;
 import com.chydee.notekeeper.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -271,6 +276,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Checks and ensures user already allowed  permissions for Manifest.permission.RECORD_AUDIO &
+     * Manifest.permission.WRITE_EXTERNAL_STORAGE.
+     * if these permissions have been granted then it inflates the VoiceNotesFragment else it prompts the user to allow
+     * the permissions
+     */
+    private void checkPermissionAndOpenFragment() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this, permissions, 0);
+        } else {
+            navController.navigate(R.id.voiceNotesFragment);
+        }
+    }
+
 
     /**
      * creates and enqueues a work in the background using the WorkManager.
@@ -288,6 +310,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setConstraints(constraints)
                 .build();
         workManager.enqueue(periodicWorkRequest);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            navController.navigate(R.id.voiceNotesFragment);
+        } else {
+            Snackbar.make(binding.getRoot(), "You need to give permission", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -317,6 +349,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.aboutFragment:
                 navController.navigate(R.id.aboutFragment);
+                break;
+            case R.id.voiceNotesFragment:
+                checkPermissionAndOpenFragment();
                 break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);
