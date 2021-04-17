@@ -72,6 +72,8 @@ dependencies {
     // flex box #help for overflowing child views
     implementation "com.google.android:flexbox:$flex_box_version"
 
+    implementation "com.airbnb.android:lottie:$version_lottie"
+
     //Life-cycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'

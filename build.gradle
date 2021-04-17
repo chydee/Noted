@@ -19,6 +19,7 @@ buildscript {
         version_constraint_layout = '2.0.4'
         version_junit = '4.13.1'
         version_ext_junit = '1.1.2'
+        version_lottie = '3.6.0'
         version_espresso = '3.3.0'
         version_runner = '1.3.0'
         version_recyclerview_selection = '1.1.0-rc03'

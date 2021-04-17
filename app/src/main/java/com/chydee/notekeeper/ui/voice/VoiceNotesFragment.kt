@@ -20,7 +20,9 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.hide
+import com.chydee.notekeeper.utils.isContainsSpecialCharacter
 import com.chydee.notekeeper.utils.show
+import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
