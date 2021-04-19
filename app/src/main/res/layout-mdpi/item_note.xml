@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="notes"
+            type="com.chydee.notekeeper.data.model.Note" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/noteCard"
+        style="@style/Widget.MaterialComponents.CardView.NoteItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rippleColor="@color/secondaryLightColor"
+        app:strokeColor="@android:color/darker_gray"
+        app:strokeWidth="1dp"
+        tools:ignore="PrivateResource">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/noteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{notes.isLocked ? @string/lock_indicator : notes.noteTitle }"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="12sp"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/noteContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins"
+                android:maxLines="15"
+                android:text="@{notes.isLocked ? @string/unlock_instruction:  notes.noteDetail}"
+                android:textSize="11sp"
+                tools:text="Description" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/noteLocked"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="end|top"
+            android:layout_margin="16dp"
+            android:scaleType="centerInside"
+            android:visibility="@{notes.isLocked ? View.VISIBLE : View.GONE }"
+            app:srcCompat="@drawable/ic_lock_note" />
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

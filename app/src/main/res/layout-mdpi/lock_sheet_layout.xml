@@ -20,7 +20,7 @@
             android:fontFamily="@font/poppins_medium"
             android:text="@string/lock_note"
             android:textColor="@color/primaryTextColor"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/subLabel"
@@ -29,7 +29,7 @@
             android:fontFamily="@font/poppins_light"
             android:text="@string/dont_forget"
             android:textColor="@color/primaryTextColor"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textVisiblePassword"
-                android:textColor="@color/primaryTextColor" />
+                android:textColor="@color/primaryTextColor"
+                android:textSize="12sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -59,6 +60,7 @@
             android:layout_marginBottom="16dp"
             android:text="@string/lock"
             android:textColor="@color/secondaryTextColor"
+            android:textSize="12sp"
             app:backgroundTint="@color/primaryColor"
             app:cornerRadius="8dp" />
 

@@ -24,7 +24,6 @@ import com.chydee.notekeeper.utils.isContainsSpecialCharacter
 import com.chydee.notekeeper.utils.show
 import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dialog_note_name.*
 import timber.log.Timber
@@ -62,14 +61,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         super.onCreate(savedInstanceState)
         // Record to the external cache directory for visibility
         fileName = "${getOutputDirectory(requireContext())}/${System.currentTimeMillis()}.mp3"
-        ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
+       // ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
     }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = VoiceNotesFragmentBinding.inflate(inflater)
         return binding.root
     }
@@ -79,6 +78,12 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         viewModel = ViewModelProvider(this).get(VoiceNotesViewModel::class.java)
         adapter = VoiceNotesAdapter()
         hideNavigationIcon()
+        handleOnClickEvents()
+        checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
+        dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+    }
+
+    private fun handleOnClickEvents() {
         binding.recordNewVoiceNote.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireActivity(),
@@ -90,8 +95,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 ActivityCompat.requestPermissions(requireActivity(), recordAudioPermission, REQUEST_RECORD_AUDIO_PERMISSION)
             }
         }
-        checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
-        dialogBuilder = MaterialAlertDialogBuilder(requireContext())
     }
 
     /**
@@ -315,22 +318,18 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
         val window = renameDialog.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
-
     }
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_ACCESS_FILES_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Timber.d("REQUEST_RECORD_AUDIO_PERMISSION: $REQUEST_RECORD_AUDIO_PERMISSION is GRANTED")
             checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
-        } else {
-            //TODO: Show reason for need of permission and ask again
-            Snackbar.make(binding.root, "You need to give permission", Snackbar.LENGTH_LONG).show()
         }
 
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Timber.d("REQUEST_RECORD_AUDIO_PERMISSION: $REQUEST_RECORD_AUDIO_PERMISSION is GRANTED")
+        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
         }
     }
 

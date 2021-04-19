@@ -9,9 +9,9 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/colorCard"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="4dp"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

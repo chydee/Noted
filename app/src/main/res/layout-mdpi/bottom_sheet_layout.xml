@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:id="@+id/options_bottom_sheet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="true"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <Button
+            android:id="@+id/deleteBtn"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            app:icon="@drawable/ic_delete_black_24dp" />
+
+        <Button
+            android:id="@+id/copyBtn"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/make_a_copy"
+            app:icon="@drawable/ic_content_copy" />
+
+        <Button
+            android:id="@+id/sendBtn"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            app:icon="@drawable/ic_share" />
+
+        <Button
+            android:id="@+id/lockeNoteBtn"
+            style="@style/BottomSheetButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/encrypt_note"
+            app:icon="@drawable/ic_encrypt" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/coloursRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_color" />
+    </LinearLayout>
+
+</layout>

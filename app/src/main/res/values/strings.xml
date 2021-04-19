@@ -58,7 +58,7 @@
     <string name="trash">Trash</string>
     <string name="settings">Settings</string>
     <string name="dont_forget">Try not to forget your password 🙏</string>
-    <string name="lock_note">Lock this note</string>
+    <string name="lock_note">Secure note</string>
     <string name="key_to_decrypt">Create a password to lock this note</string>
     <string name="lock">Lock</string>
     <string name="password_hint">Password</string>
@@ -78,6 +78,7 @@
     <string name="lock_indicator">Note Locked</string>
     <string name="trash_info">Notes in Trash are deleted after 7 days</string>
     <string name="create_new_note_icon_desc">Create New Note Icon</string>
+    <string name="create_new_voice_note_icon_desc">Create New Vooice Note Icon</string>
     <string name="clear_trash_icon_desc">Clear Trash Icon</string>
 
     <string name="stop_recording">Stop Recording</string>

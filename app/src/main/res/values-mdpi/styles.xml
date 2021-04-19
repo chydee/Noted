@@ -1,0 +1,111 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="android:showDividers">none</item>
+        <item name="actionBarDivider">@android:color/transparent</item>
+
+        <item name="colorNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemSelected">@color/colorWhite</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearance">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.CardView.NoteItems">
+        <item name="android:layout_marginLeft" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginTop" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+        <item name="android:layout_marginRight" tools:ignore="PrivateResource">
+            @dimen/mtrl_card_spacing
+        </item>
+    </style>
+
+    <style name="Widget.MaterialComponents.FloatingActionButton.Custom" parent="Widget.Design.FloatingActionButton">
+        <item name="android:background">@null</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+        <item name="elevation" tools:ignore="PrivateResource">@dimen/mtrl_fab_elevation</item>
+        <item name="backgroundTint" tools:ignore="PrivateResource">
+            @color/primaryColor
+        </item>
+        <item name="tint">@android:color/white</item>
+        <item name="hoveredFocusedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_hovered_focused
+        </item>
+        <item name="pressedTranslationZ" tools:ignore="PrivateResource">
+            @dimen/mtrl_fab_translation_z_pressed
+        </item>
+        <item name="rippleColor" tools:ignore="PrivateResource">@color/mtrl_fab_ripple_color</item>
+        <item name="showMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_show_motion_spec
+        </item>
+        <item name="hideMotionSpec" tools:ignore="PrivateResource">
+            @animator/mtrl_fab_hide_motion_spec
+        </item>
+        <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton
+        </item>
+    </style>
+
+    <style name="ToolBarWrapperCardStyle">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="HomeRecyclerViewStyle">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?attr/colorNavigationItem</item>
+        <item name="itemIconSize">18dp</item>
+        <item name="itemTextAppearance">@style/DrawerItemTextAppearance</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
+
+
+    <style name="DrawerItemTextAppearance">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BottomSheetButtons" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="iconTint">@color/primaryColor</item>
+    </style>
+
+</resources>
