@@ -148,8 +148,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         binding.vnRecyclerView.layoutManager = manager
         binding.vnRecyclerView.adapter = adapter
         adapter.submitList(audios)
-        adapter.notifyDataSetChanged()
-
         adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
             override fun onFileClicked(file: File) {
 
@@ -220,6 +218,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 stop()
                 release()
             }
+            fetchAndDisplayVoiceNotes()
             state = false
         } else {
             Timber.d("You are not recording right now!")

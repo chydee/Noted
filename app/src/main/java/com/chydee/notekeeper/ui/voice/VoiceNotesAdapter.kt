@@ -3,28 +3,42 @@ package com.chydee.notekeeper.ui.voice
 import android.view.*
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.databinding.ItemVoiceNoteBinding
-import com.chydee.notekeeper.utils.AutoUpdatableAdapter
 import com.chydee.notekeeper.utils.remove
 import com.chydee.notekeeper.utils.show
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.properties.Delegates
 
-class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHolder>(), AutoUpdatableAdapter, Filterable {
+class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHolder>(), Filterable {
 
-    private var items: ArrayList<File> by Delegates.observable(ArrayList()) { _, oldList, newList ->
-        autoNotify(oldList, newList) { o, n -> o.name == n.name }
+    private val diffCallback = object : DiffUtil.ItemCallback<File>() {
+        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
+            return oldItem.name == newItem.name
+        }
+
+        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
+        }
     }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
 
     private lateinit var itemsFilter: MutableList<File>
 
     private lateinit var listener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceNoteViewHolder {
-        return VoiceNoteViewHolder(ItemVoiceNoteBinding.inflate(LayoutInflater.from(parent.context)))
+        val bd = ItemVoiceNoteBinding.inflate(LayoutInflater.from(parent.context))
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        bd.root.layoutParams = lp
+        return VoiceNoteViewHolder(bd)
     }
 
     inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) : RecyclerView.ViewHolder(binding.root),
@@ -104,14 +118,14 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
     }
 
     internal fun submitList(voiceNotes: ArrayList<File>) {
-        this.items = voiceNotes
+        differ.submitList(voiceNotes)
         itemsFilter = ArrayList(voiceNotes)
     }
 
-    internal fun getItems() = this.items
+    internal fun getItems() = differ.currentList
 
     override fun onBindViewHolder(holder: VoiceNotesAdapter.VoiceNoteViewHolder, position: Int) {
-        val voiceNote = items[position]
+        val voiceNote = differ.currentList[position]
         holder.bind(voiceNote)
         holder.itemView.setOnClickListener {
             listener.onFileClicked(voiceNote)
@@ -120,7 +134,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return differ.currentList.size
     }
 
     override fun getFilter(): Filter {
@@ -150,7 +164,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             constraint: CharSequence,
             results: FilterResults
         ) {
-            items = (results.values as ArrayList<File>?)!!
+            differ.submitList((results.values as ArrayList<File>?)!!)
         }
     }
 
