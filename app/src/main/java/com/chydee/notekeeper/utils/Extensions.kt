@@ -24,5 +24,3 @@ fun View.remove() {
 fun View.hide() {
     this.visibility = View.INVISIBLE
 }
-
-

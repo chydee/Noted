@@ -9,7 +9,6 @@ import com.chydee.notekeeper.databinding.ItemTrashBinding
 
 class TrashAdapter : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
 
-
     private lateinit var listener: OnItemClickListener
 
     var trashes: ArrayList<Trash> = arrayListOf()
@@ -79,5 +78,4 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.TrashViewHolder>() {
     override fun getItemCount(): Int {
         return trashes.size
     }
-
 }

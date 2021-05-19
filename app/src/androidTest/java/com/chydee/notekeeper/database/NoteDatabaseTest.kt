@@ -23,12 +23,11 @@ class NoteDatabaseTest {
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
         db = Room.inMemoryDatabaseBuilder(context, NoteDatabase::class.java)
-                // Allowing main thread queries, just for testing.
-                .allowMainThreadQueries()
-                .build()
+            // Allowing main thread queries, just for testing.
+            .allowMainThreadQueries()
+            .build()
         noteDao = db.noteDao
     }
-
 
     @After
     @Throws(IOException::class)
@@ -41,7 +40,7 @@ class NoteDatabaseTest {
     fun insertAndGetNote() {
         val note = Note(noteId = 1, noteTitle = "Hi", noteDetail = "Hmmmm", isEncrypted = false, lastEdit = "12", color = -1)
         noteDao.insert(note)
-        //val thisNote = noteDao.getThisNote()
+        // val thisNote = noteDao.getThisNote()
         // Assert.assertEquals(thisNote.noteTitle, "Hi")
     }
 
@@ -50,6 +49,6 @@ class NoteDatabaseTest {
     fun updateAndGetNote() {
         noteDao.update(Note(noteId = 1, noteTitle = "Test", noteDetail = "Testing Testing", isEncrypted = false, lastEdit = "12", color = -1))
         // val updatedNote = noteDao.getThisNote()
-        //Assert.assertNotEquals(updatedNote.noteTitle, "Hi")
+        // Assert.assertNotEquals(updatedNote.noteTitle, "Hi")
     }
 }

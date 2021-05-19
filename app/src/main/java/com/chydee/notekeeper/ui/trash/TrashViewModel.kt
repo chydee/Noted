@@ -22,8 +22,9 @@ class TrashViewModel @ViewModelInject constructor(private val dbHelper: DBHelper
 
     fun getDeletedNotes() {
         dbHelper.getAllTrash().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ notes ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { notes ->
                     if (notes.isNotEmpty()) {
                         _deletedNotes.postValue(notes)
                     } else {
@@ -32,25 +33,27 @@ class TrashViewModel @ViewModelInject constructor(private val dbHelper: DBHelper
                     notes.forEach {
                         Timber.tag("Trash Note").d(it.noteTitle)
                     }
-                }, {}).let { compositeDisposable.add(it) }
+                },
+                {}
+            ).let { compositeDisposable.add(it) }
     }
 
     fun deleteForever() {
         dbHelper.clearTrash().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun removeTrash(trash: Trash) {
         dbHelper.deleteTrash(trash).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun insertNote(note: Note) {
         dbHelper.insert(note).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     override fun onCleared() {

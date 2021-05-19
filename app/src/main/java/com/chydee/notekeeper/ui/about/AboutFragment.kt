@@ -9,8 +9,11 @@ import com.chydee.notekeeper.ui.main.BaseFragment
 
 class AboutFragment : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.about_fragment, container, false)
     }
 
@@ -18,5 +21,4 @@ class AboutFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         showNavigationIcon()
     }
-
 }

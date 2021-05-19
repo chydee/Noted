@@ -12,15 +12,13 @@ import androidx.preference.*
 import com.chydee.notekeeper.R
 import com.google.android.material.appbar.MaterialToolbar
 
-
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferenceScreen.sharedPreferences
-                .registerOnSharedPreferenceChangeListener(this)
+            .registerOnSharedPreferenceChangeListener(this)
     }
-
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -44,8 +42,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val callback = object : OnBackPressedCallback(true
-                /** true means that the callback is enabled */) {
+        val callback = object : OnBackPressedCallback(
+            true
+            /** true means that the callback is enabled */
+        ) {
             override fun handleOnBackPressed() {
                 // Show your dialog and handle navigation
                 // Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
@@ -84,7 +84,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         val preference: Preference? = findPreference(key!!)
 
         if (preference != null) {
-            //update the summary for the preference
+            // update the summary for the preference
             if (preference !is CheckBoxPreference) {
                 val value: String? = sharedPreferences?.getString(preference.key, "")
                 value?.let { setPreferenceSummary(preference, it) }
@@ -95,7 +95,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onDestroy() {
         super.onDestroy()
         preferenceScreen.sharedPreferences
-                .unregisterOnSharedPreferenceChangeListener(this)
+            .unregisterOnSharedPreferenceChangeListener(this)
     }
-
 }

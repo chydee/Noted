@@ -36,7 +36,8 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -58,7 +59,6 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
             onRecord(isChecked)
         }
-
 
         binding.stopRecording.setOnClickListener {
             stopRecording()
@@ -163,7 +163,6 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
 
             override fun onAnimationEnd(animation: Animator) {
                 Timber.tag("Animation:").e("ended")
-
             }
 
             override fun onAnimationCancel(animation: Animator) {
@@ -178,14 +177,13 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
 
     override fun onStop() {
         super.onStop()
-        //Pause Lottie Animation when BottomSheetDialogFragment is stopped
+        // Pause Lottie Animation when BottomSheetDialogFragment is stopped
         lottieView.pauseAnimation()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //Pause Lottie Animation when BottomSheetDialogFragment is destroyed
+        // Pause Lottie Animation when BottomSheetDialogFragment is destroyed
         lottieView.pauseAnimation()
     }
-
 }

@@ -1,6 +1,5 @@
 package com.chydee.notekeeper.ui.bottomsheets
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import kotlinx.android.synthetic.main.lock_sheet_layout.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 class LockNoteBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var mListener: OnClickListener
@@ -22,10 +20,10 @@ class LockNoteBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         fun instance(listener: OnClickListener) =
-                LockNoteBottomSheet()
-                        .apply {
-                            mListener = listener
-                        }
+            LockNoteBottomSheet()
+                .apply {
+                    mListener = listener
+                }
     }
 
     interface OnClickListener {
@@ -33,9 +31,9 @@ class LockNoteBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = LockSheetLayoutBinding.inflate(inflater)
         return binding.root
@@ -49,7 +47,6 @@ class LockNoteBottomSheet : BottomSheetDialogFragment() {
                 8 -> secretKeyField.error = null
                 else -> secretKeyField.error = null
             }
-
         }
         binding.continueBtn.setOnClickListener {
             if (isKeyStrong(binding.secretKeyField.takeText())) {
@@ -84,6 +81,4 @@ class LockNoteBottomSheet : BottomSheetDialogFragment() {
 
         return key.length >= 8 && matcher.matches()
     }
-
-
 }

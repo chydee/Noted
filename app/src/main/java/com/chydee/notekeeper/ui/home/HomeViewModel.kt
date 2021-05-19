@@ -15,7 +15,6 @@ import timber.log.Timber
 
 class HomeViewModel @ViewModelInject constructor(private val dbHelper: DBHelperImpl) : ViewModel() {
 
-
     private val compositeDisposable = CompositeDisposable()
 
     private val _notes = MutableLiveData<List<Note>>()
@@ -28,8 +27,9 @@ class HomeViewModel @ViewModelInject constructor(private val dbHelper: DBHelperI
 
     fun getNotes() {
         dbHelper.getAllNotes().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ notes ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { notes ->
                     if (notes.isNotEmpty()) {
                         _notes.postValue(notes)
                     } else {
@@ -38,38 +38,40 @@ class HomeViewModel @ViewModelInject constructor(private val dbHelper: DBHelperI
                     notes.forEach {
                         Timber.d(it.noteTitle)
                     }
-                }, {}).let { compositeDisposable.add(it) }
+                },
+                {}
+            ).let { compositeDisposable.add(it) }
     }
 
     fun deleteNote(note: Note) {
         dbHelper.delete(note).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
         Log.d("DeleteHome", "$note deleted")
     }
 
     fun insertNote(note: Note) {
         dbHelper.insert(note).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun addToTrash(trash: List<Trash>) {
         dbHelper.insertTrash(trash).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun removeFromTrash(trash: Trash) {
         dbHelper.deleteTrash(trash).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun updateNote(note: Note) {
         dbHelper.update(note).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {}).let { compositeDisposable.add(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {}).let { compositeDisposable.add(it) }
     }
 
     fun displayNoteDetails(note: Note) {

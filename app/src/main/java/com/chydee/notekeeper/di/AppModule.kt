@@ -18,13 +18,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRunningDatabase(
-            @ApplicationContext app: Context
+        @ApplicationContext app: Context
     ) = Room.databaseBuilder(
-            app,
-            NoteDatabase::class.java,
-            Constants.NOTED_DB_NAME
+        app,
+        NoteDatabase::class.java,
+        Constants.NOTED_DB_NAME
     ).fallbackToDestructiveMigration()
-            .build()
+        .build()
 
     @Singleton
     @Provides

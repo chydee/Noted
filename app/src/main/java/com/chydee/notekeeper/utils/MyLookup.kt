@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.ui.home.NoteAdapter
 
 class MyLookup(private val recyclerView: RecyclerView) :
-        ItemDetailsLookup<Long>() {
+    ItemDetailsLookup<Long>() {
     override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
         val view = recyclerView.findChildViewUnder(event.x, event.y)
         return if (view != null) {

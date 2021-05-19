@@ -20,9 +20,7 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.hide
-import com.chydee.notekeeper.utils.isContainsSpecialCharacter
 import com.chydee.notekeeper.utils.show
-import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dialog_note_name.*
@@ -61,12 +59,12 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         super.onCreate(savedInstanceState)
         // Record to the external cache directory for visibility
         fileName = "${getOutputDirectory(requireContext())}/${System.currentTimeMillis()}.mp3"
-       // ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
+        // ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = VoiceNotesFragmentBinding.inflate(inflater)
@@ -131,13 +129,16 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      *  Observe voiceNotes and load to RecyclerView
      */
     private fun loadVoiceNotes() {
-        viewModel.voiceNotes.observe(viewLifecycleOwner, {
-            if (it != null && it.isNotEmpty()) {
-                setupRecyclerView(it as ArrayList<File>)
-            } else {
-                showEmptyState()
+        viewModel.voiceNotes.observe(
+            viewLifecycleOwner,
+            {
+                if (it != null && it.isNotEmpty()) {
+                    setupRecyclerView(it as ArrayList<File>)
+                } else {
+                    showEmptyState()
+                }
             }
-        })
+        )
     }
 
     /**
@@ -150,31 +151,24 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         adapter.submitList(audios)
         adapter.setOnClickListener(object : VoiceNotesAdapter.OnItemClickListener {
             override fun onFileClicked(file: File) {
-
             }
 
             override fun onPlayPauseClicked() {
-
             }
 
             override fun onStopPlaying() {
-
             }
 
             override fun onSkipForward() {
-
             }
 
             override fun onSkipBackward() {
-
             }
 
             override fun onRenameClicked(file: File) {
-
             }
 
             override fun onDeleteClicked(file: File) {
-
             }
         })
     }
@@ -187,7 +181,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         binding.vnRecyclerView.hide()
         binding.emptyNotesState.show()
     }
-
 
     /**
      *  Prepare and start recording
@@ -305,12 +298,10 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 try {
                     Timber.d("file last modified: ${newFile.lastModified()}")
                     viewModel.renameFile(fromfile, newFile)
-
                 } catch (e: IOException) {
-                    //Toast.makeText(this@MainActivity, SyncStateContract.Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this@MainActivity, SyncStateContract.Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
 
         renameDialog.show()
@@ -318,7 +309,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         val window = renameDialog.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -328,22 +318,21 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         }
 
         if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-
         }
     }
 
     override fun onStartRecording() {
-        //Start Recording Note
+        // Start Recording Note
         startRecording()
     }
 
     override fun onPauseRecording() {
-        //Pause Recording  and Release Media
+        // Pause Recording  and Release Media
         pauseRecording()
     }
 
     override fun onStopRecording() {
-        //Stop Recording and Release Media
+        // Stop Recording and Release Media
         stopRecording()
     }
 
@@ -352,5 +341,4 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         mediaRecorder?.release()
         mediaRecorder = null
     }
-
 }

@@ -9,7 +9,6 @@ import java.io.File
 
 abstract class BaseFragment : Fragment() {
 
-
     fun showNavigationIcon() {
         val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
         appbar.setNavigationIcon(R.drawable.ic_up)
@@ -29,10 +28,10 @@ abstract class BaseFragment : Fragment() {
     fun snackBarWithAction(message: String, actionName: String, action: () -> Unit) {
         view?.let {
             Snackbar.make(it, message, Snackbar.LENGTH_LONG)
-                    .setAction(actionName) {
-                        action()
-                    }
-                    .show()
+                .setAction(actionName) {
+                    action()
+                }
+                .show()
         }
     }
 

@@ -19,14 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TrashFragment : BaseFragment() {
 
-
     private val viewModel: TrashViewModel by viewModels()
 
     private lateinit var binding: TrashFragmentBinding
 
     private lateinit var adapter: TrashAdapter
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = TrashFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return binding.root
@@ -57,16 +59,19 @@ class TrashFragment : BaseFragment() {
      */
     private fun loadTrash() {
         viewModel.getDeletedNotes()
-        viewModel.deletedNotes.observe(viewLifecycleOwner, { exNote ->
-            if (exNote != null) {
-                if (exNote.isNotEmpty()) {
-                    showAndHideViewsWhenTrashIsNotEmpty()
-                    setupRV(exNote)
-                } else {
-                    hideAndShowViewsWhenTrashIsEmpty()
+        viewModel.deletedNotes.observe(
+            viewLifecycleOwner,
+            { exNote ->
+                if (exNote != null) {
+                    if (exNote.isNotEmpty()) {
+                        showAndHideViewsWhenTrashIsNotEmpty()
+                        setupRV(exNote)
+                    } else {
+                        hideAndShowViewsWhenTrashIsEmpty()
+                    }
                 }
             }
-        })
+        )
     }
 
     /**
@@ -82,7 +87,7 @@ class TrashFragment : BaseFragment() {
 
         adapter.setOnClickListener(object : TrashAdapter.OnItemClickListener {
             override fun onTrashClick(trash: Trash) {
-                //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
+                // findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
                 snackBarWithAction("Can't open items in trash", getString(R.string.restore)) {
                     restoreNotes(trash)
                 }
@@ -119,6 +124,4 @@ class TrashFragment : BaseFragment() {
         binding.recyclerView.hide()
         binding.emptyTrashState.show()
     }
-
-
 }

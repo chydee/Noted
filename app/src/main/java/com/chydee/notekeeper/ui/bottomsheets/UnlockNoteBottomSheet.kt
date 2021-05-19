@@ -1,6 +1,5 @@
 package com.chydee.notekeeper.ui.bottomsheets
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.chydee.notekeeper.utils.takeText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.unlock_sheet_layout.*
 
-
 class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var mListener: OnClickListener
@@ -22,10 +20,10 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         fun instance(listener: OnClickListener) =
-                UnlockNoteBottomSheet()
-                        .apply {
-                            mListener = listener
-                        }
+            UnlockNoteBottomSheet()
+                .apply {
+                    mListener = listener
+                }
     }
 
     interface OnClickListener {
@@ -33,9 +31,9 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = UnlockSheetLayoutBinding.inflate(inflater)
         return binding.root
@@ -48,13 +46,13 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
             if (note != null) {
                 if (binding.secretKeyField.takeText().contentEquals(note?.password!!)) {
                     val updatedNote = Note(
-                            noteId = note!!.noteId,
-                            noteTitle = note!!.noteTitle,
-                            noteDetail = note!!.noteDetail,
-                            lastEdit = note!!.lastEdit,
-                            isLocked = false,
-                            color = note!!.color,
-                            password = note!!.password
+                        noteId = note!!.noteId,
+                        noteTitle = note!!.noteTitle,
+                        noteDetail = note!!.noteDetail,
+                        lastEdit = note!!.lastEdit,
+                        isLocked = false,
+                        color = note!!.color,
+                        password = note!!.password
                     )
                     mListener.onNoteUnlocked(updatedNote)
                     dismiss()
@@ -69,6 +67,4 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
     override fun getTheme(): Int {
         return R.style.CustomBottomSheetDialog
     }
-
-
 }

@@ -14,28 +14,26 @@ import timber.log.Timber
 
 class ClearTrashWorker @WorkerInject constructor(@Assisted ctx: Context, @Assisted params: WorkerParameters, val dbHelperImpl: DBHelperImpl) : Worker(ctx, params) {
 
-
-    //Create an instance of DBHelperImpl and CompositeDisposable
+    // Create an instance of DBHelperImpl and CompositeDisposable
     private val compositeDisposable = CompositeDisposable()
 
     override fun doWork(): Result {
         val appContext = applicationContext
 
         return try {
-            //Perform the delete operation
+            // Perform the delete operation
             dbHelperImpl.clearTrash().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({}, {}).let {
-                        compositeDisposable.add(it)
-                    }
-            //Return if successful
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {}).let {
+                    compositeDisposable.add(it)
+                }
+            // Return if successful
             Result.success()
         } catch (throwable: Throwable) {
-            //Throw exception if anything goes wrong
+            // Throw exception if anything goes wrong
             Log.e("ClearTrashWorker", "$throwable")
             Timber.e(throwable)
             Result.failure()
         }
     }
-
 }

@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class DBHelperImpl @Inject constructor(private val noteDao: NoteDao, private val trashDao: TrashDao) : DBHelper {
 
-
     override fun insert(note: Note): Completable {
         return noteDao.insert(note)
     }
@@ -58,6 +57,4 @@ class DBHelperImpl @Inject constructor(private val noteDao: NoteDao, private val
     override fun getAllTrash(): Single<List<Trash>> {
         return trashDao.getAllTrash()
     }
-
-
 }

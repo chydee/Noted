@@ -1,5 +1,4 @@
-    package com.chydee.notekeeper.ui.bottomsheets
-
+package com.chydee.notekeeper.ui.bottomsheets
 
 import android.graphics.Color.*
 import android.os.Bundle
@@ -18,11 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class EditorBottomSheet : BottomSheetDialogFragment() {
 
     private var colors = arrayListOf(
-            Color("Blue", BLUE),
-            Color("Yellow", YELLOW),
-            Color("Green", GREEN),
-            Color("Red", RED),
-            Color("Magenta", MAGENTA)
+        Color("Blue", BLUE),
+        Color("Yellow", YELLOW),
+        Color("Green", GREEN),
+        Color("Red", RED),
+        Color("Magenta", MAGENTA)
     )
 
     private lateinit var mListener: EditorBottomSheetClickListener
@@ -32,10 +31,10 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         fun instance(listener: EditorBottomSheetClickListener) =
-                EditorBottomSheet()
-                        .apply {
-                            mListener = listener
-                        }
+            EditorBottomSheet()
+                .apply {
+                    mListener = listener
+                }
     }
 
     interface EditorBottomSheetClickListener {
@@ -108,7 +107,5 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
                 mListener.onColorSelected(color)
             }
         })
-
     }
-
 }

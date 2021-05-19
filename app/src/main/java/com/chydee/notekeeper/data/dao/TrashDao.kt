@@ -5,8 +5,7 @@ import com.chydee.notekeeper.data.model.Trash
 import io.reactivex.Completable
 import io.reactivex.Single
 
-
-//Defines the method for using the Note class with room
+// Defines the method for using the Note class with room
 @Dao
 interface TrashDao {
 
@@ -19,7 +18,6 @@ interface TrashDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(trash: List<Trash>): Completable
 
-
     @Delete
     fun delete(trash: Trash): Completable
 
@@ -30,7 +28,6 @@ interface TrashDao {
      */
     @Query("DELETE FROM trash")
     fun clearTrash(): Completable
-
 
     @Query("SELECT * FROM trash ORDER BY id DESC")
     fun getAllTrash(): Single<List<Trash>>

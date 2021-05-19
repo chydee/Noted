@@ -24,7 +24,7 @@ class NotedApp : Application(), Configuration.Provider {
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()
-                .setWorkerFactory(workerFactory)
-                .build()
+            .setWorkerFactory(workerFactory)
+            .build()
     }
 }

@@ -16,9 +16,8 @@ class ColorsAdapter : ListAdapter<Color, ColorsAdapter.MyViewHolder>(DiffCallbac
 
     private lateinit var listener: OnItemClickListener
 
-
     inner class MyViewHolder(val binding: ItemColorBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(color: Color) {
             with(binding) {
                 colorCard.setOnClickListener {
@@ -54,10 +53,7 @@ class ColorsAdapter : ListAdapter<Color, ColorsAdapter.MyViewHolder>(DiffCallbac
         }
     }
 
-
     internal fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
-
-
 }

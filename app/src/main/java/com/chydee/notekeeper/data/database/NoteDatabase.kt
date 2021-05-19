@@ -7,7 +7,6 @@ import com.chydee.notekeeper.data.dao.TrashDao
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.data.model.Trash
 
-
 @Database(entities = [Note::class, Trash::class], version = 2, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 

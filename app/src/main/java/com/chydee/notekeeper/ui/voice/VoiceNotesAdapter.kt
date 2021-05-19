@@ -41,13 +41,15 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         return VoiceNoteViewHolder(bd)
     }
 
-    inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) : RecyclerView.ViewHolder(binding.root),
-        View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    inner class VoiceNoteViewHolder(private var binding: ItemVoiceNoteBinding) :
+        RecyclerView.ViewHolder(binding.root),
+        View.OnCreateContextMenuListener,
+        MenuItem.OnMenuItemClickListener {
         private var currentFile: File? = null
         fun bind(file: File) {
             binding.file = file
             this.currentFile = file
-            //binding.fileName.text = file.name
+            // binding.fileName.text = file.name
             binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     binding.optionsArea.show()
@@ -95,8 +97,6 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             }
             return false
         }
-
-
     }
 
     override fun getItemId(position: Int): Long {
@@ -130,7 +130,6 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         holder.itemView.setOnClickListener {
             listener.onFileClicked(voiceNote)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -167,5 +166,4 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             differ.submitList((results.values as ArrayList<File>?)!!)
         }
     }
-
 }

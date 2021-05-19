@@ -48,8 +48,11 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
     private var password: String = ""
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = EditNoteFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return binding.root
@@ -75,23 +78,23 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
 
         if (args.selectedNoteProperty != null && args.selectedNoteProperty?.noteId != -1) {
             val updateNote = Note(
-                    noteId = args.selectedNoteProperty?.noteId!!,
-                    noteTitle = binding.noteTitle.takeText(),
-                    noteDetail = binding.noteContent.takeText(),
-                    lastEdit = binding.lastEdited.text.toString(),
-                    isLocked = isLocked,
-                    color = selectedColor,
-                    password = password
+                noteId = args.selectedNoteProperty?.noteId!!,
+                noteTitle = binding.noteTitle.takeText(),
+                noteDetail = binding.noteContent.takeText(),
+                lastEdit = binding.lastEdited.text.toString(),
+                isLocked = isLocked,
+                color = selectedColor,
+                password = password
             )
             viewModel.updateNote(updateNote)
         } else {
             val newNote = Note(
-                    noteTitle = binding.noteTitle.takeText(),
-                    noteDetail = binding.noteContent.takeText(),
-                    lastEdit = binding.lastEdited.text.toString(),
-                    isLocked = isLocked,
-                    color = selectedColor,
-                    password = password
+                noteTitle = binding.noteTitle.takeText(),
+                noteDetail = binding.noteContent.takeText(),
+                lastEdit = binding.lastEdited.text.toString(),
+                isLocked = isLocked,
+                color = selectedColor,
+                password = password
             )
             viewModel.insertNote(newNote)
         }
@@ -110,8 +113,10 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
     }
 
     private fun onBackPressed() {
-        val callback = object : OnBackPressedCallback(true
-                /** true means that the callback is enabled */) {
+        val callback = object : OnBackPressedCallback(
+            true
+            /** true means that the callback is enabled */
+        ) {
             override fun handleOnBackPressed() {
                 // update note and handle navigation
                 addOrUpdate()
@@ -163,7 +168,6 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         startActivity(shareIntent)
     }
 
-
     override fun onDeleteClick() {
         args.selectedNoteProperty?.toTrash()?.let { viewModel.addToTrash(it) }
         args.selectedNoteProperty.let {
@@ -203,6 +207,4 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         addOrUpdate()
         findNavController().popBackStack()
     }
-
-
 }

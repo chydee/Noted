@@ -35,8 +35,11 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
     private lateinit var deleteList: ArrayList<Trash>
     private var tracker: SelectionTracker<Long>? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = HomeFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
         return binding.root
@@ -54,7 +57,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
     private fun doSearch() {
         binding.searchNote.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //Do nothing here
+                // Do nothing here
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -106,32 +109,34 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         })
     }
 
-
     private fun observeNotes() {
-        viewModel.notes.observe(viewLifecycleOwner, {
-            if (it != null) {
-                if (it.isNotEmpty()) {
-                    binding.emptyNotesState.hide()
-                    adapter.setNotes(it as ArrayList)
-                    adapter.notifyDataSetChanged()
+        viewModel.notes.observe(
+            viewLifecycleOwner,
+            {
+                if (it != null) {
+                    if (it.isNotEmpty()) {
+                        binding.emptyNotesState.hide()
+                        adapter.setNotes(it as ArrayList)
+                        adapter.notifyDataSetChanged()
 
-                    doSearch()
-                } else {
-                    binding.emptyNotesState.show()
+                        doSearch()
+                    } else {
+                        binding.emptyNotesState.show()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun buildSelectionTracker() {
         tracker = SelectionTracker.Builder(
-                "mySelection",
-                binding.recyclerView,
-                StableIdKeyProvider(binding.recyclerView),
-                MyLookup(binding.recyclerView),
-                StorageStrategy.createLongStorage()
+            "mySelection",
+            binding.recyclerView,
+            StableIdKeyProvider(binding.recyclerView),
+            MyLookup(binding.recyclerView),
+            StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
-                SelectionPredicates.createSelectAnything()
+            SelectionPredicates.createSelectAnything()
         ).build()
 
         adapter.tracker = tracker
@@ -144,7 +149,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
      *  when isCleared is true
      */
     private fun clearSelection() {
-        val isCleared = tracker?.clearSelection()
+        val isCleared = tracker.clearSelection()
         binding.selectedOptions.visibility = if (isCleared!!) View.GONE else View.VISIBLE
     }
 
@@ -152,10 +157,10 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
      *  Listen to the RecyclerView Selection Tracker and update the selectedCount TextView with the number selected
      */
     private fun observeTracker() {
-        tracker?.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+        tracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
-                val selected: Int? = tracker?.selection?.size()
+                val selected: Int? = tracker.selection.size()
                 if (selected != null && selected > 0) {
                     with(binding) {
                         selectedOptions.show()
@@ -173,8 +178,8 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         deleteList = arrayListOf()
         val notes: ArrayList<Note> = adapter.getNotes()
         val newNotes: ArrayList<Note> = arrayListOf()
-        tracker?.selection?.forEach {
-            if (tracker?.isSelected(it)!!) {
+        tracker.selection.forEach {
+            if (tracker.isSelected(it)!!) {
                 deleteList.add(notes[it.toInt()].toTrash())
                 newNotes.add(notes[it.toInt()])
                 viewModel.deleteNote(notes[it.toInt()])
@@ -192,9 +197,7 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
             adapter.notifyDataSetChanged()
             showSnackBar("Note(s) restored")
         }
-
     }
-
 
     private fun undoDelete(notes: List<Note>): List<Note> {
         if (notes.isNotEmpty()) {
@@ -218,5 +221,4 @@ class HomeFragment : BaseFragment(), UnlockNoteBottomSheet.OnClickListener {
         viewModel.updateNote(note)
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note))
     }
-
 }
