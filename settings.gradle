@@ -1,1 +1,2 @@
+rootProject.name='Noted'
 include ':app'

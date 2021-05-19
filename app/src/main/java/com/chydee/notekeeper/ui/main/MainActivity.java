@@ -31,7 +31,7 @@ import androidx.work.WorkManager;
 
 import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
-import com.chydee.notekeeper.worker.ClearTrashWorker;
+import com.chydee.notekeeper.utils.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
