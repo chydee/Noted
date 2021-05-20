@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.id.homeFragment,
                 R.id.editNoteFragment,
                 R.id.trashFragment,
-                R.id.aboutFragment,
                 R.id.settingsFragment
         )
                 .setOpenableLayout(binding.mainDrawer)
@@ -97,9 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.trashFragment:
                     hideWelcomingGroup(getString(R.string.trash));
-                    break;
-                case R.id.aboutFragment:
-                    hideWelcomingGroup(getString(R.string.about));
                     break;
                 default:
                     showWelcomingGroup();
@@ -321,9 +317,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
 
         switch (item.getItemId()) {
-            case R.id.aboutFragment:
-                navController.navigate(R.id.aboutFragment);
-                break;
             case R.id.voiceNotesFragment:
                 navController.navigate(R.id.voiceNotesFragment);
                 break;
