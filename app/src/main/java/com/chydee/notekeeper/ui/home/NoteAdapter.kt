@@ -29,7 +29,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
 
     var tracker: SelectionTracker<Long>? = null
 
-
     init {
         setHasStableIds(true)
     }
@@ -60,10 +59,10 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
         }
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
-                object : ItemDetailsLookup.ItemDetails<Long>() {
-                    override fun getPosition(): Int = adapterPosition
-                    override fun getSelectionKey(): Long? = itemId
-                }
+            object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getPosition(): Int = absoluteAdapterPosition
+                override fun getSelectionKey(): Long = itemId
+            }
     }
 
     override fun getItemId(position: Int): Long {
@@ -87,8 +86,8 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = items[position]
-        tracker?.let {
-            holder.bind(note, it.isSelected(position.toLong()))
+        tracker.let {
+            it?.isSelected(position.toLong())?.let { pos -> holder.bind(note, pos) }
         }
         holder.itemView.setOnClickListener {
             listener.onNoteClick(note)
@@ -110,9 +109,11 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
                 filteredList.addAll(itemsFilter)
             } else {
                 val filterPattern =
-                        constraint.toString().toLowerCase(Locale.ENGLISH).trim { it <= ' ' }
+                    constraint.toString().toLowerCase(Locale.ENGLISH).trim { it <= ' ' }
                 for (item in itemsFilter) {
-                    if (item.noteTitle.toLowerCase(Locale.ENGLISH).contains(filterPattern) or item.noteDetail.toLowerCase(Locale.ENGLISH).contains(filterPattern)) {
+                    if (item.noteTitle.toLowerCase(Locale.ENGLISH).contains(filterPattern) or item.noteDetail.toLowerCase(Locale.ENGLISH)
+                            .contains(filterPattern)
+                    ) {
                         filteredList.add(item)
                     }
                 }
@@ -123,11 +124,10 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
         }
 
         override fun publishResults(
-                constraint: CharSequence,
-                results: FilterResults
+            constraint: CharSequence,
+            results: FilterResults
         ) {
-            items = (results.values as ArrayList<Note>?)!!
+            items = (results.values as ArrayList<Note>?) as ArrayList<Note>
         }
     }
-
 }

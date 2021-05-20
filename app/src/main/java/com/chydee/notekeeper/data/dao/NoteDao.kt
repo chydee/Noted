@@ -5,8 +5,7 @@ import com.chydee.notekeeper.data.model.Note
 import io.reactivex.Completable
 import io.reactivex.Single
 
-
-//Defines the method for using the Note class with room
+// Defines the method for using the Note class with room
 @Dao
 interface NoteDao {
 

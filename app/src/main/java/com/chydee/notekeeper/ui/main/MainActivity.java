@@ -2,6 +2,7 @@ package com.chydee.notekeeper.ui.main;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,20 +31,18 @@ import androidx.work.WorkManager;
 
 import com.chydee.notekeeper.R;
 import com.chydee.notekeeper.databinding.ActivityMainBinding;
-import com.chydee.notekeeper.worker.ClearTrashWorker;
+import com.chydee.notekeeper.utils.worker.ClearTrashWorker;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
-
-/**
- * @author Desmond Ngwuta
- * @email: demsondchidi311@gmail.com
- */
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DrawerLayout drawerLayout;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.id.homeFragment,
                 R.id.editNoteFragment,
                 R.id.trashFragment,
-                R.id.aboutFragment,
                 R.id.settingsFragment
         )
                 .setOpenableLayout(binding.mainDrawer)
@@ -98,9 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.trashFragment:
                     hideWelcomingGroup(getString(R.string.trash));
-                    break;
-                case R.id.aboutFragment:
-                    hideWelcomingGroup(getString(R.string.about));
                     break;
                 default:
                     showWelcomingGroup();
@@ -269,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     /**
      * creates and enqueues a work in the background using the WorkManager.
      * clears the trash every 7 days intervals
@@ -286,6 +280,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setConstraints(constraints)
                 .build();
         workManager.enqueue(periodicWorkRequest);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            navController.navigate(R.id.voiceNotesFragment);
+        } else {
+            Snackbar.make(binding.getRoot(), "You need to give permission", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -313,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
 
         switch (item.getItemId()) {
-            case R.id.aboutFragment:
-                navController.navigate(R.id.aboutFragment);
+            case R.id.voiceNotesFragment:
+                navController.navigate(R.id.voiceNotesFragment);
                 break;
             case R.id.trashFragment:
                 navController.navigate(R.id.trashFragment);
@@ -352,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+        binding = null;
     }
 
     @Override

@@ -10,20 +10,22 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/voiceNotesFragment"
+            android:icon="@drawable/ic_record"
+            android:title="@string/voice_notes" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/trashFragment"
             android:icon="@drawable/ic_delete"
             android:title="@string/menu_trash" />
     </group>
 
-    <item android:title="@string/others">
+    <item android:title="">
         <menu>
-            <item android:title="@string/others">
+            <item android:title="">
                 <group android:checkableBehavior="single">
-                    <item
-                        android:id="@+id/aboutFragment"
-                        android:icon="@drawable/ic_about"
-                        android:title="@string/menu_about" />
-
                     <item
                         android:id="@+id/settingsFragment"
                         android:icon="@drawable/ic_settings"

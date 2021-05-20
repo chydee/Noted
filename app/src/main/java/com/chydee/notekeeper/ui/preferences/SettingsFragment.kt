@@ -2,7 +2,6 @@ package com.chydee.notekeeper.ui.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.*
 import com.chydee.notekeeper.R
 import com.google.android.material.appbar.MaterialToolbar
-
+import timber.log.Timber
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferenceScreen.sharedPreferences
-                .registerOnSharedPreferenceChangeListener(this)
+            .registerOnSharedPreferenceChangeListener(this)
     }
-
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -32,7 +30,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         // Go through all of the preferences, and set up their preference summary.
         for (i in 0 until count) {
             val p: Preference = prefScreen.getPreference(i)
-            // You don't need to set up preference summaries for checkbox preferences because
+            // No need to set up preference summaries for checkbox preferences because
             // they are already set up in xml using summaryOff and summary On
             if (p !is CheckBoxPreference) {
                 val value = sharedPreferences.getString(p.key, "")
@@ -44,11 +42,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val callback = object : OnBackPressedCallback(true
-                /** true means that the callback is enabled */) {
+        val callback = object : OnBackPressedCallback(
+            true
+            /** when set to true it means that the callback is enabled */
+        ) {
             override fun handleOnBackPressed() {
-                // Show your dialog and handle navigation
-                // Toast.makeText(context, "Discard Note", Toast.LENGTH_SHORT).show()
+                // Show  dialog and handle navigation
                 findNavController().popBackStack()
             }
         }
@@ -63,7 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         appbar.setNavigationIcon(R.drawable.ic_up)
     }
 
-    // The below method sets the Preference Summary as per selected.
+    // sets the Preference Summary as per selected.
     private fun setPreferenceSummary(preference: Preference, value: String) {
         if (preference is ListPreference) {
             // For list preferences, figure out the label of the selected value
@@ -71,7 +70,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             val prefIndex: Int = listPreference.findIndexOfValue(value)
             if (prefIndex >= 0) {
                 // Set the summary to that label
-                Log.d("Noted Theme Summary", listPreference.entries[prefIndex] as String)
+                Timber.d(listPreference.entries[prefIndex] as String)
             }
         } else {
             // For an invalid Preference type, set the summary to null
@@ -84,7 +83,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         val preference: Preference? = findPreference(key!!)
 
         if (preference != null) {
-            //update the summary for the preference
+            // update the summary for the preference
             if (preference !is CheckBoxPreference) {
                 val value: String? = sharedPreferences?.getString(preference.key, "")
                 value?.let { setPreferenceSummary(preference, it) }
@@ -94,8 +93,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onDestroy() {
         super.onDestroy()
+        // Unregister the preferenceScreen.sharedPreferences
         preferenceScreen.sharedPreferences
-                .unregisterOnSharedPreferenceChangeListener(this)
+            .unregisterOnSharedPreferenceChangeListener(this)
     }
-
 }
