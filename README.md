@@ -80,7 +80,7 @@
 ## Demo
 
     Find below screenshots of the application
-    <img src="screens/noted_home.png" width="350" title="Home Screen"> <img src="screens/noted_add_note.png" width="350" title="Create new note">
+   <img src="https://github.com/chydee/Noted/blob/master/screens/noted_home.png" width="350" title="Home Screen"> <img src="screens/noted_add_note.png" width="350" title="Create new note"> <img src="https://github.com/chydee/Noted/blob/master/screens/noted_new_note.png" width="350" title="Create new note">
 
 
  ## Credits
