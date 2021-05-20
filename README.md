@@ -7,10 +7,12 @@
  Noted is a note taking app, that's inspired by - Google Keep. The Application leverages the latest improvement in the android ecosystem and improved on the parent application
  with extended functionalities such as vault-like behaviour which allows user's to add security to notes by using a user-generated password as key.
 
- Minimum Api Level : 21
- compileSdkVersion : 30
+ Minimum Api Level : 21 compileSdkVersion : 30
 
  Build System : [Gradle](https://gradle.org/)
+ 
+ <img src="https://github.com/chydee/Noted/blob/master/screens/noted_home.png" width="200" title="Home Screen"> <img src="screens/noted_add_note.png" width="200" title="Create new note"> <img src="https://github.com/chydee/Noted/blob/master/screens/noted_new_note.png" width="200" title="Create new note">
+ <img src="screens/noted_-hme_notes.png" width="200" title=""> <img src="screens/noted_side_nav.png" width="200" title=""> <img src="screens/note_trash.png" width="200" title="">
 
  ## Table of Contents
 
@@ -18,7 +20,6 @@
 -   [Design](#design)
 -   [Architecture](#architecture)
 -   [Libraries](#libraries)
--   [Demo](#demo)
 -   [Credits](#credits)
 
  ## Installation
@@ -75,12 +76,7 @@
 
      ### Plugins
 
-     -   [Firebase-Crashlytics]
-
-## Demo
-
-    Find below screenshots of the application
-   <img src="https://github.com/chydee/Noted/blob/master/screens/noted_home.png" width="350" title="Home Screen"> <img src="screens/noted_add_note.png" width="350" title="Create new note"> <img src="https://github.com/chydee/Noted/blob/master/screens/noted_new_note.png" width="350" title="Create new note">
+     -   [Firebase-Crashlytics]   
 
 
  ## Credits
