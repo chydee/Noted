@@ -11,8 +11,8 @@
 
  Build System : [Gradle](https://gradle.org/)
  
- <img src="https://github.com/chydee/Noted/blob/master/screens/noted_home.png" width="200" title="Home Screen"> <img src="screens/noted_add_note.png" width="200" title="Create new note"> <img src="https://github.com/chydee/Noted/blob/master/screens/noted_new_note.png" width="200" title="Create new note">
- <img src="screens/noted_-hme_notes.png" width="200" title=""> <img src="screens/noted_side_nav.png" width="200" title=""> <img src="screens/note_trash.png" width="200" title="">
+ <img src="https://github.com/chydee/Noted/blob/master/screens/noted_home.png" width="200" title="Home Screen"> <img src="screens/noted_add_note.png" width="200" title="Create new note"> <img src="https://github.com/chydee/Noted/blob/master/screens/noted_new_note.png" width="200" title="note">
+ <img src="screens/noted_home_notes.png" width="200" title=""> <img src="screens/noted_side_nav.png" width="200" title=""> <img src="screens/note_trash.png" width="200" title="">
 
  ## Table of Contents
 
