@@ -1,15 +1,17 @@
 package com.chydee.notekeeper.ui.addoreditnote
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.chydee.notekeeper.data.DBHelperImpl
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.data.model.Trash
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class EditNoteViewModel @ViewModelInject constructor(private val dbHelper: DBHelperImpl) : ViewModel() {
+@HiltViewModel
+class EditNoteViewModel @Inject constructor(private val dbHelper: DBHelperImpl) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 

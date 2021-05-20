@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Note
 import com.chydee.notekeeper.databinding.UnlockSheetLayoutBinding
-import com.chydee.notekeeper.utils.takeText
+import com.chydee.notekeeper.utils.ext.takeText
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.unlock_sheet_layout.*
 
 class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var mListener: OnClickListener
-    private lateinit var binding: UnlockSheetLayoutBinding
+    private var binding: UnlockSheetLayoutBinding? = null
 
     private var note: Note? = null
 
@@ -36,15 +35,15 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = UnlockSheetLayoutBinding.inflate(inflater)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         note = requireArguments().getParcelable("Note")
-        binding.continueBtn.setOnClickListener {
+        binding?.continueBtn?.setOnClickListener {
             if (note != null) {
-                if (binding.secretKeyField.takeText().contentEquals(note?.password!!)) {
+                if (binding?.secretKeyField?.takeText()?.contentEquals(note?.password!!) == true) {
                     val updatedNote = Note(
                         noteId = note!!.noteId,
                         noteTitle = note!!.noteTitle,
@@ -58,7 +57,7 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
                     dismiss()
                 } else {
                     val error = "Password does not match. Try again"
-                    secretKeyField.error = error
+                    binding?.secretKeyField?.error = error
                 }
             }
         }
@@ -66,5 +65,10 @@ class UnlockNoteBottomSheet : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int {
         return R.style.CustomBottomSheetDialog
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

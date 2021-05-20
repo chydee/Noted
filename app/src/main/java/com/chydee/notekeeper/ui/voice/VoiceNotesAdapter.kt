@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.databinding.ItemVoiceNoteBinding
-import com.chydee.notekeeper.utils.remove
-import com.chydee.notekeeper.utils.show
+import com.chydee.notekeeper.utils.ext.remove
+import com.chydee.notekeeper.utils.ext.show
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -78,15 +78,15 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
          */
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             if (currentFile != null) {
-                val position = adapterPosition
+                val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     return when (item?.itemId) {
                         1 -> {
-                            listener.onRenameClicked(file = currentFile!!)
+                            listener.onRenameClicked(file = currentFile)
                             true
                         }
                         2 -> {
-                            listener.onDeleteClicked(currentFile!!)
+                            listener.onDeleteClicked(currentFile)
                             true
                         }
                         else -> {
@@ -109,8 +109,8 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
         fun onStopPlaying()
         fun onSkipForward()
         fun onSkipBackward()
-        fun onRenameClicked(file: File)
-        fun onDeleteClicked(file: File)
+        fun onRenameClicked(file: File?)
+        fun onDeleteClicked(file: File?)
     }
 
     internal fun setOnClickListener(listener: OnItemClickListener) {

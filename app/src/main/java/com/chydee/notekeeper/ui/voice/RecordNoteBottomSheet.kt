@@ -14,15 +14,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
 
 /**
- *  @author: Desmond Ngwuta
- *  @email: desmondchidi311@gmail.com
+ *  RecordVoiceNotes BottomSheetDialogFragment
  */
 class RecordNoteBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var listener: OnClickListener
-    private lateinit var binding: RecordNoteSheetLayoutBinding
+    private var binding: RecordNoteSheetLayoutBinding? = null
 
-    private lateinit var lottieView: LottieAnimationView
+    private var lottieView: LottieAnimationView? = null
 
     private var pauseOffset: Long = 0
     private var running = false
@@ -42,7 +41,7 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = RecordNoteSheetLayoutBinding.inflate(inflater)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,11 +55,11 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      *  Handle OnClickEvents by setting OnClickListener or OnCheckedChangeListener
      */
     private fun onClickEvents() {
-        binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
+        binding?.playPauseCircle?.setOnCheckedChangeListener { _, isChecked ->
             onRecord(isChecked)
         }
 
-        binding.stopRecording.setOnClickListener {
+        binding?.stopRecording?.setOnClickListener {
             stopRecording()
             listener.onStopRecording()
             dismiss()
@@ -71,7 +70,7 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      *  Set up Chronometer
      */
     private fun setupChronometer() {
-        binding.durationCounter.apply {
+        binding?.durationCounter?.apply {
             format = "Duration: %s"
             base = SystemClock.elapsedRealtime()
         }
@@ -99,8 +98,8 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      */
     private fun startRecording() {
         listener.onStartRecording()
-        lottieView.playAnimation()
-        binding.durationCounter.apply {
+        lottieView?.playAnimation()
+        binding?.durationCounter?.apply {
             base = SystemClock.elapsedRealtime() - pauseOffset
             start()
         }
@@ -113,8 +112,8 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      */
     private fun stopRecording() {
         listener.onStopRecording()
-        lottieView.pauseAnimation()
-        binding.durationCounter.apply {
+        lottieView?.pauseAnimation()
+        binding?.durationCounter?.apply {
             base = SystemClock.elapsedRealtime() - this.base
             stop()
         }
@@ -128,9 +127,9 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      */
     private fun pauseRecording() {
         listener.onPauseRecording()
-        lottieView.pauseAnimation()
+        lottieView?.pauseAnimation()
         if (running) {
-            binding.durationCounter.apply {
+            binding?.durationCounter?.apply {
                 stop()
                 pauseOffset = SystemClock.elapsedRealtime() - this.base
             }
@@ -142,7 +141,7 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      * Resets Chronometer when called
      */
     private fun resetChronometer() {
-        binding.durationCounter.base = SystemClock.elapsedRealtime()
+        binding?.durationCounter?.base = SystemClock.elapsedRealtime()
         pauseOffset = 0
     }
 
@@ -150,12 +149,12 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
      * Set up lottie animation
      */
     private fun setupLottie() {
-        lottieView = binding.recordingAnimation
-        lottieView.setAnimation(R.raw.recording)
-        lottieView.setSafeMode(true)
-        lottieView.repeatCount = LottieDrawable.INFINITE
-        lottieView.pauseAnimation()
-        lottieView.addAnimatorListener(object :
+        lottieView = binding?.recordingAnimation
+        lottieView?.setAnimation(R.raw.recording)
+        lottieView?.setSafeMode(true)
+        lottieView?.repeatCount = LottieDrawable.INFINITE
+        lottieView?.pauseAnimation()
+        lottieView?.addAnimatorListener(object :
             Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
                 Timber.tag("Animation:").e("started")
@@ -178,12 +177,18 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
     override fun onStop() {
         super.onStop()
         // Pause Lottie Animation when BottomSheetDialogFragment is stopped
-        lottieView.pauseAnimation()
+        lottieView?.pauseAnimation()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Pause Lottie Animation when BottomSheetDialogFragment is destroyed
-        lottieView.pauseAnimation()
+        binding = null
+        lottieView = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+        lottieView = null
     }
 }

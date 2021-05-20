@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -12,8 +13,10 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
-class VoiceNotesViewModel : ViewModel() {
+@HiltViewModel
+class VoiceNotesViewModel @Inject constructor() : ViewModel() {
 
     private val _voiceNotes = MutableLiveData<List<File>>()
     val voiceNotes: LiveData<List<File>>

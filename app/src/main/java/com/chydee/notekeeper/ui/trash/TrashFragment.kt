@@ -11,8 +11,8 @@ import com.chydee.notekeeper.data.model.Trash
 import com.chydee.notekeeper.databinding.TrashFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.SpacesItemDecoration
-import com.chydee.notekeeper.utils.hide
-import com.chydee.notekeeper.utils.show
+import com.chydee.notekeeper.utils.ext.hide
+import com.chydee.notekeeper.utils.ext.show
 import com.chydee.notekeeper.utils.toNote
 import dagger.hilt.android.AndroidEntryPoint
 

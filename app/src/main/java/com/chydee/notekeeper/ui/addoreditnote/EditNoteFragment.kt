@@ -1,9 +1,6 @@
 package com.chydee.notekeeper.ui.addoreditnote
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -13,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,10 +22,9 @@ import com.chydee.notekeeper.databinding.EditNoteFragmentBinding
 import com.chydee.notekeeper.ui.bottomsheets.EditorBottomSheet
 import com.chydee.notekeeper.ui.bottomsheets.LockNoteBottomSheet
 import com.chydee.notekeeper.ui.main.BaseFragment
-import com.chydee.notekeeper.utils.takeText
+import com.chydee.notekeeper.utils.ext.takeText
 import com.chydee.notekeeper.utils.toTrash
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.edit_note_fragment.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +33,7 @@ import java.util.*
 @AndroidEntryPoint
 class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClickListener, LockNoteBottomSheet.OnClickListener {
 
-    private lateinit var binding: EditNoteFragmentBinding
+    private var binding: EditNoteFragmentBinding? = null
 
     private val viewModel: EditNoteViewModel by viewModels()
 
@@ -52,36 +49,41 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = EditNoteFragmentBinding.inflate(inflater)
         setHasOptionsMenu(true)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
+        binding?.lifecycleOwner = this
         showNavigationIcon()
         setLastEditedTime()
-        setDisplay()
-        handleClickListeners()
+        setUpDisplay()
+        setUpClickListeners()
         onBackPressed()
     }
 
-    private fun handleClickListeners() {
-        binding.optionsBtn.setOnClickListener {
+    private fun setUpClickListeners() {
+        binding?.optionsBtn?.setOnClickListener {
             EditorBottomSheet.instance(this).show(childFragmentManager, "Options")
         }
     }
 
-    private fun addOrUpdate() {
+    /**
+     *  first checks if the NavArgs is not null and the note id is not -1
+     *  if true: update note
+     *  if false create new note and add to the Note Table
+     */
+    private fun addOrUpdateNote() {
 
         if (args.selectedNoteProperty != null && args.selectedNoteProperty?.noteId != -1) {
             val updateNote = Note(
-                noteId = args.selectedNoteProperty?.noteId!!,
-                noteTitle = binding.noteTitle.takeText(),
-                noteDetail = binding.noteContent.takeText(),
-                lastEdit = binding.lastEdited.text.toString(),
+                noteId = args.selectedNoteProperty?.noteId ?: -1,
+                noteTitle = binding?.noteTitle?.takeText() ?: "",
+                noteDetail = binding?.noteContent?.takeText() ?: "",
+                lastEdit = binding?.lastEdited?.text.toString(),
                 isLocked = isLocked,
                 color = selectedColor,
                 password = password
@@ -89,9 +91,9 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
             viewModel.updateNote(updateNote)
         } else {
             val newNote = Note(
-                noteTitle = binding.noteTitle.takeText(),
-                noteDetail = binding.noteContent.takeText(),
-                lastEdit = binding.lastEdited.text.toString(),
+                noteTitle = binding?.noteTitle?.takeText() ?: "",
+                noteDetail = binding?.noteContent?.takeText() ?: "",
+                lastEdit = binding?.lastEdited?.text.toString(),
                 isLocked = isLocked,
                 color = selectedColor,
                 password = password
@@ -104,11 +106,11 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern(getString(R.string.date_time_string_format))
-            binding.lastEdited.text = getString(R.string.edited, current.format(formatter))
+            binding?.lastEdited?.text = getString(R.string.edited, current.format(formatter))
         } else {
             val date = Date()
             val formatter = SimpleDateFormat(getString(R.string.date_time_string_format), Locale.ROOT)
-            binding.lastEdited.text = getString(R.string.edited, formatter.format(date))
+            binding?.lastEdited?.text = getString(R.string.edited, formatter.format(date))
         }
     }
 
@@ -119,37 +121,37 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         ) {
             override fun handleOnBackPressed() {
                 // update note and handle navigation
-                addOrUpdate()
+                addOrUpdateNote()
                 findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    private fun setDisplay() {
-        binding.noteTitle.imeOptions = EditorInfo.IME_ACTION_NEXT
-        binding.noteTitle.setRawInputType(InputType.TYPE_CLASS_TEXT)
+    private fun setUpDisplay() {
+        binding?.noteTitle?.imeOptions = EditorInfo.IME_ACTION_NEXT
+        binding?.noteTitle?.setRawInputType(InputType.TYPE_CLASS_TEXT)
         if (args.selectedNoteProperty != null) {
-            binding.noteTitle.setText(args.selectedNoteProperty?.noteTitle)
-            binding.noteContent.setText(args.selectedNoteProperty?.noteDetail)
-            binding.lastEdited.text = args.selectedNoteProperty?.lastEdit
+            binding?.noteTitle?.setText(args.selectedNoteProperty?.noteTitle)
+            binding?.noteContent?.setText(args.selectedNoteProperty?.noteDetail)
+            binding?.lastEdited?.text = args.selectedNoteProperty?.lastEdit
         }
 
-        binding.noteContent.movementMethod = LinkMovementMethod.getInstance()
-        Linkify.addLinks(binding.noteContent, Linkify.ALL)
+        binding?.noteContent?.movementMethod = LinkMovementMethod.getInstance()
+        binding?.noteContent?.let { Linkify.addLinks(it, Linkify.ALL) }
 
-        binding.noteTitle.setOnEditorActionListener { _, actionId, _ ->
+        binding?.noteTitle?.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_NEXT -> {
-                    binding.noteContent.requestFocus()
+                    binding?.noteContent?.requestFocus()
                     true
                 }
                 EditorInfo.IME_ACTION_SEND -> {
-                    binding.noteContent.requestFocus()
+                    binding?.noteContent?.requestFocus()
                     true
                 }
                 EditorInfo.IME_ACTION_UNSPECIFIED -> {
-                    binding.noteContent.requestFocus()
+                    binding?.noteContent?.requestFocus()
                     true
                 }
                 else -> false
@@ -157,15 +159,23 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         }
     }
 
+    /**
+     *  Share note with other apps
+     */
     private fun sendNote() {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "${noteTitle.text}\n ${noteContent.text}")
+            putExtra(Intent.EXTRA_TEXT, "${binding?.noteTitle?.takeText()}\n ${binding?.noteContent?.takeText()}")
             type = "text/plain"
         }
 
-        val shareIntent = Intent.createChooser(sendIntent, noteTitle.text.toString())
-        startActivity(shareIntent)
+        val shareIntent = Intent.createChooser(sendIntent, binding?.noteTitle?.takeText())
+        // Try to invoke the intent.
+        try {
+            startActivity(shareIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, "Activity Not Found", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDeleteClick() {
@@ -183,7 +193,8 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         // Gets a handle to the clipboard service.
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         // Creates a new text clip to put on the clipboard
-        val clip: ClipData = ClipData.newPlainText(noteTitle.text.toString(), "${noteTitle.text} \n ${noteContent.text}")
+        val clip: ClipData =
+            ClipData.newPlainText(binding?.noteTitle?.takeText(), "${binding?.noteTitle?.takeText()} \n ${binding?.noteContent?.takeText()}")
         // Set the clipboard's primary clip.
         clipboard.setPrimaryClip(clip)
     }
@@ -204,7 +215,12 @@ class EditNoteFragment : BaseFragment(), EditorBottomSheet.EditorBottomSheetClic
         isLocked = true
         this.password = password
         showSnackBar(getString(R.string.note_locked))
-        addOrUpdate()
+        addOrUpdateNote()
         findNavController().popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

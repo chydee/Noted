@@ -1,6 +1,5 @@
 package com.chydee.notekeeper.ui.bottomsheets
 
-import android.graphics.Color.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,23 +8,15 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.data.model.Color
 import com.chydee.notekeeper.databinding.BottomSheetLayoutBinding
 import com.chydee.notekeeper.ui.ColorsAdapter
+import com.chydee.notekeeper.utils.Items
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EditorBottomSheet : BottomSheetDialogFragment() {
-
-    private var colors = arrayListOf(
-        Color("Blue", BLUE),
-        Color("Yellow", YELLOW),
-        Color("Green", GREEN),
-        Color("Red", RED),
-        Color("Magenta", MAGENTA)
-    )
-
     private lateinit var mListener: EditorBottomSheetClickListener
-    private lateinit var binding: BottomSheetLayoutBinding
+    private var binding: BottomSheetLayoutBinding? = null
 
     private lateinit var colorsAdapter: ColorsAdapter
 
@@ -49,9 +40,9 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = BottomSheetLayoutBinding.inflate(inflater)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,42 +55,51 @@ class EditorBottomSheet : BottomSheetDialogFragment() {
         return R.style.CustomBottomSheetDialog
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    /**
+     *  Handle Button Clicks
+     */
     private fun handleBtnClicks() {
         with(binding) {
-            deleteBtn.setOnClickListener {
+            this?.deleteBtn?.setOnClickListener {
                 mListener.onDeleteClick()
                 dismiss()
             }
-            copyBtn.setOnClickListener {
+            this?.copyBtn?.setOnClickListener {
                 mListener.onCopyClick()
                 dismiss()
             }
-            sendBtn.setOnClickListener {
+            this?.sendBtn?.setOnClickListener {
                 mListener.onSendClick()
                 dismiss()
             }
-            lockeNoteBtn.setOnClickListener {
+            this?.lockeNoteBtn?.setOnClickListener {
                 mListener.onLockNoteClicked()
                 dismiss()
             }
         }
     }
 
+    /**
+     * Set up ColorsAdapter and load them to screen
+     */
     private fun loadColors() {
-        val layoutManager = FlexboxLayoutManager(requireContext())
-
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.FLEX_START
-
-        binding.coloursRV.layoutManager = layoutManager
+        binding?.coloursRV?.layoutManager = FlexboxLayoutManager(requireContext()).apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }
 
         colorsAdapter = ColorsAdapter()
 
         with(binding) {
-            coloursRV.adapter = colorsAdapter
-            colorsAdapter.submitList(colors)
-            coloursRV.setHasFixedSize(true)
-            coloursRV.isNestedScrollingEnabled = false
+            this?.coloursRV?.adapter = colorsAdapter
+            colorsAdapter.submitList(Items.colors)
+            this?.coloursRV?.setHasFixedSize(true)
+            this?.coloursRV?.isNestedScrollingEnabled = false
         }
 
         colorsAdapter.setOnItemClickListener(object : ColorsAdapter.OnItemClickListener {

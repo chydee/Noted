@@ -2,15 +2,41 @@
 
     <PreferenceCategory app:title="@string/theme_header">
 
-
         <ListPreference
+            app:allowDividerAbove="true"
             app:defaultValue="@string/mode_system"
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_value"
             app:key="@string/pref_theme_key"
             app:title="@string/theme_sub"
-            app:allowDividerAbove="true"
             app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="about_category"
+        app:title="App Info">
+
+        <Preference
+            app:key="app_info"
+            app:summary="1.0"
+            app:title="App Version" />
+
+        <Preference
+            app:key="libraries"
+            app:summary="@string/libraries"
+            app:title="Libraries" />
+
+        <Preference
+            app:key="authors"
+            app:summary="@string/author"
+            app:title="Authors" />
+
+        <Preference
+            app:key="licence"
+            app:summary="@string/licence"
+
+            app:title="Licences" />
 
     </PreferenceCategory>
 

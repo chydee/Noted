@@ -60,8 +60,8 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
-                override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): Long? = itemId
+                override fun getPosition(): Int = absoluteAdapterPosition
+                override fun getSelectionKey(): Long = itemId
             }
     }
 
@@ -87,7 +87,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = items[position]
         tracker.let {
-            holder.bind(note, it.isSelected(position.toLong()))
+            it?.isSelected(position.toLong())?.let { pos -> holder.bind(note, pos) }
         }
         holder.itemView.setOnClickListener {
             listener.onNoteClick(note)
@@ -111,7 +111,9 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
                 val filterPattern =
                     constraint.toString().toLowerCase(Locale.ENGLISH).trim { it <= ' ' }
                 for (item in itemsFilter) {
-                    if (item.noteTitle.toLowerCase(Locale.ENGLISH).contains(filterPattern) or item.noteDetail.toLowerCase(Locale.ENGLISH).contains(filterPattern)) {
+                    if (item.noteTitle.toLowerCase(Locale.ENGLISH).contains(filterPattern) or item.noteDetail.toLowerCase(Locale.ENGLISH)
+                            .contains(filterPattern)
+                    ) {
                         filteredList.add(item)
                     }
                 }
@@ -125,7 +127,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), AutoUpda
             constraint: CharSequence,
             results: FilterResults
         ) {
-            items = (results.values as ArrayList<Note>?)!!
+            items = (results.values as ArrayList<Note>?) as ArrayList<Note>
         }
     }
 }

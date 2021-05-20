@@ -35,11 +35,6 @@
         android:name="com.chydee.notekeeper.ui.trash.TrashFragment"
         android:label="TrashFragment"
         tools:layout="@layout/trash_fragment" />
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.chydee.notekeeper.ui.about.AboutFragment"
-        android:label="AboutFragment"
-        tools:layout="@layout/about_fragment" />
 
     <fragment
         android:id="@+id/settingsFragment"
@@ -53,13 +48,6 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"
         app:popUpTo="@id/nav_graph" />
-    <action
-        android:id="@+id/action_global_aboutFragment"
-        app:destination="@id/aboutFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/fade_in"
-        app:popExitAnim="@anim/fade_out" />
 
     <action
         android:id="@+id/action_global_settingsFragment"

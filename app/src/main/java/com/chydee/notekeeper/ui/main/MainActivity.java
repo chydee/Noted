@@ -42,11 +42,6 @@ import java.util.concurrent.TimeUnit;
 import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
-
-/**
- * @author Desmond Ngwuta
- * @email: demsondchidi311@gmail.com
- */
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -273,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     /**
      * creates and enqueues a work in the background using the WorkManager.
      * clears the trash every 7 days intervals
@@ -369,6 +363,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+        binding = null;
     }
 
     @Override
