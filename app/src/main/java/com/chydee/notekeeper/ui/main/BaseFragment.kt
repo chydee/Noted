@@ -1,6 +1,8 @@
 package com.chydee.notekeeper.ui.main
 
 import android.content.Context
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.chydee.notekeeper.R
 import com.google.android.material.appbar.MaterialToolbar
@@ -9,14 +11,19 @@ import java.io.File
 
 abstract class BaseFragment : Fragment() {
 
+    private var appbar: MaterialToolbar? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+    }
+
     fun showNavigationIcon() {
-        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
-        appbar.setNavigationIcon(R.drawable.ic_up)
+        appbar?.setNavigationIcon(R.drawable.ic_up)
     }
 
     fun hideNavigationIcon() {
-        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
-        appbar.navigationIcon = null
+        if (appbar?.navigationIcon != null) appbar?.navigationIcon = null
     }
 
     fun showSnackBar(message: String) {
