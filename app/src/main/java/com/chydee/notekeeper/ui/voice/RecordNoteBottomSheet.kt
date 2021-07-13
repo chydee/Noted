@@ -1,11 +1,15 @@
 package com.chydee.notekeeper.ui.voice
 
+import android.Manifest
 import android.animation.Animator
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.chydee.notekeeper.R
@@ -60,11 +64,30 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding?.stopRecording?.setOnClickListener {
-            stopRecording()
-            listener.onStopRecording()
-            dismiss()
+            if (ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                stopRecording()
+                listener.onStopRecording()
+                dismiss()
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                registerForActivityResult(
+                    ActivityResultContracts.RequestPermission()
+                ) { isGranted: Boolean ->
+                    if (isGranted) {
+                        stopRecording()
+                        listener.onStopRecording()
+                        dismiss()
+                    } else {
+                    }
+                }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
         }
     }
+
 
     /**
      *  Set up Chronometer

@@ -15,6 +15,7 @@ import kotlin.collections.ArrayList
 
 class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHolder>(), Filterable {
 
+    private var isPlaying: Boolean = false
     private val diffCallback = object : DiffUtil.ItemCallback<File>() {
         override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
             return oldItem.name == newItem.name
@@ -50,15 +51,38 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             binding.file = file
             this.currentFile = file
             // binding.fileName.text = file.name
-            binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
+
+            binding.playPauseCircle.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
+                    listener.onResume()
                     binding.optionsArea.show()
                 } else {
+                    listener.onPause()
                     binding.optionsArea.remove()
                 }
             }
+
+            binding.stopPlaying.setOnClickListener {
+                binding.optionsArea.remove()
+                listener.onStop()
+                binding.playPauseCircle.isChecked = false
+            }
+
+            binding.skipForward.setOnClickListener { listener.onSkipForward() }
+            binding.skipBackward.setOnClickListener { listener.onSkipBackward() }
             itemView.setOnCreateContextMenuListener(this)
             binding.executePendingBindings()
+        }
+
+        private fun pauseResume() {
+            if (isPlaying) {
+                listener.onPause()
+                binding.optionsArea.remove()
+            } else {
+                listener.onResume()
+                binding.optionsArea.show()
+            }
+            isPlaying = !isPlaying
         }
 
         /**
@@ -105,8 +129,10 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
 
     interface OnItemClickListener {
         fun onFileClicked(file: File)
-        fun onPlayPauseClicked()
-        fun onStopPlaying()
+        fun onPlay(file: File)
+        fun onPause()
+        fun onResume()
+        fun onStop()
         fun onSkipForward()
         fun onSkipBackward()
         fun onRenameClicked(file: File?)
@@ -127,9 +153,6 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
     override fun onBindViewHolder(holder: VoiceNotesAdapter.VoiceNoteViewHolder, position: Int) {
         val voiceNote = differ.currentList[position]
         holder.bind(voiceNote)
-        holder.itemView.setOnClickListener {
-            listener.onFileClicked(voiceNote)
-        }
     }
 
     override fun getItemCount(): Int {

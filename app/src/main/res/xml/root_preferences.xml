@@ -32,12 +32,6 @@
             app:summary="@string/author"
             app:title="Authors" />
 
-        <Preference
-            app:key="licence"
-            app:summary="@string/licence"
-
-            app:title="Licences" />
-
     </PreferenceCategory>
 
 </PreferenceScreen>

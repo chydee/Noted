@@ -15,7 +15,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        appbar = requireActivity().findViewById(R.id.topAppBar)
     }
 
     fun showNavigationIcon() {

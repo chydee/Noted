@@ -4,13 +4,16 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.util.*
 
-private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
-
-private const val REQUEST_ACCESS_FILES_PERMISSION = 300
 
 @AndroidEntryPoint
 class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener {
@@ -44,11 +45,11 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     private var mediaRecorder: MediaRecorder? = null
     private var state: Boolean = false
     private var recordingStopped: Boolean = false
+    private var playingStopped: Boolean = false
 
-    // Requesting permission to RECORD_AUDIO
-    private var permissionToRecordAccepted = false
-    private var recordAudioPermission: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
-    private var accessFilesPermission: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private var player: MediaPlayer? = null
+
+    private var length: Int = 0
 
     private lateinit var adapter: VoiceNotesAdapter
 
@@ -58,8 +59,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Record to the external cache directory for visibility
-        fileName = "${getOutputDirectory(requireContext())}/${System.currentTimeMillis()}.mp3"
-        // ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
+        fileName = "${getOutputDirectory(requireContext())}/New Voice Note ${Date().time}.mp3"
     }
 
     override fun onCreateView(
@@ -82,16 +82,65 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
 
     private fun setUpOnClickListeners() {
         binding?.recordNewVoiceNote?.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.RECORD_AUDIO
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                RecordNoteBottomSheet.instanceOfThis(this).show(childFragmentManager, "RecordNotes")
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                launchRecordNoteSheet()
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
             } else {
-                ActivityCompat.requestPermissions(requireActivity(), recordAudioPermission, REQUEST_RECORD_AUDIO_PERMISSION)
+                registerForActivityResult(
+                    RequestPermission()
+                ) { isGranted: Boolean ->
+                    if (isGranted) {
+                        launchRecordNoteSheet()
+                    } else {
+                    }
+                }.launch(Manifest.permission.RECORD_AUDIO)
             }
         }
+    }
+
+    private fun launchRecordNoteSheet() {
+        RecordNoteBottomSheet.instanceOfThis(this).show(childFragmentManager, "RecordNotes")
+    }
+
+
+    private fun playVoiceNote(fileName: String) {
+        player = MediaPlayer().apply {
+            try {
+                setDataSource(fileName)
+                setWakeMode(requireContext(), PowerManager.PARTIAL_WAKE_LOCK)
+                prepare()
+                start()
+            } catch (e: IOException) {
+                Timber.e("prepare() failed")
+            }
+        }
+    }
+
+    private fun pausePlaying() {
+        if (player?.isPlaying == true) {
+            player?.pause()
+            length = player?.currentPosition ?: 0
+        }
+    }
+
+    private fun resumePlaying() {
+        Timber.d("Resume!")
+        if (player?.isPlaying == false) {
+            player?.apply {
+                seekTo(length)
+                start()
+            }
+        }
+    }
+
+    private fun stopPlaying() {
+        if (player?.isPlaying == true) {
+            player?.stop()
+            player?.release()
+        } else {
+            Timber.d("You are not playing any voice note right now!")
+        }
+        player = null
     }
 
     /**
@@ -101,17 +150,32 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      *  Show reason why they should grant the permission
      */
     private fun checkIfFilePermissionsAreGrantedAndFetchVoiceNotes() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             fetchAndDisplayVoiceNotes()
+        } else if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            // In an educational UI, explain to the user why your app requires this
+            // permission for a specific feature to behave as expected. In this UI,
+            // include a "cancel" or "no thanks" button that allows the user to
+            // continue using your app without granting the permission.
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), accessFilesPermission, REQUEST_ACCESS_FILES_PERMISSION)
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            registerForActivityResult(
+                RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                    fetchAndDisplayVoiceNotes()
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // features requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                }
+            }.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 
@@ -133,6 +197,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             {
                 if (it != null && it.isNotEmpty()) {
                     setupRecyclerView(it as ArrayList<File>)
+                    Toast.makeText(context, it.size.toString(), Toast.LENGTH_SHORT).show()
                 } else {
                     showEmptyState()
                 }
@@ -152,16 +217,38 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             override fun onFileClicked(file: File) {
             }
 
-            override fun onPlayPauseClicked() {
+            override fun onPlay(file: File) {
+                playVoiceNote(file.absolutePath)
             }
 
-            override fun onStopPlaying() {
+            override fun onPause() {
+                pausePlaying()
+            }
+
+            override fun onResume() {
+                resumePlaying()
+            }
+
+            override fun onStop() {
+                stopPlaying()
             }
 
             override fun onSkipForward() {
+                if (player?.isPlaying == true) {
+                    player?.apply {
+                        seekTo(10)
+                        start()
+                    }
+                }
             }
 
             override fun onSkipBackward() {
+                if (player?.isPlaying == true) {
+                    player?.apply {
+                        seekTo(-10)
+                        start()
+                    }
+                }
             }
 
             override fun onRenameClicked(file: File?) {
@@ -185,7 +272,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      *  Prepare and start recording
      */
     private fun startRecording() {
-
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -210,12 +296,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
                 stop()
                 release()
             }
-            fetchAndDisplayVoiceNotes()
             state = false
+            recordingStopped = true
         } else {
             Timber.d("You are not recording right now!")
+            mediaRecorder = null
         }
         mediaRecorder = null
+        fetchAndDisplayVoiceNotes()
     }
 
     /**
@@ -256,6 +344,25 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         renameDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_note_name, null)
         renameDialog.setContentView(renameDialogView)
     }
+
+    // Register the permissions callback, which handles the user's response to the
+    // system permissions dialog. Save the return value, an instance of
+    // ActivityResultLauncher, as an instance variable.
+    private val requestPermissionLauncher = registerForActivityResult(
+        RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission is granted. Continue the action or workflow in your
+            // app.
+        } else {
+            // Explain to the user that the feature is unavailable because the
+            // features requires a permission that the user has denied. At the
+            // same time, respect the user's decision. Don't link to system
+            // settings in an effort to convince the user to change their
+            // decision.
+        }
+    }
+
 
     /**
      *  show an MaterialAlertDialog and prompt to enter file name before
@@ -309,17 +416,6 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
          window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
      }*/
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_ACCESS_FILES_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Timber.d("REQUEST_RECORD_AUDIO_PERMISSION: $REQUEST_RECORD_AUDIO_PERMISSION is GRANTED")
-            checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
-        }
-
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-            // Do Something
-        }
-    }
 
     override fun onStartRecording() {
         // Start Recording Note
@@ -340,6 +436,8 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         super.onStop()
         mediaRecorder?.release()
         mediaRecorder = null
+        player?.release()
+        player = null
     }
 
     override fun onDestroyView() {
