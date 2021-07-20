@@ -49,4 +49,9 @@ abstract class BaseFragment : Fragment() {
         }
         return if (mediaDir != null && mediaDir.exists()) mediaDir else appContext.filesDir
     }
+
+    override fun onStop() {
+        super.onStop()
+        appbar = null
+    }
 }

@@ -12,7 +12,6 @@ import android.os.PowerManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -78,22 +77,30 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         setUpOnClickListeners()
         checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
         dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+
+        player?.setOnCompletionListener {
+            MediaPlayer.OnCompletionListener { stopPlaying() }
+        }
     }
 
     private fun setUpOnClickListeners() {
         binding?.recordNewVoiceNote?.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-                launchRecordNoteSheet()
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
-            } else {
-                registerForActivityResult(
-                    RequestPermission()
-                ) { isGranted: Boolean ->
-                    if (isGranted) {
-                        launchRecordNoteSheet()
-                    } else {
-                    }
-                }.launch(Manifest.permission.RECORD_AUDIO)
+            when {
+                ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED -> {
+                    launchRecordNoteSheet()
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+                }
+                else -> {
+                    registerForActivityResult(
+                        RequestPermission()
+                    ) { isGranted: Boolean ->
+                        if (isGranted) {
+                            launchRecordNoteSheet()
+                        } else {
+                        }
+                    }.launch(Manifest.permission.RECORD_AUDIO)
+                }
             }
         }
     }
@@ -117,7 +124,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     }
 
     private fun pausePlaying() {
-        if (player?.isPlaying == true) {
+        if (player != null && player?.isPlaying == true) {
             player?.pause()
             length = player?.currentPosition ?: 0
         }
@@ -126,6 +133,8 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     private fun resumePlaying() {
         Timber.d("Resume!")
         if (player?.isPlaying == false) {
+            player?.start()
+        } else {
             player?.apply {
                 seekTo(length)
                 start()
@@ -134,13 +143,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     }
 
     private fun stopPlaying() {
-        if (player?.isPlaying == true) {
+        if (player != null && player?.isPlaying == true) {
             player?.stop()
+            player?.reset()
             player?.release()
+            player = null
         } else {
             Timber.d("You are not playing any voice note right now!")
         }
-        player = null
     }
 
     /**
@@ -151,31 +161,35 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      */
     private fun checkIfFilePermissionsAreGrantedAndFetchVoiceNotes() {
 
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            fetchAndDisplayVoiceNotes()
-        } else if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            // In an educational UI, explain to the user why your app requires this
-            // permission for a specific feature to behave as expected. In this UI,
-            // include a "cancel" or "no thanks" button that allows the user to
-            // continue using your app without granting the permission.
-        } else {
-            // You can directly ask for the permission.
-            // The registered ActivityResultCallback gets the result of this request.
-            registerForActivityResult(
-                RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                    fetchAndDisplayVoiceNotes()
-                } else {
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
-            }.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        when {
+            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
+                fetchAndDisplayVoiceNotes()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                // In an educational UI, explain to the user why your app requires this
+                // permission for a specific feature to behave as expected. In this UI,
+                // include a "cancel" or "no thanks" button that allows the user to
+                // continue using your app without granting the permission.
+            }
+            else -> {
+                // You can directly ask for the permission.
+                // The registered ActivityResultCallback gets the result of this request.
+                registerForActivityResult(
+                    RequestPermission()
+                ) { isGranted: Boolean ->
+                    if (isGranted) {
+                        // Permission is granted. Continue the action or workflow in your
+                        // app.
+                        fetchAndDisplayVoiceNotes()
+                    } else {
+                        // Explain to the user that the feature is unavailable because the
+                        // features requires a permission that the user has denied. At the
+                        // same time, respect the user's decision. Don't link to system
+                        // settings in an effort to convince the user to change their
+                        // decision.
+                    }
+                }.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
         }
     }
 
@@ -197,13 +211,13 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             {
                 if (it != null && it.isNotEmpty()) {
                     setupRecyclerView(it as ArrayList<File>)
-                    Toast.makeText(context, it.size.toString(), Toast.LENGTH_SHORT).show()
                 } else {
                     showEmptyState()
                 }
             }
         )
     }
+
 
     /**
      *  Set up the RecyclerView and set adapter
@@ -234,19 +248,21 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             }
 
             override fun onSkipForward() {
-                if (player?.isPlaying == true) {
-                    player?.apply {
-                        seekTo(10)
-                        start()
+                if (player != null && player?.isPlaying == true) {
+                    if (player?.currentPosition ?: 0 <= player?.duration ?: 0) {
+                        player?.apply {
+                            seekTo(10000)
+                        }
                     }
                 }
             }
 
             override fun onSkipBackward() {
-                if (player?.isPlaying == true) {
-                    player?.apply {
-                        seekTo(-10)
-                        start()
+                if (player != null && player?.isPlaying == true) {
+                    if (player?.currentPosition ?: 0 <= player?.duration ?: 0) {
+                        player?.apply {
+                            seekTo(-10000)
+                        }
                     }
                 }
             }

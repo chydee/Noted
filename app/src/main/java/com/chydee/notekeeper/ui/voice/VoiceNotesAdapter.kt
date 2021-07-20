@@ -54,7 +54,7 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
 
             binding.playPauseCircle.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
-                    listener.onResume()
+                    listener.onPlay(file)
                     binding.optionsArea.show()
                 } else {
                     listener.onPause()

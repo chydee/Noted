@@ -10,109 +10,115 @@
             type="java.io.File" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/voiceNoteCard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_8"
-        app:cardBackgroundColor="@color/grey_80"
-        app:cardCornerRadius="@dimen/dp_16"
-        app:contentPadding="@dimen/dp_16"
-        app:rippleColor="@color/secondaryLightColor"
-        app:strokeColor="@android:color/transparent"
-        app:strokeWidth="1dp">
+        android:weightSum="100">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/voiceNoteCard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="100">
+            android:layout_margin="@dimen/dp_8"
+            android:layout_weight="100"
+            app:cardBackgroundColor="@color/grey_80"
+            app:cardCornerRadius="@dimen/dp_16"
+            app:contentPadding="@dimen/dp_16"
+            app:rippleColor="@color/secondaryLightColor">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mainArea"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical"
+                android:weightSum="100">
 
-                <TextView
-                    android:id="@+id/fileName"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mainArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:singleLine="true"
-                    android:text="@{file.name}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/sp_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/fileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="50dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:singleLine="true"
+                        android:text="@{file.name}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sp_18"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="File Name" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/playPauseCircle"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/baseline_play_pause"
+                        android:backgroundTint="@color/primaryColor"
+                        android:checked="false"
+                        android:contentDescription="@null"
+                        android:thumb="@null"
+                        app:layout_constraintBottom_toBottomOf="@+id/fileName"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/fileName" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/optionsArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="File Name" />
+                    app:layout_constraintTop_toBottomOf="@+id/mainArea">
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/playPauseCircle"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/baseline_play_pause"
-                    android:backgroundTint="@color/primaryColor"
-                    android:checked="false"
-                    android:contentDescription="@null"
-                    android:thumb="@null"
-                    app:layout_constraintBottom_toBottomOf="@+id/fileName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fileName" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/skipBackward"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/ic_skip_back"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/stopPlaying"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/optionsArea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mainArea">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/stopPlaying"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_stop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/skipForward"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/skipBackward"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/skipBackward"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/ic_skip_back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/stopPlaying"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/skipForward"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/ic_skip_forward"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/stopPlaying"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/stopPlaying"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_stop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/skipForward"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/skipBackward"
-                    app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/skipForward"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/ic_skip_forward"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/stopPlaying"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 </layout>
