@@ -120,6 +120,7 @@ class TrashFragment : BaseFragment() {
      *  Show the EmptyState for the trash, and Hide the RecyclerView Trash Disclaimer when the trash is  empty
      */
     private fun hideAndShowViewsWhenTrashIsEmpty() {
+        binding.clearTrash.isEnabled = false
         binding.trashDisclaimer.hide()
         binding.recyclerView.hide()
         binding.emptyTrashState.show()

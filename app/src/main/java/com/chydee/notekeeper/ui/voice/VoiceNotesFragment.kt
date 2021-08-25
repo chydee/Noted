@@ -12,7 +12,8 @@ import android.os.PowerManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import android.view.WindowManager
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,10 @@ import com.chydee.notekeeper.R
 import com.chydee.notekeeper.databinding.VoiceNotesFragmentBinding
 import com.chydee.notekeeper.ui.main.BaseFragment
 import com.chydee.notekeeper.utils.ext.hide
+import com.chydee.notekeeper.utils.ext.isContainsSpecialCharacter
 import com.chydee.notekeeper.utils.ext.show
+import com.chydee.notekeeper.utils.ext.takeText
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +59,7 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     private lateinit var renameDialog: Dialog
     private lateinit var renameDialogView: View
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Record to the external cache directory for visibility
@@ -75,32 +80,23 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         adapter = VoiceNotesAdapter()
         hideNavigationIcon()
         setUpOnClickListeners()
-        checkIfFilePermissionsAreGrantedAndFetchVoiceNotes()
         dialogBuilder = MaterialAlertDialogBuilder(requireContext())
-
+        initDialogs()
+        fetchAndDisplayVoiceNotes()
         player?.setOnCompletionListener {
             MediaPlayer.OnCompletionListener { stopPlaying() }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        fetchAndDisplayVoiceNotes()
+    }
+
     private fun setUpOnClickListeners() {
         binding?.recordNewVoiceNote?.setOnClickListener {
-            when {
-                ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED -> {
-                    launchRecordNoteSheet()
-                }
-                shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
-                }
-                else -> {
-                    registerForActivityResult(
-                        RequestPermission()
-                    ) { isGranted: Boolean ->
-                        if (isGranted) {
-                            launchRecordNoteSheet()
-                        } else {
-                        }
-                    }.launch(Manifest.permission.RECORD_AUDIO)
-                }
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                launchRecordNoteSheet()
             }
         }
     }
@@ -154,52 +150,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
     }
 
     /**
-     *  Check if the  Manifest.permission.WRITE_EXTERNAL_STORAGE and Manifest.permission.READ_EXTERNAL_STORAGE
-     *  has been granted by the user and then retrieve VoiceNotes from App Specific Storage else
-     *  !retrieve any VoiceNote and
-     *  Show reason why they should grant the permission
-     */
-    private fun checkIfFilePermissionsAreGrantedAndFetchVoiceNotes() {
-
-        when {
-            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
-                fetchAndDisplayVoiceNotes()
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected. In this UI,
-                // include a "cancel" or "no thanks" button that allows the user to
-                // continue using your app without granting the permission.
-            }
-            else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
-                registerForActivityResult(
-                    RequestPermission()
-                ) { isGranted: Boolean ->
-                    if (isGranted) {
-                        // Permission is granted. Continue the action or workflow in your
-                        // app.
-                        fetchAndDisplayVoiceNotes()
-                    } else {
-                        // Explain to the user that the feature is unavailable because the
-                        // features requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }
-                }.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-        }
-    }
-
-    /**
      *
      *  Fetch And Display Voice Notes
      */
     private fun fetchAndDisplayVoiceNotes() {
-        viewModel.fetchAudioFiles(getOutputDirectory(requireContext()))
-        loadVoiceNotes()
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            viewModel.fetchAudioFiles(getOutputDirectory(requireContext()))
+            loadVoiceNotes()
+        }
     }
 
     /**
@@ -268,9 +226,27 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             }
 
             override fun onRenameClicked(file: File?) {
+                showSnackBar("Coming soon!")
+                //renameVoiceNoteFile(file)
+                /*viewModel.isFiledRenamed.observe(viewLifecycleOwner, {
+                    when (it) {
+                        true -> adapter.notifyDataSetChanged()
+                        false -> showSnackBar("Error: unable to rename voice note")
+                    }
+                })*/
             }
 
             override fun onDeleteClicked(file: File?) {
+                showSnackBar("Coming soon!")
+                /* if (file != null) {
+                     viewModel.deleteByFileInBackground(file)
+                     *//*viewModel.isFileDeleted.observe(viewLifecycleOwner, {
+                        when (it) {
+                            true -> adapter.notifyDataSetChanged()
+                            false -> showSnackBar("Unable to delete voice note")
+                        }
+                    })*//*
+                }*/
             }
         })
     }
@@ -295,11 +271,11 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             try {
                 prepare()
+                start()
+                state = true
             } catch (e: IOException) {
                 Timber.e("prepare() failed")
             }
-            start()
-            state = true
         }
     }
 
@@ -307,19 +283,22 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      *  Stop Recording and release recorder
      */
     private fun stopRecording() {
-        if (state) {
-            mediaRecorder?.apply {
-                stop()
-                release()
+        if (state && mediaRecorder != null) {
+            try {
+                mediaRecorder?.stop()
+                mediaRecorder?.reset()
+                mediaRecorder?.release()
+                mediaRecorder = null
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
             }
             state = false
             recordingStopped = true
+            fetchAndDisplayVoiceNotes()
         } else {
             Timber.d("You are not recording right now!")
             mediaRecorder = null
         }
-        mediaRecorder = null
-        fetchAndDisplayVoiceNotes()
     }
 
     /**
@@ -329,12 +308,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         if (state) {
             if (!recordingStopped) {
                 Timber.d("Stopped!")
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mediaRecorder?.pause()
-                } else {
-                    stopRecording()
+                if (mediaRecorder != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        mediaRecorder?.pause()
+                    } else {
+                        stopRecording()
+                    }
+                    recordingStopped = true
                 }
-                recordingStopped = true
             } else {
                 resumeRecording()
             }
@@ -347,12 +328,14 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
      */
     private fun resumeRecording() {
         Timber.d("Resume!")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mediaRecorder?.resume()
-        } else {
-            startRecording()
+        if (mediaRecorder != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mediaRecorder?.resume()
+            } else {
+                startRecording()
+            }
+            recordingStopped = false
         }
-        recordingStopped = false
     }
 
     private fun initDialogs() {
@@ -361,76 +344,60 @@ class VoiceNotesFragment : BaseFragment(), RecordNoteBottomSheet.OnClickListener
         renameDialog.setContentView(renameDialogView)
     }
 
-    // Register the permissions callback, which handles the user's response to the
-    // system permissions dialog. Save the return value, an instance of
-    // ActivityResultLauncher, as an instance variable.
-    private val requestPermissionLauncher = registerForActivityResult(
-        RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            // Permission is granted. Continue the action or workflow in your
-            // app.
-        } else {
-            // Explain to the user that the feature is unavailable because the
-            // features requires a permission that the user has denied. At the
-            // same time, respect the user's decision. Don't link to system
-            // settings in an effort to convince the user to change their
-            // decision.
-        }
-    }
-
-
     /**
      *  show an MaterialAlertDialog and prompt to enter file name before
      *  exiting process completely
      */
-    /* private fun renameVoiceNoteFile(item: File?) {
-         renameDialogView.apply {
-             val fileName = item?.name?.split(".")?.get(0)
-             etFileName.setText(fileName.toString())
+    private fun renameVoiceNoteFile(item: File?) {
+        renameDialogView.apply {
+            val fileName = item?.name?.split(".mp3")?.get(0)
+            val fileNameEdt = findViewById<EditText>(R.id.etFileName)
 
-             btnGoBack.setOnClickListener {
-                 renameDialog.cancel()
-             }
+            fileNameEdt.setText(fileName.toString())
 
-             btnRename.setOnClickListener {
+            findViewById<MaterialButton>(R.id.btnGoBack).setOnClickListener {
+                renameDialog.cancel()
+            }
 
-                 var name: String = ""
+            findViewById<MaterialButton>(R.id.btnRename).setOnClickListener {
 
-                 if (etFileName.takeText().isEmpty()) {
-                     etFileName.error = "Cannot be empty"
-                     return@setOnClickListener
-                 }
+                var name: String = ""
 
-                 if (etFileName.isContainsSpecialCharacter()) {
-                     etFileName.error = "Cannot contain special characters"
-                     return@setOnClickListener
-                 }
+                if (fileNameEdt.takeText().isEmpty()) {
+                    fileNameEdt.error = "Cannot be empty"
+                    return@setOnClickListener
+                }
 
-                 etFileName.error = null
+                if (fileNameEdt.isContainsSpecialCharacter()) {
+                    fileNameEdt.error = "Cannot contain special characters"
+                    return@setOnClickListener
+                }
 
-                 if (etFileName.takeText().endsWith(".mp3")) {
-                     name = etFileName.takeText().split(".mp3")[0]
-                 }
+                fileNameEdt.error = null
 
-                 Timber.d("filename: $name")
+                if (fileNameEdt.takeText().endsWith(".mp3")) {
+                    name = fileNameEdt.takeText().split(".mp3")[0]
+                }
 
-                 val fromfile = File(getOutputDirectory(requireActivity()), item?.name.toString())
-                 val newFile = File(getOutputDirectory(requireActivity()), "$name.pdf")
-                 try {
-                     Timber.d("file last modified: ${newFile.lastModified()}")
-                     viewModel.renameFile(fromfile, newFile)
-                 } catch (e: IOException) {
-                     // Toast.makeText(this@MainActivity, SyncStateContract.Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show()
-                 }
-             }
-         }
+                Timber.d("filename: $name")
 
-         renameDialog.show()
+                val fromFile = File(getOutputDirectory(requireActivity()), item?.name.toString())
+                val newFile = File(getOutputDirectory(requireActivity()), "$name.mp3")
+                try {
+                    Timber.d("file last modified: ${newFile.lastModified()}")
+                    viewModel.renameFile(fromFile, "$name.mp3")
+                } catch (e: IOException) {
+                    showSnackBar("Something went wrong: $e")
 
-         val window = renameDialog.window
-         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-     }*/
+                }
+            }
+        }
+
+        renameDialog.show()
+
+        val window = renameDialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+    }
 
 
     override fun onStartRecording() {

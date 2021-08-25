@@ -80,7 +80,16 @@
 ## Demo
 
     Find below screenshots of the application
-    <img src="screens/noted_home.png" width="350" title="Home Screen"> <img src="screens/noted_add_note.png" width="350" title="Create new note">
+    <p>
+        <img src="screens/noted_home.png" width="250" title="Home Screen">
+        <img src="screens/noted_add_note.png" width="250" title="Create new note">
+        <img src="screens/noted_home_notes.png" width="250" title="Create new note">
+    </p>
+    <p>
+        <img src="screens/noted_trash.png" width="250" title="Home Screen">
+        <img src="screens/noted_new_note.png" width="250" title="Create new note">
+        <img src="screens/noted_side_nav.png" width="250" title="Create new note">
+    </p>
 
 
  ## Credits

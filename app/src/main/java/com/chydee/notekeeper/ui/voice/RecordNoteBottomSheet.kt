@@ -5,6 +5,7 @@ import android.animation.Animator
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,31 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
                 .apply {
                     this.listener = listener
                 }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d("RecordBottomSheet", "Permission Granted Already")
+        } else {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                //Show a UI explaining why the permission was needed and user can request permission again
+            } else {
+                registerForActivityResult(
+                    ActivityResultContracts.RequestPermission()
+                ) { isGranted: Boolean ->
+                    if (isGranted) {
+                        Log.d("RecordBottomSheet", "Permission Granted")
+                    } else {
+                        Log.d("RecordBottomSheet", "Permission Denied")
+                    }
+                }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -72,18 +98,6 @@ class RecordNoteBottomSheet : BottomSheetDialogFragment() {
                 stopRecording()
                 listener.onStopRecording()
                 dismiss()
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            } else {
-                registerForActivityResult(
-                    ActivityResultContracts.RequestPermission()
-                ) { isGranted: Boolean ->
-                    if (isGranted) {
-                        stopRecording()
-                        listener.onStopRecording()
-                        dismiss()
-                    } else {
-                    }
-                }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
     }

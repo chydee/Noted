@@ -1,15 +1,20 @@
 package com.chydee.notekeeper.ui.main;
 
+import static android.Manifest.permission;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -19,6 +24,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -43,6 +49,8 @@ import timber.log.Timber;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
@@ -55,6 +63,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MaterialToolbar toolBar;
 
     private WorkManager workManager;
+    private final String[] permissions = {permission.READ_EXTERNAL_STORAGE, permission.RECORD_AUDIO, permission.WRITE_EXTERNAL_STORAGE};
+    private final ActivityResultLauncher<String[]> requestPermissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
+        if (permissions.get(permission.RECORD_AUDIO)) {
+            Log.d(TAG, "Permission granted for " + permission.RECORD_AUDIO);
+        } else if (permissions.get(permission.READ_EXTERNAL_STORAGE)) {
+            Log.d(TAG, "Permission granted for " + permission.READ_EXTERNAL_STORAGE);
+        } else if (permissions.get(permission.WRITE_EXTERNAL_STORAGE)) {
+            Log.d(TAG, "Permission granted for " + permission.WRITE_EXTERNAL_STORAGE);
+
+        } else {
+            Log.d(TAG, "No Permissions granted");
+        }
+    });
+    private final NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
+        @Override
+        public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+            if (destination.getId() == R.id.voiceNotesFragment) {
+                requestPermissions.launch(permissions);
+            }
+        }
+    };
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -99,6 +129,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     showWelcomingGroup();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navController.addOnDestinationChangedListener(listener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        navController.removeOnDestinationChangedListener(listener);
     }
 
     /**

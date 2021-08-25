@@ -5,36 +5,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class VoiceNotesViewModel @Inject constructor() : ViewModel() {
 
+
     private val _voiceNotes = MutableLiveData<List<File>>()
     val voiceNotes: LiveData<List<File>>
         get() = _voiceNotes
 
-    private val _isFileRenaming = MutableLiveData<Boolean>()
-    private val _isFileDeleting = MutableLiveData<Boolean>()
+    private val _isFileRenamed = MutableLiveData<Boolean>()
+    private val _isFileDeleted = MutableLiveData<Boolean>()
 
-    init {
-        _isFileDeleting.postValue(false)
-        _isFileRenaming.postValue(false)
-    }
 
-    val isFileRenaming: LiveData<Boolean>
-        get() = _isFileRenaming
+    val isFiledRenamed: LiveData<Boolean>
+        get() = _isFileRenamed
 
-    val isFileDeleting: LiveData<Boolean>
-        get() = _isFileDeleting
+    val isFileDeleted: LiveData<Boolean>
+        get() = _isFileDeleted
 
     fun fetchAudioFiles(dir: File) {
         viewModelScope.launch {
@@ -53,35 +45,32 @@ class VoiceNotesViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun renameFile(src: File?, dst: File) = viewModelScope.launch {
-        copyFileInBackground(src, dst)
-    }
+    fun renameFile(src: File, newName: String) {
+        viewModelScope.launch {
+            _isFileRenamed.value = false
+            val from: File = File(src.absolutePath, src.nameWithoutExtension)
+            val to: File = File(src.absolutePath, newName.trim())
+            rename(from, to)
+            _isFileRenamed.postValue(true)
 
-    @Throws(IOException::class)
-    private suspend fun copyFileInBackground(src: File?, dst: File) = withContext(Dispatchers.IO) {
-        _isFileRenaming.postValue(true)
-        FileInputStream(src).use { `in` ->
-            FileOutputStream(dst).use { out ->
-                val buf = ByteArray(1024)
-                var len: Int
-                while (`in`.read(buf).also { len = it } > 0) {
-                    out.write(buf, 0, len)
-                }
-            }
-        }
-
-        withContext(Dispatchers.Main) {
-            _isFileRenaming.postValue(false)
         }
     }
 
-    private suspend fun deleteByFileInBackground(file: File) = withContext(Dispatchers.IO) {
-        _isFileDeleting.postValue(true)
-        val f = File(file.toURI())
-        f.delete()
+    private fun rename(from: File, to: File): Boolean {
+        return from.parentFile.exists() && from.exists() && from.renameTo(to)
+    }
 
-        withContext(Dispatchers.Main) {
-            _isFileDeleting.postValue(false)
+    fun deleteByFileInBackground(file: File) {
+        viewModelScope.launch {
+
+            _isFileDeleted.postValue(false)
+            val f = File(file.toURI())
+            f.delete()
+
+
+
+            _isFileDeleted.postValue(true)
+
         }
     }
 
