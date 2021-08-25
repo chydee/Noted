@@ -1,33 +1,37 @@
 package com.chydee.notekeeper.ui.voice
 
 import android.view.*
-import android.widget.Filter
-import android.widget.Filterable
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chydee.notekeeper.databinding.ItemVoiceNoteBinding
 import com.chydee.notekeeper.utils.ext.remove
 import com.chydee.notekeeper.utils.ext.show
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 
-class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHolder>(), Filterable {
+class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHolder>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<File>() {
-        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem.name == newItem.name
+    private var isPlaying: Boolean = false
+
+    private var notes: ArrayList<File> = arrayListOf()
+
+    inner class DiffCallback(private val oldList: List<File>, private val newList: List<File>) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int {
+            return oldList.size
         }
 
-        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].name == newList[newItemPosition].name
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
         }
     }
-
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-    private lateinit var itemsFilter: MutableList<File>
 
     private lateinit var listener: OnItemClickListener
 
@@ -50,15 +54,38 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
             binding.file = file
             this.currentFile = file
             // binding.fileName.text = file.name
-            binding.playPauseCircle.setOnCheckedChangeListener { _, isChecked ->
+
+            binding.playPauseCircle.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
+                    listener.onPlay(file)
                     binding.optionsArea.show()
                 } else {
+                    listener.onPause()
                     binding.optionsArea.remove()
                 }
             }
+
+            binding.stopPlaying.setOnClickListener {
+                binding.optionsArea.remove()
+                listener.onStop()
+                binding.playPauseCircle.isChecked = false
+            }
+
+            binding.skipForward.setOnClickListener { listener.onSkipForward() }
+            binding.skipBackward.setOnClickListener { listener.onSkipBackward() }
             itemView.setOnCreateContextMenuListener(this)
             binding.executePendingBindings()
+        }
+
+        private fun pauseResume() {
+            if (isPlaying) {
+                listener.onPause()
+                binding.optionsArea.remove()
+            } else {
+                listener.onResume()
+                binding.optionsArea.show()
+            }
+            isPlaying = !isPlaying
         }
 
         /**
@@ -105,8 +132,10 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
 
     interface OnItemClickListener {
         fun onFileClicked(file: File)
-        fun onPlayPauseClicked()
-        fun onStopPlaying()
+        fun onPlay(file: File)
+        fun onPause()
+        fun onResume()
+        fun onStop()
         fun onSkipForward()
         fun onSkipBackward()
         fun onRenameClicked(file: File?)
@@ -118,52 +147,23 @@ class VoiceNotesAdapter : RecyclerView.Adapter<VoiceNotesAdapter.VoiceNoteViewHo
     }
 
     internal fun submitList(voiceNotes: ArrayList<File>) {
-        differ.submitList(voiceNotes)
-        itemsFilter = ArrayList(voiceNotes)
+        val diffCallback = DiffCallback(notes, voiceNotes)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.notes.clear()
+        this.notes.addAll(voiceNotes)
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    internal fun getItems() = differ.currentList
+    internal fun getItems() = notes
 
     override fun onBindViewHolder(holder: VoiceNotesAdapter.VoiceNoteViewHolder, position: Int) {
-        val voiceNote = differ.currentList[position]
+        val voiceNote = notes[position]
         holder.bind(voiceNote)
-        holder.itemView.setOnClickListener {
-            listener.onFileClicked(voiceNote)
-        }
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return notes.size
     }
 
-    override fun getFilter(): Filter {
-        return itemFilter
-    }
 
-    private val itemFilter: Filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence): FilterResults {
-            val filteredList: MutableList<File> = ArrayList()
-            if (constraint == null || constraint.isEmpty()) {
-                filteredList.addAll(itemsFilter)
-            } else {
-                val filterPattern =
-                    constraint.toString().toLowerCase(Locale.ENGLISH).trim { it <= ' ' }
-                for (item in itemsFilter) {
-                    if (item.name.toLowerCase(Locale.ENGLISH).contains(filterPattern)) {
-                        filteredList.add(item)
-                    }
-                }
-            }
-            val results = FilterResults()
-            results.values = filteredList
-            return results
-        }
-
-        override fun publishResults(
-            constraint: CharSequence,
-            results: FilterResults
-        ) {
-            differ.submitList((results.values as ArrayList<File>?)!!)
-        }
-    }
 }

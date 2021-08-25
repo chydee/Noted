@@ -14,6 +14,8 @@ import timber.log.Timber
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private var appBar: MaterialToolbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferenceScreen.sharedPreferences
@@ -58,8 +60,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val appbar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
-        appbar.setNavigationIcon(R.drawable.ic_up)
+        setupAppBar()
+    }
+
+    private fun setupAppBar() {
+        appBar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
+        appBar?.setNavigationIcon(R.drawable.ic_up)
     }
 
     // sets the Preference Summary as per selected.
@@ -89,6 +95,16 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 value?.let { setPreferenceSummary(preference, it) }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupAppBar()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        appBar = null
     }
 
     override fun onDestroy() {

@@ -36,18 +36,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/password_hint"
-            app:counterEnabled="true"
-            app:counterMaxLength="8"
             app:errorEnabled="true"
-            app:hintAnimationEnabled="false"
-            app:passwordToggleEnabled="false">
+            app:hintAnimationEnabled="true"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/secretKeyField"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textVisiblePassword"
-                android:textColor="@color/primaryTextColor" />
+                android:inputType="textPassword"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

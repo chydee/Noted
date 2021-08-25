@@ -28,7 +28,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
-                android:textSize="14sp"
                 android:background="@drawable/search_container"
                 android:drawableStart="@drawable/ic_baseline_search_24"
                 android:drawablePadding="16dp"
@@ -38,6 +37,7 @@
                 android:inputType="text"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

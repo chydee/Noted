@@ -22,15 +22,15 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:focusable="auto"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_semibold"
             android:hint="@string/title_hint"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
             android:padding="@dimen/text_area_padding"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
             android:textColor="@color/secondaryDarkColor"
-            android:textSize="14sp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/noteContent"
@@ -39,15 +39,15 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:cursorVisible="true"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_medium"
             android:gravity="top"
             android:hint="@string/note_placeholder"
             android:importantForAutofill="no"
-            android:inputType="text|textAutoCorrect|textMultiLine"
+            android:inputType="textCapSentences|text|textAutoCorrect|textMultiLine"
             android:padding="@dimen/text_area_padding"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/secondaryDarkColor"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/bottom_layout"
@@ -64,7 +64,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:textAlignment="center"
                 android:textColor="@color/vector_distinct_color"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 tools:text="Edited Oct 25, 2020 08:31PM" />
 
             <com.google.android.material.button.MaterialButton
@@ -78,7 +78,7 @@
                 app:iconGravity="textEnd"
                 app:iconPadding="0dp"
                 app:iconSize="18dp"
-                app:iconTint="@color/primaryDarkColor" />
+                app:iconTint="@color/primaryColor" />
 
         </LinearLayout>
     </LinearLayout>

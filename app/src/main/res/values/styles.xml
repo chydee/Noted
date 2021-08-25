@@ -96,8 +96,8 @@
 
     <style name="BottomSheetButtons" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textAlignment">textStart</item>
-        <item name="android:textColor">@color/primaryColor</item>
-        <item name="iconTint">@color/primaryColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="iconTint">@color/primaryTextColor</item>
     </style>
 
 </resources>

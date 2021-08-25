@@ -52,6 +52,7 @@
                 android:fontFamily="@font/poppins"
                 android:maxLines="15"
                 android:text="@{notes.isLocked ? @string/unlock_instruction:  notes.noteDetail}"
+                android:textSize="16sp"
                 tools:text="Description" />
         </LinearLayout>
 
