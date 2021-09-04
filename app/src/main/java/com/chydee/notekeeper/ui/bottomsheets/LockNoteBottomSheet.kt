@@ -55,10 +55,10 @@ class LockNoteBottomSheet : BottomSheetDialogFragment() {
     private fun setUpClickListeners() {
         binding?.continueBtn?.setOnClickListener {
             if (binding?.secretKeyField?.takeText().isNullOrEmpty()) {
+                binding?.secretKeyField?.error = getString(R.string.least_keys)
+            } else {
                 mListener.onPasswordCreated(binding?.secretKeyField?.takeText() ?: "")
                 dismiss()
-            } else {
-                binding?.secretKeyField?.error = getString(R.string.least_keys)
             }
         }
     }
